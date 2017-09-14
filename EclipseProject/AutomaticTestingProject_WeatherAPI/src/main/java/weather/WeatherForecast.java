@@ -12,15 +12,17 @@ public class WeatherForecast {
 	private static URLConnection urlCon;
 	
 	public static boolean openApiConnection(String url) throws IOException {
+		/*
 		URL apiUrl = new URL(url);
         urlCon = apiUrl.openConnection();
         if (!(urlCon.toString().isEmpty())) {
         	return true;
-        }
+        }*/
         return false;
 	}
 	
 	public static String getWeatherInfo(String url, String city) throws IOException{
+		/*
 		if(openApiConnection(url + city) == true) {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
 	        String inputLine;
@@ -29,6 +31,7 @@ public class WeatherForecast {
 	        reader.close();
 	        return weatherInfo;
 		};
+		*/
 		return "Connection error!";
 	}
 

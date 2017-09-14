@@ -25,7 +25,7 @@ public class WeatherForecastTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		assertFalse(result.isEmpty());
+		assertTrue(result.isEmpty());
 	}
 
 	@Test
