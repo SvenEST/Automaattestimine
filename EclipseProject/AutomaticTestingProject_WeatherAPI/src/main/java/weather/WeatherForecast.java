@@ -12,6 +12,7 @@ public class WeatherForecast {
 	private static String weatherInfoJson;
 	
 	public static boolean internetConnectionExists() {
+		//Kommenteeritud osad tegin, et paremini aru saada info liikumusest ja kujust
 	    /*try {
 	        final URL url = new URL("http://www.google.com");
 	        final URLConnection connection = url.openConnection();
