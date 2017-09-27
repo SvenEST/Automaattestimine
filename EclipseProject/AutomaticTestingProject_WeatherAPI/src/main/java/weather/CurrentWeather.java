@@ -7,12 +7,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import org.json.*;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class WeatherForecast {
-
-	public static JSONObject getWeatherForecastInfo(String apiUrl, String apiKey, String city, String units) throws IOException{
-        URL url;
+public class CurrentWeather {
+	
+	public static JSONObject getWeatherInfoJson(String apiUrl, String apiKey, String city, String units) throws IOException{
+		URL url;
 		JSONObject weatherInfoJson = null;
 		try {
 			url = new URL(apiUrl + city + "&units=" + units + "&appid=" + apiKey);
@@ -31,24 +32,12 @@ public class WeatherForecast {
 		}
 		return weatherInfoJson;
 	}
-	
-	public static JSONObject getForecastForDay(JSONObject forecastInfo, int day){
-		JSONArray list;
-		JSONObject forecast = null;
+
+	public static int getTemperature(JSONObject weatherInfoJson) {
 		try {
-			list = forecastInfo.getJSONArray("list");
-			forecast = list.getJSONObject(day);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return forecast;
-	}
-	
-	public static int getTemperature(JSONObject forecastForDay) {
-		try {
-			JSONObject main = forecastForDay.getJSONObject("main");
-			int temp = main.getInt("temp");
-			return temp;
+			JSONObject main = weatherInfoJson.getJSONObject("main");
+			int currentTemp = main.getInt("temp");
+			return currentTemp;
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -62,8 +51,9 @@ public class WeatherForecast {
 	public static int getMinTemperature() {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
-	
+
 	public static String getCoordinates() {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
+	
 }
