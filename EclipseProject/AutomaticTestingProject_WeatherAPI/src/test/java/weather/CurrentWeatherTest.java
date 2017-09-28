@@ -113,4 +113,16 @@ public class CurrentWeatherTest {
 		assertTrue(result.length() == 7);
 		assertEquals(result.charAt(4), ":");
 	}
+	
+	@Test
+	public void testIfReturnedInfoHasSameCityName() {
+		String cityName = "Tallinn";
+		JSONObject result;
+		try {
+			result = CurrentWeather.getWeatherInfoJson("http://api.openweathermap.org/data/2.5/weather?q=", "1a8a3563bee4967e64490dbfadf83b7e", cityName);
+			assertEquals(cityName, CurrentWeather.getCityName(result).toString());
+		} catch (IOException e) {
+			fail("Failure caused by: " + e.getMessage());
+		}
+	}
 }

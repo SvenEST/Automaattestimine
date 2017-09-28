@@ -81,4 +81,16 @@ public class WeatherForecast implements WeatherReport{
 	public static String getUnits() {
 		return units;
 	}
+	
+	public static String getCityName(JSONObject weatherInfo) {
+		JSONObject cityInfo = null;
+		String cityName = null;
+		try {
+			cityInfo = weatherInfo.getJSONObject("city");
+			cityName = cityInfo.getString("name");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return cityName;
+	}
 }

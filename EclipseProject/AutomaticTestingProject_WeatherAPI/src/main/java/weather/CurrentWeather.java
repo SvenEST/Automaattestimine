@@ -71,4 +71,14 @@ public class CurrentWeather implements WeatherReport {
 		return units;
 	}
 	
+	public static String getCityName(JSONObject weatherInfo) {
+		String city = null;
+		try {
+			city = weatherInfo.getString("name");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return city;
+	}
+	
 }
