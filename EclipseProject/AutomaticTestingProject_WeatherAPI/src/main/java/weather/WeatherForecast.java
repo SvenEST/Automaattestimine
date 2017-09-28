@@ -9,9 +9,11 @@ import java.net.URLConnection;
 
 import org.json.*;
 
-public class WeatherForecast {
+public class WeatherForecast implements WeatherReport{
+	
+	private static String units = "Metric";
 
-	public static JSONObject getWeatherForecastInfo(String apiUrl, String apiKey, String city, String units) throws IOException{
+	public static JSONObject getWeatherForecastInfo(String apiUrl, String apiKey, String city) throws IOException{
         URL url;
 		JSONObject weatherInfoJson = null;
 		try {
@@ -65,5 +67,18 @@ public class WeatherForecast {
 	
 	public static String getCoordinates() {
 		throw new UnsupportedOperationException("Not yet implemented");
+	}
+	
+	public static String changeUnit(String newUnit) {
+		if(newUnit == "Metric" || newUnit == "Imperial" || newUnit == "Kelvin") {
+			units = newUnit;
+			return "Unit changed to: " + newUnit;
+		} else {
+			return "Unit change failed. Use Metric, Imperial or Kelvin";
+		}
+	}
+
+	public static String getUnits() {
+		return units;
 	}
 }

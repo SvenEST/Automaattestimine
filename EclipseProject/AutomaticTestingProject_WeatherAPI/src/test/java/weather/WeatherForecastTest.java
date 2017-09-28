@@ -12,9 +12,9 @@ public class WeatherForecastTest {
 	public void testGetWeatherForecastInfo() {
 		JSONObject result = null;
 		try {
-			result = WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee", "Metric");
+			result = WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee");
 		} catch (IOException e) {
-			e.printStackTrace();
+			fail("Failure caused by: " + e.getMessage());
 		}
 		assertTrue(result == (JSONObject)result);
 		assertFalse(result.toString().isEmpty());
@@ -26,9 +26,9 @@ public class WeatherForecastTest {
 	public void getForecastForDay() {
 		JSONObject result = null;
 		try {
-			result = WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee", "Metric"), 1);
+			result = WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee"), 1);
 		} catch (IOException e) {
-			e.printStackTrace();
+			fail("Failure caused by: " + e.getMessage());
 		}
 		assertTrue(result == (JSONObject)result);
 		assertFalse(result.toString().isEmpty());
@@ -37,18 +37,59 @@ public class WeatherForecastTest {
 	}
 	
 	@Test
-	public void testGetTemperature() {
+	public void testGetTemperatureMetric() {
 		int result;
-		String units = "Metric";
+		WeatherForecast.changeUnit("Metric");
+		String units = WeatherForecast.getUnits();
 		try {
-			result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee", units), 1));
+			result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee"), 1));
 			assertTrue(result == (int)result);
 			if (units == "Metric") {
 				assertTrue(result < 100);
 				assertTrue(result > -100);
+			}else{
+				fail("Units not in metric");
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			fail("Failure caused by: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testGetTemperatureImperial() {
+		int result;
+		WeatherForecast.changeUnit("Imperial");
+		String units = WeatherForecast.getUnits();
+		try {
+			result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee"), 1));
+			assertTrue(result == (int)result);
+			if (units == "Imperial") {
+				assertTrue(result < 212);
+				assertTrue(result > -148);
+			}else{
+				fail("Units not in imperial");
+			}
+		} catch (IOException e) {
+			fail("Failure caused by: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testGetTemperatureKelvin() {
+		int result;
+		WeatherForecast.changeUnit("Kelvin");
+		String units = WeatherForecast.getUnits();
+		try {
+			result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee"), 1));
+			assertTrue(result == (int)result);
+			if (units == "Kelvin") {
+				assertTrue(result < 373);
+				assertTrue(result > -173);
+			}else{
+				fail("Units not in Kelvin");
+			}
+		} catch (IOException e) {
+			fail("Failure caused by: " + e.getMessage());
 		}
 	}
 
