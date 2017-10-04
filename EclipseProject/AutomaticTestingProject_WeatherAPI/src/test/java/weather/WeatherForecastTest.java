@@ -10,26 +10,31 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetWeatherForecastInfo() {
-		JSONObject result = null;
+		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		JSONObject result;
 		try {
-			result = WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee");
+			result = WeatherForecast.getWeatherForecastInfo("Tallinn");
+			assertTrue(result == (JSONObject)result);
+			assertFalse(result.toString().isEmpty());
+			assertTrue(result.toString().startsWith("{"));
+			assertTrue(result.toString().endsWith("}"));
 		} catch (IOException e) {
 			fail("Failure caused by: " + e.getMessage());
 		}
-		assertTrue(result == (JSONObject)result);
-		assertFalse(result.toString().isEmpty());
-		assertTrue(result.toString().startsWith("{"));
-		assertTrue(result.toString().endsWith("}"));
 	}
 	
 	@Test
 	public void getForecastForDay() {
-		JSONObject result = null;
+		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		JSONObject forecastInfo = null;
 		try {
-			result = WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee"), 1);
-		} catch (IOException e) {
-			fail("Failure caused by: " + e.getMessage());
+			forecastInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
+		JSONObject result = WeatherForecast.getForecastForDay(forecastInfo, 1);
 		assertTrue(result == (JSONObject)result);
 		assertFalse(result.toString().isEmpty());
 		assertTrue(result.toString().startsWith("{"));
@@ -38,58 +43,67 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetTemperatureMetric() {
-		int result;
 		WeatherForecast.changeUnit("Metric");
-		String units = WeatherForecast.getUnits();
+		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		JSONObject forecastInfo = null;
 		try {
-			result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee"), 1));
-			assertTrue(result == (int)result);
-			if (units == "Metric") {
-				assertTrue(result < 100);
-				assertTrue(result > -100);
-			}else{
-				fail("Units not in metric");
-			}
+			forecastInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");
 		} catch (IOException e) {
-			fail("Failure caused by: " + e.getMessage());
+			e.printStackTrace();
+		}
+		int result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(forecastInfo, 1));
+		assertTrue(result == (int)result);
+		String units = WeatherForecast.getUnits();
+		if (units == "Metric") {
+			assertTrue(result < 100);
+			assertTrue(result > -100);
+		}else{
+			fail("Units not in metric");
 		}
 	}
 	
 	@Test
 	public void testGetTemperatureImperial() {
-		int result;
 		WeatherForecast.changeUnit("Imperial");
-		String units = WeatherForecast.getUnits();
+		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		JSONObject forecastInfo = null;
 		try {
-			result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee"), 1));
-			assertTrue(result == (int)result);
-			if (units == "Imperial") {
-				assertTrue(result < 212);
-				assertTrue(result > -148);
-			}else{
-				fail("Units not in imperial");
-			}
+			forecastInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");
 		} catch (IOException e) {
-			fail("Failure caused by: " + e.getMessage());
+			e.printStackTrace();
+		}
+		int result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(forecastInfo, 1));
+		assertTrue(result == (int)result);
+		String units = WeatherForecast.getUnits();
+		if (units == "Imperial") {
+			assertTrue(result < 212);
+			assertTrue(result > -148);
+		}else{
+			fail("Units not in imperial");
 		}
 	}
 	
 	@Test
 	public void testGetTemperatureKelvin() {
-		int result;
 		WeatherForecast.changeUnit("Kelvin");
-		String units = WeatherForecast.getUnits();
+		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		JSONObject forecastInfo = null;
 		try {
-			result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee"), 1));
-			assertTrue(result == (int)result);
-			if (units == "Kelvin") {
-				assertTrue(result < 373);
-				assertTrue(result > -173);
-			}else{
-				fail("Units not in Kelvin");
-			}
+			forecastInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");
 		} catch (IOException e) {
-			fail("Failure caused by: " + e.getMessage());
+			e.printStackTrace();
+		}
+		int result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(forecastInfo, 1));
+		assertTrue(result == (int)result);
+		String units = WeatherForecast.getUnits();
+		if (units == "Kelvin") {
+			assertTrue(result < 373);
+			assertTrue(result > -173);
+		}else{
+			fail("Units not in Kelvin");
 		}
 	}
 
@@ -126,14 +140,32 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testIfReturnedInfoHasSameCityName() {
+		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
 		String cityName = "Tallinn";
 		JSONObject result;
 		try {
-			result = WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", cityName), 1);
+			result = WeatherForecast.getWeatherForecastInfo(cityName);
 			assertEquals(cityName, WeatherForecast.getCityName(result).toString());
 		} catch (IOException e) {
 			fail("Failure caused by: " + e.getMessage());
 		}
 	}
 
+	@Test
+	public void testSetApiUrl() {
+		String newUrl = "http://api.openweathermap.org/data/2.5/forecast?q=";
+		WeatherForecast.setApiKey(newUrl);
+		String url = WeatherForecast.getApiKey();
+		assertEquals(newUrl, url);
+	}
+	
+	@Test
+	public void testSetApiKey() {
+		String newKey = "1a8a3563bee4967e64490dbfadf83b7e";
+		WeatherForecast.setApiKey(newKey);
+		String key = WeatherForecast.getApiKey();
+		assertEquals(newKey, key);
+	}
+	
 }

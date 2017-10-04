@@ -11,13 +11,14 @@ import org.json.*;
 
 public class WeatherForecast implements WeatherReport{
 	
-	private static String units = "Metric";
+	private static String units;
+	private static String apiKey;
+	private static String apiUrl;
 
-	public static JSONObject getWeatherForecastInfo(String apiUrl, String apiKey, String city) throws IOException{
-        URL url;
+	public static JSONObject getWeatherForecastInfo(String city) throws IOException{
 		JSONObject weatherInfoJson = null;
 		try {
-			url = new URL(apiUrl + city + "&units=" + units + "&appid=" + apiKey);
+			URL url = new URL(apiUrl + city + "&units=" + units + "&appid=" + apiKey);
 			URLConnection urlCon = url.openConnection();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
 	        String result = reader.readLine();
@@ -57,16 +58,28 @@ public class WeatherForecast implements WeatherReport{
 		return 0;
 	}
 	
-	public static int getMaxTemperature() {
+	public static int getMinTemperature() {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 	
-	public static int getMinTemperature() {
+	public static int getMaxTemperature() {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 	
 	public static String getCoordinates() {
 		throw new UnsupportedOperationException("Not yet implemented");
+	}
+	
+	public static String getCityName(JSONObject weatherInfo) {
+		JSONObject cityInfo;
+		String cityName = null;
+		try {
+			cityInfo = weatherInfo.getJSONObject("city");
+			cityName = cityInfo.getString("name");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return cityName;
 	}
 	
 	public static String changeUnit(String newUnit) {
@@ -82,16 +95,20 @@ public class WeatherForecast implements WeatherReport{
 		return units;
 	}
 	
-	public static String getCityName(JSONObject weatherInfo) {
-		JSONObject cityInfo = null;
-		String cityName = null;
-		try {
-			cityInfo = weatherInfo.getJSONObject("city");
-			cityName = cityInfo.getString("name");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return cityName;
+	public static void setApiUrl(String apiUrl) {
+		WeatherForecast.apiUrl = apiUrl;
+	}
+
+	public static String getApiUrl() {
+		return apiUrl;
+	}
+	
+	public static void setApiKey(String apiKey) {
+		WeatherForecast.apiKey = apiKey;
+	}
+
+	public static String getApiKey() {
+		return apiKey;
 	}
 
 }
