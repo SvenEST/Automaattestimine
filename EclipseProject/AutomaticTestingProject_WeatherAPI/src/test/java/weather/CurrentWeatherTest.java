@@ -136,11 +136,20 @@ public class CurrentWeatherTest {
 	
 	@Test
 	public void testGetCoordinates() {
-		String result = CurrentWeather.getCoordinates();
+		CurrentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		CurrentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
+		JSONObject weatherInfo = null;
+		try {
+			weatherInfo = CurrentWeather.getWeatherInfoJson("Tallinn");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String result = CurrentWeather.getCoordinates(weatherInfo);
 		assertTrue(result == (String)result);
 		assertFalse(result.isEmpty());
-		assertTrue(result.length() == 7);
-		assertEquals(result.charAt(4), ":");
+		assertTrue(result.contains(":"));
+		//assertTrue(result.length() == 7);
+		//assertEquals(result.charAt(4), ":");
 	}
 	
 	@Test

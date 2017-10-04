@@ -69,8 +69,18 @@ public class CurrentWeather implements WeatherReport {
 		return 0;
 	}
 
-	public static String getCoordinates() {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public static String getCoordinates(JSONObject weatherInfoJson) {
+		int lon = 0;
+		int lat = 0;
+		try {
+			JSONObject coord = weatherInfoJson.getJSONObject("coord");
+			lon = coord.getInt("lon");
+			lat = coord.getInt("lat");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		String GEOcoord = Integer.toString(lat) + ":" + Integer.toString(lon);
+		return GEOcoord;
 	}
 	
 	public static String getCityName(JSONObject weatherInfo) {

@@ -149,11 +149,20 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetCoordinates() {
-		String result = WeatherForecast.getCoordinates();
+		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		JSONObject weatherInfo = null;
+		try {
+			weatherInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String result = WeatherForecast.getCoordinates(weatherInfo);
 		assertTrue(result == (String)result);
 		assertFalse(result.isEmpty());
-		assertTrue(result.length() == 7);
-		assertEquals(result.charAt(4), ":");
+		assertTrue(result.contains(":"));
+		//assertTrue(result.length() == 7);
+		//assertEquals(result.charAt(4), ":");
 	}
 	
 	@Test

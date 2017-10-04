@@ -80,8 +80,19 @@ public class WeatherForecast implements WeatherReport{
 		return 0;
 	}
 	
-	public static String getCoordinates() {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public static String getCoordinates(JSONObject forecastInfo) {
+		int lon = 0;
+		int lat = 0;
+		try {
+			JSONObject city = forecastInfo.getJSONObject("city");
+			JSONObject coord = city.getJSONObject("coord");
+			lon = coord.getInt("lon");
+			lat = coord.getInt("lat");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		String GEOcoord = Integer.toString(lat) + ":" + Integer.toString(lon);
+		return GEOcoord;
 	}
 	
 	public static String getCityName(JSONObject weatherInfo) {
