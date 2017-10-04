@@ -47,29 +47,16 @@ public class CurrentWeather implements WeatherReport {
 		return 0;
 	}
 	
-	public static int getMaxTemperature() {
+	public static int getMinTemperature() {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 	
-	public static int getMinTemperature() {
+	public static int getMaxTemperature() {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
 	public static String getCoordinates() {
 		throw new UnsupportedOperationException("Not yet implemented");
-	}
-	
-	public static String changeUnit(String newUnit) {
-		if(newUnit == "Metric" || newUnit == "Imperial" || newUnit == "Kelvin") {
-			units = newUnit;
-			return "Unit changed to: " + newUnit;
-		} else {
-			return "Unit change failed. Use Metric, Imperial or Kelvin";
-		}
-	}
-
-	public static String getUnits() {
-		return units;
 	}
 	
 	public static String getCityName(JSONObject weatherInfo) {
@@ -81,21 +68,34 @@ public class CurrentWeather implements WeatherReport {
 		}
 		return city;
 	}
-
-	public static String getApiKey() {
-		return apiKey;
+	
+	public static String changeUnit(String newUnit) {
+		if(newUnit == "Metric" || newUnit == "Imperial" || newUnit == "Kelvin") {
+			units = newUnit;
+			return newUnit;
+		} else {
+			return "Unit change failed. Use Metric, Imperial or Kelvin";
+		}
 	}
 
-	public static void setApiKey(String apiKey) {
-		CurrentWeather.apiKey = apiKey;
+	public static String getUnits() {
+		return units;
+	}
+	
+	public static void setApiUrl(String apiUrl) {
+		CurrentWeather.apiUrl = apiUrl;
 	}
 
 	public static String getApiUrl() {
 		return apiUrl;
 	}
+	
+	public static void setApiKey(String apiKey) {
+		CurrentWeather.apiKey = apiKey;
+	}
 
-	public static void setApiUrl(String apiUrl) {
-		CurrentWeather.apiUrl = apiUrl;
+	public static String getApiKey() {
+		return apiKey;
 	}
 	
 }

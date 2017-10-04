@@ -30,6 +30,7 @@ public class CurrentWeatherTest {
 	
 	@Test
 	public void testGetTemperatureMetric() {
+		CurrentWeather.changeUnit("Metric");
 		CurrentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		CurrentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		JSONObject weatherInfo = null;
@@ -38,11 +39,11 @@ public class CurrentWeatherTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		CurrentWeather.changeUnit("Metric");
-		String units = CurrentWeather.getUnits();
 		int result = CurrentWeather.getTemperature(weatherInfo);
 		assertTrue(result == (int)result);
+		String units = CurrentWeather.getUnits();
 		if (units == "Metric") {
+			System.out.println(result);
 			assertTrue(result < 100);
 			assertTrue(result > -100);
 		}else{
@@ -52,6 +53,7 @@ public class CurrentWeatherTest {
 	
 	@Test
 	public void testGetTemperatureImperial() {
+		CurrentWeather.changeUnit("Imperial");
 		CurrentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		CurrentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		JSONObject weatherInfo = null;
@@ -60,10 +62,9 @@ public class CurrentWeatherTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		CurrentWeather.changeUnit("Imperial");
-		String units = CurrentWeather.getUnits();
 		int result = CurrentWeather.getTemperature(weatherInfo);
 		assertTrue(result == (int)result);
+		String units = CurrentWeather.getUnits();
 		if (units == "Imperial") {
 			assertTrue(result < 212);
 			assertTrue(result > -148);
@@ -74,6 +75,7 @@ public class CurrentWeatherTest {
 	
 	@Test
 	public void testGetTemperatureKelvin() {
+		CurrentWeather.changeUnit("Kelvin");
 		CurrentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		CurrentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		JSONObject weatherInfo = null;
@@ -82,15 +84,25 @@ public class CurrentWeatherTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		CurrentWeather.changeUnit("Kelvin");
-		String units = CurrentWeather.getUnits();
 		int result = CurrentWeather.getTemperature(weatherInfo);
 		assertTrue(result == (int)result);
+		String units = CurrentWeather.getUnits();
 		if (units == "Kelvin") {
 			assertTrue(result < 373);
 			assertTrue(result > 173);
 		}else{
 			fail("Units not in kelvin");
+		}
+	}
+	
+	@Test
+	public void testGetMinTemperature() {
+		String units = "Metric";
+		int result = WeatherForecast.getMinTemperature();
+		assertTrue(result == (int)result);
+		if (units == "Metric") {
+			assertTrue(result < 100);
+			assertTrue(result > -100); 
 		}
 	}
 	
@@ -102,17 +114,6 @@ public class CurrentWeatherTest {
 		if (units == "Metric") {
 			assertTrue(result < 100);
 			assertTrue(result > -100);
-		}
-	}
-
-	@Test
-	public void testGetMinTemperature() {
-		String units = "Metric";
-		int result = WeatherForecast.getMinTemperature();
-		assertTrue(result == (int)result);
-		if (units == "Metric") {
-			assertTrue(result < 100);
-			assertTrue(result > -100); 
 		}
 	}
 	
@@ -139,6 +140,31 @@ public class CurrentWeatherTest {
 	
 	@Test
 	public void testChangeUnits() {
-		String newUnit =
+		String newUnit1 = "Metric";
+		String result1 = CurrentWeather.changeUnit(newUnit1);
+		assertEquals(newUnit1, result1);
+		String newUnit2 = "Imperial";
+		String result2 = CurrentWeather.changeUnit(newUnit2);
+		assertEquals(newUnit2, result2);
+		String newUnit3 = "Kelvin";
+		String result3 = CurrentWeather.changeUnit(newUnit3);
+		assertEquals(newUnit3, result3);
 	}
+	
+	@Test
+	public void testSetApiUrl() {
+		String newUrl = "http://api.openweathermap.org/data/2.5/weather?q=";
+		CurrentWeather.setApiKey(newUrl);
+		String url = CurrentWeather.getApiKey();
+		assertEquals(newUrl, url);
+	}
+	
+	@Test
+	public void testSetApiKey() {
+		String newKey = "1a8a3563bee4967e64490dbfadf83b7e";
+		CurrentWeather.setApiKey(newKey);
+		String key = CurrentWeather.getApiKey();
+		assertEquals(newKey, key);
+	}
+	
 }

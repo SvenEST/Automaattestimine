@@ -7,7 +7,7 @@ import org.json.JSONObject;
 public class RunCode {
 
 	public static void main(String[] args) throws IOException{
-		System.out.println("Internet connection exists: " + Connection.internetConnectionExists());
+		/*System.out.println("Internet connection exists: " + Connection.internetConnectionExists());
 		JSONObject weatherInfoJson = CurrentWeather.getWeatherInfoJson("http://api.openweathermap.org/data/2.5/weather?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn, ee");
 		//System.out.println("Current weather info: " + weatherInfoJson);
 		System.out.println("Current temperature: " + CurrentWeather.getTemperature(weatherInfoJson));
@@ -44,14 +44,6 @@ public class RunCode {
 		System.out.println("City name from JSON: " + WeatherForecast.getCityName(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee")));
 		
 		System.out.println("--------------------------------------------------");
-		System.out.println(WeatherRequest.getTemperature("Tallinn", "Metric"));
-		/*
-		System.out.println("Same functionalities with facade class");
-		WeatherRequest.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
-		System.out.println(WeatherRequest.getApiUrl());
-		WeatherRequest.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		System.out.println(WeatherRequest.getApiKey());
-		WeatherRequest.getWeatherInfo("Tallinn");
-		System.out.println("Current temperature: " + WeatherRequest.getTemperature("Tallinn", "Metric"));*/
+		System.out.println(WeatherRequest.getTemperature("Tallinn", "Metric"));*/
 	}
 }
