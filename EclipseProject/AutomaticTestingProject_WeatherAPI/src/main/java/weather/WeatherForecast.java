@@ -93,4 +93,5 @@ public class WeatherForecast implements WeatherReport{
 		}
 		return cityName;
 	}
+
 }

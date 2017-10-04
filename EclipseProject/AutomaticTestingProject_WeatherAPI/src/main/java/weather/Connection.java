@@ -5,7 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class Connection implements WeatherReport{
+public class Connection{
 
 	public static boolean internetConnectionExists() {
 	    try {

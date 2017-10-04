@@ -12,13 +12,14 @@ import org.json.JSONObject;
 
 public class CurrentWeather implements WeatherReport {
 	
-	private static String units = "Metric";
+	private static String units;
+	private static String apiKey;
+	private static String apiUrl;
 	
-	public static JSONObject getWeatherInfoJson(String apiUrl, String apiKey, String city) throws IOException{
-		URL url;
+	public static JSONObject getWeatherInfoJson(String city) throws IOException{
 		JSONObject weatherInfoJson = null;
 		try {
-			url = new URL(apiUrl + city + "&units=" + units + "&appid=" + apiKey);
+			URL url = new URL(apiUrl + city + "&units=" + units + "&appid=" + apiKey);
 			URLConnection urlCon = url.openConnection();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
 	        String result = reader.readLine();
@@ -79,6 +80,22 @@ public class CurrentWeather implements WeatherReport {
 			e.printStackTrace();
 		}
 		return city;
+	}
+
+	public static String getApiKey() {
+		return apiKey;
+	}
+
+	public static void setApiKey(String apiKey) {
+		CurrentWeather.apiKey = apiKey;
+	}
+
+	public static String getApiUrl() {
+		return apiUrl;
+	}
+
+	public static void setApiUrl(String apiUrl) {
+		CurrentWeather.apiUrl = apiUrl;
 	}
 	
 }

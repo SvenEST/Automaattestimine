@@ -14,9 +14,11 @@ public class CurrentWeatherTest {
 
 	@Test
 	public void testGetWeatherInfoJson(){
+		CurrentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		CurrentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		JSONObject result;
 		try {
-			result = CurrentWeather.getWeatherInfoJson("http://api.openweathermap.org/data/2.5/weather?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn, ee");
+			result = CurrentWeather.getWeatherInfoJson("Tallinn");
 			assertTrue(result == (JSONObject)result);
 			assertFalse(result.toString().isEmpty());
 			assertTrue(result.toString().startsWith("{"));
@@ -28,58 +30,67 @@ public class CurrentWeatherTest {
 	
 	@Test
 	public void testGetTemperatureMetric() {
-		int result;
+		CurrentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		CurrentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
+		JSONObject weatherInfo = null;
+		try {
+			weatherInfo = CurrentWeather.getWeatherInfoJson("Tallinn");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		CurrentWeather.changeUnit("Metric");
 		String units = CurrentWeather.getUnits();
-		try {
-			result = CurrentWeather.getTemperature(CurrentWeather.getWeatherInfoJson("http://api.openweathermap.org/data/2.5/weather?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn, ee"));
-			assertTrue(result == (int)result);
-			if (units == "Metric") {
-				assertTrue(result < 100);
-				assertTrue(result > -100);
-			}else{
-				fail("Units not in metric");
-			}
-		} catch (IOException e) {
-			fail("Failure caused by: " + e.getMessage());
+		int result = CurrentWeather.getTemperature(weatherInfo);
+		assertTrue(result == (int)result);
+		if (units == "Metric") {
+			assertTrue(result < 100);
+			assertTrue(result > -100);
+		}else{
+			fail("Units not in metric");
 		}
 	}
 	
 	@Test
 	public void testGetTemperatureImperial() {
-		int result;
+		CurrentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		CurrentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
+		JSONObject weatherInfo = null;
+		try {
+			weatherInfo = CurrentWeather.getWeatherInfoJson("Tallinn");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		CurrentWeather.changeUnit("Imperial");
 		String units = CurrentWeather.getUnits();
-		try {
-			result = CurrentWeather.getTemperature(CurrentWeather.getWeatherInfoJson("http://api.openweathermap.org/data/2.5/weather?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn, ee"));
-			assertTrue(result == (int)result);
-			if (units == "Imperial") {
-				assertTrue(result < 212);
-				assertTrue(result > -148);
-			}else{
-				fail("Units not in imperial");
-			}
-		} catch (IOException e) {
-			fail("Failure caused by: " + e.getMessage());
+		int result = CurrentWeather.getTemperature(weatherInfo);
+		assertTrue(result == (int)result);
+		if (units == "Imperial") {
+			assertTrue(result < 212);
+			assertTrue(result > -148);
+		}else{
+			fail("Units not in imperial");
 		}
 	}
 	
 	@Test
 	public void testGetTemperatureKelvin() {
-		int result;
+		CurrentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		CurrentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
+		JSONObject weatherInfo = null;
+		try {
+			weatherInfo = CurrentWeather.getWeatherInfoJson("Tallinn");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		CurrentWeather.changeUnit("Kelvin");
 		String units = CurrentWeather.getUnits();
-		try {
-			result = CurrentWeather.getTemperature(CurrentWeather.getWeatherInfoJson("http://api.openweathermap.org/data/2.5/weather?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn, ee"));
-			assertTrue(result == (int)result);
-			if (units == "Kelvin") {
-				assertTrue(result < 373);
-				assertTrue(result > 173);
-			}else{
-				fail("Units not in kelvin");
-			}
-		} catch (IOException e) {
-			fail("Failure caused by: " + e.getMessage());
+		int result = CurrentWeather.getTemperature(weatherInfo);
+		assertTrue(result == (int)result);
+		if (units == "Kelvin") {
+			assertTrue(result < 373);
+			assertTrue(result > 173);
+		}else{
+			fail("Units not in kelvin");
 		}
 	}
 	
@@ -119,10 +130,15 @@ public class CurrentWeatherTest {
 		String cityName = "Tallinn";
 		JSONObject result;
 		try {
-			result = CurrentWeather.getWeatherInfoJson("http://api.openweathermap.org/data/2.5/weather?q=", "1a8a3563bee4967e64490dbfadf83b7e", cityName);
+			result = CurrentWeather.getWeatherInfoJson(cityName);
 			assertEquals(cityName, CurrentWeather.getCityName(result).toString());
 		} catch (IOException e) {
 			fail("Failure caused by: " + e.getMessage());
 		}
+	}
+	
+	@Test
+	public void testChangeUnits() {
+		String newUnit =
 	}
 }
