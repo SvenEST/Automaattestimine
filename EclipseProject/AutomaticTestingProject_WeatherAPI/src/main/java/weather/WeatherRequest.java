@@ -6,48 +6,61 @@ import org.json.JSONObject;
 
 public class WeatherRequest {
 	
-	/*
-	private Connection connection;
-	private static CurrentWeather currentWeather;
-	private WeatherForecast forecast;
-	private static String apiKey;
-	private static String apiUrl;
-	private static JSONObject weatherInfoJson;
-	
-	public WeatherRequest() {
-		connection = new Connection();
-		currentWeather = new CurrentWeather();
-		forecast = new WeatherForecast();
+	public String cityName;
+	public String units;
+
+	public WeatherRequest(String cityName, String units) {
+		this.cityName = cityName;
+		this.units = units;
+		
+		CurrentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		CurrentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
+		CurrentWeather.changeUnit(units);
+		
+		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		WeatherForecast.changeUnit(units);
 	}
 	
-	public static JSONObject getWeatherInfo(String city) {
+	public int getCurrentTemperature() {
+		JSONObject weatherInfoJson;
 		try {
-			weatherInfoJson = CurrentWeather.getWeatherInfoJson(apiUrl, apiKey, city);
+			weatherInfoJson = CurrentWeather.getWeatherInfoJson(cityName);
+			int temperature = CurrentWeather.getTemperature(weatherInfoJson);
+			return temperature;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return weatherInfoJson;
+		return 0;
 	}
 	
-	public static int getTemperature(String city, String units) {
-		int temperature = CurrentWeather.getTemperature(weatherInfoJson);
+	public int getForecastTemperatureForDay(int day) {
+		JSONObject forecastInfo;
+		int temperature = 0;
+		try {
+			forecastInfo = WeatherForecast.getWeatherForecastInfo(cityName);
+			JSONObject forecastForDay = WeatherForecast.getForecastForDay(forecastInfo , day);
+			temperature = WeatherForecast.getTemperature(forecastForDay);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return temperature;
 	}
-	
-	public static String getApiKey() {
-		return apiKey;
+
+	public String getCityName() {
+		return cityName;
 	}
 
-	public static void setApiKey(String apiKey) {
-		WeatherRequest.apiKey = apiKey;
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
 
-	public static String getApiUrl() {
-		return apiUrl;
+	public String getUnits() {
+		return units;
 	}
 
-	public static void setApiUrl(String apiUrl) {
-		WeatherRequest.apiUrl = apiUrl;
-	}*/
+	public void setUnits(String units) {
+		this.units = units;
+	}
 
 }

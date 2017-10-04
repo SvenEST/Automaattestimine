@@ -45,5 +45,12 @@ public class RunCode {
 		
 		System.out.println("--------------------------------------------------");
 		System.out.println(WeatherRequest.getTemperature("Tallinn", "Metric"));*/
+		
+		System.out.println("Getting info using facade class:");
+		WeatherRequest request = new WeatherRequest("Tallinn", "Metric");
+		System.out.println("Current temperature in " + request.getCityName() + ": " + request.getCurrentTemperature());
+		System.out.println("Forecast temperature for day 1 in " + request.getCityName() + ": " + request.getForecastTemperatureForDay(1));
+		System.out.println("Forecast temperature for day 2 in " + request.getCityName() + ": " + request.getForecastTemperatureForDay(2));
+		System.out.println("Forecast temperature for day 3 in " + request.getCityName() + ": " + request.getForecastTemperatureForDay(3));
 	}
 }
