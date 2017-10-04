@@ -98,7 +98,7 @@ public class CurrentWeatherTest {
 	@Test
 	public void testGetMinTemperature() {
 		String units = "Metric";
-		int result = WeatherForecast.getMinTemperature();
+		int result = WeatherForecast.getMinTemperature(null);
 		assertTrue(result == (int)result);
 		if (units == "Metric") {
 			assertTrue(result < 100);
@@ -109,7 +109,7 @@ public class CurrentWeatherTest {
 	@Test
 	public void testGetMaxTemperature() {
 		String units = "Metric";
-		int result = WeatherForecast.getMaxTemperature();
+		int result = WeatherForecast.getMaxTemperature(null);
 		assertTrue(result == (int)result);
 		if (units == "Metric") {
 			assertTrue(result < 100);

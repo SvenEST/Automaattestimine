@@ -58,12 +58,26 @@ public class WeatherForecast implements WeatherReport{
 		return 0;
 	}
 	
-	public static int getMinTemperature() {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public static int getMinTemperature(JSONObject forecastForDay) {
+		try {
+			JSONObject main = forecastForDay.getJSONObject("main");
+			int minTemp = main.getInt("temp_min");
+			return minTemp;
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 	
-	public static int getMaxTemperature() {
-		throw new UnsupportedOperationException("Not yet implemented");
+	public static int getMaxTemperature(JSONObject forecastForDay) {
+		try {
+			JSONObject main = forecastForDay.getJSONObject("main");
+			int maxTemp = main.getInt("temp_max");
+			return maxTemp;
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
 	
 	public static String getCoordinates() {
