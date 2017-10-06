@@ -38,13 +38,7 @@ public class RunCode {
 		System.out.println("Forecast temperature for day 1: " + WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee"), 1)));
 		System.out.println("Forecast temperature for day 2: " + WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee"), 2)));
 		System.out.println("Forecast temperature for day 3: " + WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee"), 3)));
-		
-		System.out.println("--------------------------------------------------");
-		System.out.println("City name from JSON: " + CurrentWeather.getCityName(CurrentWeather.getWeatherInfoJson("http://api.openweathermap.org/data/2.5/weather?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn, ee")));
-		System.out.println("City name from JSON: " + WeatherForecast.getCityName(WeatherForecast.getWeatherForecastInfo("http://api.openweathermap.org/data/2.5/forecast?q=", "1a8a3563bee4967e64490dbfadf83b7e", "Tallinn,ee")));
-		
-		System.out.println("--------------------------------------------------");
-		System.out.println(WeatherRequest.getTemperature("Tallinn", "Metric"));*/
+        */
 		
 		System.out.println("Getting info using facade class:");
 		WeatherRequest request = new WeatherRequest("Tallinn", "Metric");
@@ -52,5 +46,11 @@ public class RunCode {
 		System.out.println("Forecast temperature for day 1 in " + request.getCityName() + ": " + request.getForecastTemperatureForDay(1));
 		System.out.println("Forecast temperature for day 2 in " + request.getCityName() + ": " + request.getForecastTemperatureForDay(2));
 		System.out.println("Forecast temperature for day 3 in " + request.getCityName() + ": " + request.getForecastTemperatureForDay(3));
+		System.out.println("Forecast min temperature for day 1 in " + request.getCityName() + ": " + request.getForecastMinTemperatureForDay(1));
+		System.out.println("Forecast min temperature for day 2 in " + request.getCityName() + ": " + request.getForecastMinTemperatureForDay(2));
+		System.out.println("Forecast min temperature for day 3 in " + request.getCityName() + ": " + request.getForecastMinTemperatureForDay(3));
+		System.out.println("Forecast max temperature for day 1 in " + request.getCityName() + ": " + request.getForecastMaxTemperatureForDay(1));
+		System.out.println("Forecast max temperature for day 2 in " + request.getCityName() + ": " + request.getForecastMaxTemperatureForDay(2));
+		System.out.println("Forecast max temperature for day 3 in " + request.getCityName() + ": " + request.getForecastMaxTemperatureForDay(3));
 	}
 }

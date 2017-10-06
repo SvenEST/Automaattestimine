@@ -13,6 +13,10 @@ public class WeatherRequest {
 		this.cityName = cityName;
 		this.units = units;
 		
+        if (Connection.internetConnectionExists() != true) {
+        	System.out.println("No internet connection!");
+        }
+        
 		CurrentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		CurrentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		CurrentWeather.changeUnit(units);
@@ -41,6 +45,32 @@ public class WeatherRequest {
 			forecastInfo = WeatherForecast.getWeatherForecastInfo(cityName);
 			JSONObject forecastForDay = WeatherForecast.getForecastForDay(forecastInfo , day);
 			temperature = WeatherForecast.getTemperature(forecastForDay);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return temperature;
+	}
+	
+	public int getForecastMinTemperatureForDay(int day) {
+		JSONObject forecastInfo;
+		int temperature = 0;
+		try {
+			forecastInfo = WeatherForecast.getWeatherForecastInfo(cityName);
+			JSONObject forecastForDay = WeatherForecast.getForecastForDay(forecastInfo , day);
+			temperature = WeatherForecast.getMinTemperature(forecastForDay);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return temperature;
+	}
+	
+	public int getForecastMaxTemperatureForDay(int day) {
+		JSONObject forecastInfo;
+		int temperature = 0;
+		try {
+			forecastInfo = WeatherForecast.getWeatherForecastInfo(cityName);
+			JSONObject forecastForDay = WeatherForecast.getForecastForDay(forecastInfo , day);
+			temperature = WeatherForecast.getMaxTemperature(forecastForDay);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

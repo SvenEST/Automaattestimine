@@ -162,7 +162,6 @@ public class WeatherForecastTest {
 		assertFalse(result.isEmpty());
 		assertTrue(result.contains(":"));
 		//assertTrue(result.length() == 7);
-		//assertEquals(result.charAt(4), ":");
 	}
 	
 	@Test
