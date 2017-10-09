@@ -93,7 +93,7 @@ public class CurrentWeather implements WeatherReport {
 		return city;
 	}
 	
-	public String changeUnit(String newUnit) {
+	public String changeUnits(String newUnit) {
 		if(newUnit == "Metric" || newUnit == "Imperial" || newUnit == "Kelvin") {
 			units = newUnit;
 			return newUnit;

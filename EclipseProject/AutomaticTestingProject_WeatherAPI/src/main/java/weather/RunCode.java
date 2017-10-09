@@ -2,8 +2,6 @@ package weather;
 
 import java.io.IOException;
 
-import org.json.JSONObject;
-
 public class RunCode {
 
 	public static void main(String[] args) throws IOException{

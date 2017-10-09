@@ -35,7 +35,7 @@ public class WeatherForecast implements WeatherReport{
 		return weatherInfoJson;
 	}
 	
-	public JSONObject getForecastForDay(JSONObject forecastInfo, int day){
+	public JSONObject getForecastForSingleDay(JSONObject forecastInfo, int day){
 		JSONArray list;
 		JSONObject forecast = null;
 		try {
@@ -107,7 +107,7 @@ public class WeatherForecast implements WeatherReport{
 		return cityName;
 	}
 	
-	public String changeUnit(String newUnit) {
+	public String changeUnits(String newUnit) {
 		if(newUnit == "Metric" || newUnit == "Imperial" || newUnit == "Kelvin") {
 			units = newUnit;
 			return newUnit;
