@@ -11,11 +11,11 @@ import org.json.*;
 
 public class WeatherForecast implements WeatherReport{
 	
-	private static String units;
-	private static String apiKey;
-	private static String apiUrl;
+	private String units;
+	private String apiKey;
+	private String apiUrl;
 
-	public static JSONObject getWeatherForecastInfo(String city) throws IOException{
+	public JSONObject getWeatherForecastInfo(String city) throws IOException{
 		JSONObject weatherInfoJson = null;
 		try {
 			URL url = new URL(apiUrl + city + "&units=" + units + "&appid=" + apiKey);
@@ -35,7 +35,7 @@ public class WeatherForecast implements WeatherReport{
 		return weatherInfoJson;
 	}
 	
-	public static JSONObject getForecastForDay(JSONObject forecastInfo, int day){
+	public JSONObject getForecastForDay(JSONObject forecastInfo, int day){
 		JSONArray list;
 		JSONObject forecast = null;
 		try {
@@ -47,7 +47,7 @@ public class WeatherForecast implements WeatherReport{
 		return forecast;
 	}
 	
-	public static int getTemperature(JSONObject forecastForDay) {
+	public int getTemperature(JSONObject forecastForDay) {
 		try {
 			JSONObject main = forecastForDay.getJSONObject("main");
 			int temp = main.getInt("temp");
@@ -58,7 +58,7 @@ public class WeatherForecast implements WeatherReport{
 		return 0;
 	}
 	
-	public static int getMinTemperature(JSONObject forecastForDay) {
+	public int getMinTemperature(JSONObject forecastForDay) {
 		try {
 			JSONObject main = forecastForDay.getJSONObject("main");
 			int minTemp = main.getInt("temp_min");
@@ -69,7 +69,7 @@ public class WeatherForecast implements WeatherReport{
 		return 0;
 	}
 	
-	public static int getMaxTemperature(JSONObject forecastForDay) {
+	public int getMaxTemperature(JSONObject forecastForDay) {
 		try {
 			JSONObject main = forecastForDay.getJSONObject("main");
 			int maxTemp = main.getInt("temp_max");
@@ -80,7 +80,7 @@ public class WeatherForecast implements WeatherReport{
 		return 0;
 	}
 	
-	public static String getCoordinates(JSONObject forecastInfo) {
+	public String getCoordinates(JSONObject forecastInfo) {
 		int lon = 0;
 		int lat = 0;
 		try {
@@ -95,7 +95,7 @@ public class WeatherForecast implements WeatherReport{
 		return GEOcoord;
 	}
 	
-	public static String getCityName(JSONObject weatherInfo) {
+	public String getCityName(JSONObject weatherInfo) {
 		JSONObject cityInfo;
 		String cityName = null;
 		try {
@@ -107,7 +107,7 @@ public class WeatherForecast implements WeatherReport{
 		return cityName;
 	}
 	
-	public static String changeUnit(String newUnit) {
+	public String changeUnit(String newUnit) {
 		if(newUnit == "Metric" || newUnit == "Imperial" || newUnit == "Kelvin") {
 			units = newUnit;
 			return "Unit changed to: " + newUnit;
@@ -116,23 +116,23 @@ public class WeatherForecast implements WeatherReport{
 		}
 	}
 
-	public static String getUnits() {
+	public String getUnits() {
 		return units;
 	}
 	
-	public static void setApiUrl(String apiUrl) {
-		WeatherForecast.apiUrl = apiUrl;
+	public void setApiUrl(String apiUrl) {
+		this.apiUrl = apiUrl;
 	}
 
-	public static String getApiUrl() {
+	public String getApiUrl() {
 		return apiUrl;
 	}
 	
-	public static void setApiKey(String apiKey) {
-		WeatherForecast.apiKey = apiKey;
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
 	}
 
-	public static String getApiKey() {
+	public String getApiKey() {
 		return apiKey;
 	}
 

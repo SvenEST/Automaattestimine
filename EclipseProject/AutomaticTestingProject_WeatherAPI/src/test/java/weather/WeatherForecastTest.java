@@ -25,12 +25,12 @@ public class WeatherForecastTest {
 	}
 	
 	@Test
-	public void getForecastForDay() {
+	public void testGetForecastForDay() {                                      //See on halvasti, ei ütle mida test teeb
 		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
 		JSONObject forecastInfo = null;
 		try {
-			forecastInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");
+			forecastInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");  //Staatiline meetod, halvasti
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}

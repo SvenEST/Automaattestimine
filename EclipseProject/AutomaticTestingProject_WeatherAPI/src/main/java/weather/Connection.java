@@ -7,7 +7,7 @@ import java.net.URLConnection;
 
 public class Connection{
 
-	public static boolean internetConnectionExists() {
+	public boolean internetConnectionExists() {
 	    try {
 	        final URL url = new URL("http://www.google.com");
 	        final URLConnection connection = url.openConnection();

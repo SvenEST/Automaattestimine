@@ -8,7 +8,8 @@ public class ConnectionTest {
 
 	@Test
 	public void testInternetConnectionExists() {
-		boolean result = Connection.internetConnectionExists();
+		Connection con = new Connection();
+		boolean result = con.internetConnectionExists();
 		assertTrue(result);
 	}
 }

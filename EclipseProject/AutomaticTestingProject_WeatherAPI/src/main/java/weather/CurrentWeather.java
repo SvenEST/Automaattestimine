@@ -12,11 +12,11 @@ import org.json.JSONObject;
 
 public class CurrentWeather implements WeatherReport {
 	
-	private static String units;
-	private static String apiKey;
-	private static String apiUrl;
+	private String units;
+	private String apiKey;
+	private String apiUrl;
 	
-	public static JSONObject getWeatherInfoJson(String city) throws IOException{
+	public JSONObject getWeatherInfoJson(String city) throws IOException{
 		JSONObject weatherInfoJson = null;
 		try {
 			URL url = new URL(apiUrl + city + "&units=" + units + "&appid=" + apiKey);
@@ -36,7 +36,7 @@ public class CurrentWeather implements WeatherReport {
 		return weatherInfoJson;
 	}
 
-	public static int getTemperature(JSONObject weatherInfoJson) {
+	public int getTemperature(JSONObject weatherInfoJson) {
 		try {
 			JSONObject main = weatherInfoJson.getJSONObject("main");
 			int currentTemp = main.getInt("temp");
@@ -47,7 +47,7 @@ public class CurrentWeather implements WeatherReport {
 		return 0;
 	}
 	
-	public static int getMinTemperature(JSONObject weatherInfoJson) {
+	public int getMinTemperature(JSONObject weatherInfoJson) {
 		try {
 			JSONObject main = weatherInfoJson.getJSONObject("main");
 			int minTemp = main.getInt("temp_min");
@@ -58,7 +58,7 @@ public class CurrentWeather implements WeatherReport {
 		return 0;
 	}
 	
-	public static int getMaxTemperature(JSONObject weatherInfoJson) {
+	public int getMaxTemperature(JSONObject weatherInfoJson) {
 		try {
 			JSONObject main = weatherInfoJson.getJSONObject("main");
 			int maxTemp = main.getInt("temp_max");
@@ -69,7 +69,7 @@ public class CurrentWeather implements WeatherReport {
 		return 0;
 	}
 
-	public static String getCoordinates(JSONObject weatherInfoJson) {
+	public String getCoordinates(JSONObject weatherInfoJson) {
 		int lon = 0;
 		int lat = 0;
 		try {
@@ -83,7 +83,7 @@ public class CurrentWeather implements WeatherReport {
 		return GEOcoord;
 	}
 	
-	public static String getCityName(JSONObject weatherInfo) {
+	public String getCityName(JSONObject weatherInfo) {
 		String city = null;
 		try {
 			city = weatherInfo.getString("name");
@@ -93,7 +93,7 @@ public class CurrentWeather implements WeatherReport {
 		return city;
 	}
 	
-	public static String changeUnit(String newUnit) {
+	public String changeUnit(String newUnit) {
 		if(newUnit == "Metric" || newUnit == "Imperial" || newUnit == "Kelvin") {
 			units = newUnit;
 			return newUnit;
@@ -102,23 +102,23 @@ public class CurrentWeather implements WeatherReport {
 		}
 	}
 
-	public static String getUnits() {
+	public String getUnits() {
 		return units;
 	}
 	
-	public static void setApiUrl(String apiUrl) {
-		CurrentWeather.apiUrl = apiUrl;
+	public void setApiUrl(String apiUrl) {
+		this.apiUrl = apiUrl;
 	}
 
-	public static String getApiUrl() {
+	public String getApiUrl() {
 		return apiUrl;
 	}
 	
-	public static void setApiKey(String apiKey) {
-		CurrentWeather.apiKey = apiKey;
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
 	}
 
-	public static String getApiKey() {
+	public String getApiKey() {
 		return apiKey;
 	}
 	
