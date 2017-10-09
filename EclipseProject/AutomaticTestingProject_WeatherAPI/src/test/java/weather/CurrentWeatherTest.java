@@ -19,7 +19,7 @@ public class CurrentWeatherTest {
 		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		JSONObject result;
 		try {
-			result = currentWeather.getWeatherInfoJson("Tallinn");
+			result = currentWeather.getWeatherInfo("Tallinn");
 			assertTrue(result == (JSONObject)result);
 			assertFalse(result.toString().isEmpty());
 			assertTrue(result.toString().startsWith("{"));
@@ -37,7 +37,7 @@ public class CurrentWeatherTest {
 		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		JSONObject weatherInfo = null;
 		try {
-			weatherInfo = currentWeather.getWeatherInfoJson("Tallinn");
+			weatherInfo = currentWeather.getWeatherInfo("Tallinn");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -60,7 +60,7 @@ public class CurrentWeatherTest {
 		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		JSONObject weatherInfo = null;
 		try {
-			weatherInfo = currentWeather.getWeatherInfoJson("Tallinn");
+			weatherInfo = currentWeather.getWeatherInfo("Tallinn");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -83,7 +83,7 @@ public class CurrentWeatherTest {
 		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		JSONObject weatherInfo = null;
 		try {
-			weatherInfo = currentWeather.getWeatherInfoJson("Tallinn");
+			weatherInfo = currentWeather.getWeatherInfo("Tallinn");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -106,7 +106,7 @@ public class CurrentWeatherTest {
 		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		JSONObject weatherInfo = null;
 		try {
-			weatherInfo = currentWeather.getWeatherInfoJson("Tallinn");
+			weatherInfo = currentWeather.getWeatherInfo("Tallinn");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -127,7 +127,7 @@ public class CurrentWeatherTest {
 		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		JSONObject weatherInfo = null;
 		try {
-			weatherInfo = currentWeather.getWeatherInfoJson("Tallinn");
+			weatherInfo = currentWeather.getWeatherInfo("Tallinn");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -147,7 +147,7 @@ public class CurrentWeatherTest {
 		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		JSONObject weatherInfo = null;
 		try {
-			weatherInfo = currentWeather.getWeatherInfoJson("Tallinn");
+			weatherInfo = currentWeather.getWeatherInfo("Tallinn");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -161,10 +161,11 @@ public class CurrentWeatherTest {
 	@Test
 	public void testIfReturnedInfoHasSameCityName() {
 		CurrentWeather currentWeather = new CurrentWeather();
+		currentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
 		String cityName = "Tallinn";
-		JSONObject result;
 		try {
-			result = currentWeather.getWeatherInfoJson(cityName);
+			JSONObject result = currentWeather.getWeatherInfo(cityName);
 			assertEquals(cityName, currentWeather.getCityName(result).toString());
 		} catch (IOException e) {
 			fail("Failure caused by: " + e.getMessage());

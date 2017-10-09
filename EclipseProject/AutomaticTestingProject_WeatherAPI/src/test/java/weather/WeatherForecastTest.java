@@ -9,7 +9,7 @@ import org.junit.Test;
 public class WeatherForecastTest {
 	
 	@Test
-	public void testGetWeatherForecastInfo() {
+	public void testGetWeatherForecastInfoJson() {
 		WeatherForecast weatherForecast = new WeatherForecast();
 		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
@@ -26,7 +26,7 @@ public class WeatherForecastTest {
 	}
 	
 	@Test
-	public void testGetForecastForDay() {  //See on halvasti, ei ütle mida test teeb
+	public void testGetForecastInfoForSingleDayJson() {
 		WeatherForecast weatherForecast = new WeatherForecast();
 		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");

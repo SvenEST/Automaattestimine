@@ -16,7 +16,7 @@ public class CurrentWeather implements WeatherReport {
 	private String apiKey;
 	private String apiUrl;
 	
-	public JSONObject getWeatherInfoJson(String city) throws IOException{
+	public JSONObject getWeatherInfo(String city) throws IOException{
 		JSONObject weatherInfoJson = null;
 		try {
 			URL url = new URL(apiUrl + city + "&units=" + units + "&appid=" + apiKey);

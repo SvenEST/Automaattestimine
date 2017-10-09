@@ -26,7 +26,7 @@ public class WeatherRequest {
 		currentWeather.changeUnit(units);
 		JSONObject weatherInfoJson;
 		try {
-			weatherInfoJson = currentWeather.getWeatherInfoJson(cityName);
+			weatherInfoJson = currentWeather.getWeatherInfo(cityName);
 			int temperature = currentWeather.getTemperature(weatherInfoJson);
 			return temperature;
 		} catch (IOException e) {
