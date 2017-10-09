@@ -173,17 +173,27 @@ public class CurrentWeatherTest {
 	}
 	
 	@Test
-	public void testChangeUnits() {
+	public void testChangeUnitsMetric() {
 		CurrentWeather currentWeather = new CurrentWeather();
-		String newUnit1 = "Metric";
-		String result1 = currentWeather.changeUnit(newUnit1);
-		assertEquals(newUnit1, result1);
-		String newUnit2 = "Imperial";
-		String result2 = currentWeather.changeUnit(newUnit2);
-		assertEquals(newUnit2, result2);
-		String newUnit3 = "Kelvin";
-		String result3 = currentWeather.changeUnit(newUnit3);
-		assertEquals(newUnit3, result3);
+		String newUnit = "Metric";
+		String result = currentWeather.changeUnit(newUnit);
+		assertEquals(newUnit, result);	
+	}
+	
+	@Test
+	public void testChangeUnitsImperial() {
+		CurrentWeather currentWeather = new CurrentWeather();
+		String newUnit = "Imperial";
+		String result = currentWeather.changeUnit(newUnit);
+		assertEquals(newUnit, result);
+	}
+	
+	@Test
+	public void testChangeUnitsKelvin() {
+		CurrentWeather currentWeather = new CurrentWeather();
+		String newUnit = "Kelvin";
+		String result = currentWeather.changeUnit(newUnit);
+		assertEquals(newUnit, result);
 	}
 	
 	@Test
