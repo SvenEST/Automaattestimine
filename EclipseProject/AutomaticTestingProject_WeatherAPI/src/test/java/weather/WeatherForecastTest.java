@@ -10,11 +10,12 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetWeatherForecastInfo() {
-		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		WeatherForecast weatherForecast = new WeatherForecast();
+		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
 		JSONObject result;
 		try {
-			result = WeatherForecast.getWeatherForecastInfo("Tallinn");
+			result = weatherForecast.getWeatherForecastInfo("Tallinn");
 			assertTrue(result == (JSONObject)result);
 			assertFalse(result.toString().isEmpty());
 			assertTrue(result.toString().startsWith("{"));
@@ -25,16 +26,17 @@ public class WeatherForecastTest {
 	}
 	
 	@Test
-	public void testGetForecastForDay() {                                      //See on halvasti, ei ütle mida test teeb
-		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+	public void testGetForecastForDay() {  //See on halvasti, ei ütle mida test teeb
+		WeatherForecast weatherForecast = new WeatherForecast();
+		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
 		JSONObject forecastInfo = null;
 		try {
-			forecastInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");  //Staatiline meetod, halvasti
+			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		JSONObject result = WeatherForecast.getForecastForDay(forecastInfo, 1);
+		JSONObject result = weatherForecast.getForecastForDay(forecastInfo, 1);
 		assertTrue(result == (JSONObject)result);
 		assertFalse(result.toString().isEmpty());
 		assertTrue(result.toString().startsWith("{"));
@@ -43,18 +45,19 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetTemperatureMetric() {
-		WeatherForecast.changeUnit("Metric");
-		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		WeatherForecast weatherForecast = new WeatherForecast();
+		weatherForecast.changeUnit("Metric");
+		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
 		JSONObject forecastInfo = null;
 		try {
-			forecastInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");
+			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		int result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(forecastInfo, 1));
+		int result = weatherForecast.getTemperature(weatherForecast.getForecastForDay(forecastInfo, 1));
 		assertTrue(result == (int)result);
-		String units = WeatherForecast.getUnits();
+		String units = weatherForecast.getUnits();
 		if (units == "Metric") {
 			assertTrue(result < 100);
 			assertTrue(result > -100);
@@ -65,18 +68,19 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetTemperatureImperial() {
-		WeatherForecast.changeUnit("Imperial");
-		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		WeatherForecast weatherForecast = new WeatherForecast();
+		weatherForecast.changeUnit("Imperial");
+		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
 		JSONObject forecastInfo = null;
 		try {
-			forecastInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");
+			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		int result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(forecastInfo, 1));
+		int result = weatherForecast.getTemperature(weatherForecast.getForecastForDay(forecastInfo, 1));
 		assertTrue(result == (int)result);
-		String units = WeatherForecast.getUnits();
+		String units = weatherForecast.getUnits();
 		if (units == "Imperial") {
 			assertTrue(result < 212);
 			assertTrue(result > -148);
@@ -87,18 +91,19 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetTemperatureKelvin() {
-		WeatherForecast.changeUnit("Kelvin");
-		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		WeatherForecast weatherForecast = new WeatherForecast();
+		weatherForecast.changeUnit("Kelvin");
+		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
 		JSONObject forecastInfo = null;
 		try {
-			forecastInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");
+			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		int result = WeatherForecast.getTemperature(WeatherForecast.getForecastForDay(forecastInfo, 1));
+		int result = weatherForecast.getTemperature(weatherForecast.getForecastForDay(forecastInfo, 1));
 		assertTrue(result == (int)result);
-		String units = WeatherForecast.getUnits();
+		String units = weatherForecast.getUnits();
 		if (units == "Kelvin") {
 			assertTrue(result < 373);
 			assertTrue(result > -173);
@@ -109,18 +114,19 @@ public class WeatherForecastTest {
 
 	@Test
 	public void testGetMinTemperature() {
-		WeatherForecast.changeUnit("Metric");
-		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		WeatherForecast weatherForecast = new WeatherForecast();
+		weatherForecast.changeUnit("Metric");
+		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
 		JSONObject forecastInfo = null;
 		try {
-			forecastInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");
+			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		int result = WeatherForecast.getMinTemperature(WeatherForecast.getForecastForDay(forecastInfo, 1));
+		int result = weatherForecast.getMinTemperature(weatherForecast.getForecastForDay(forecastInfo, 1));
 		assertTrue(result == (int)result);
-		String units = WeatherForecast.getUnits();
+		String units = weatherForecast.getUnits();
 		if (units == "Metric") { 
 			assertTrue(result < 100);
 			assertTrue(result > -100);
@@ -129,18 +135,19 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetMaxTemperature() {
-		WeatherForecast.changeUnit("Metric");
-		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		WeatherForecast weatherForecast = new WeatherForecast();
+		weatherForecast.changeUnit("Metric");
+		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
 		JSONObject forecastInfo = null;
 		try {
-			forecastInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");
+			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		int result = WeatherForecast.getMaxTemperature(WeatherForecast.getForecastForDay(forecastInfo, 1));
+		int result = weatherForecast.getMaxTemperature(weatherForecast.getForecastForDay(forecastInfo, 1));
 		assertTrue(result == (int)result);
-		String units = WeatherForecast.getUnits();
+		String units = weatherForecast.getUnits();
 		if (units == "Metric") {
 			assertTrue(result < 100);
 			assertTrue(result > -100);
@@ -149,15 +156,16 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetCoordinates() {
-		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		WeatherForecast weatherForecast = new WeatherForecast();
+		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
 		JSONObject weatherInfo = null;
 		try {
-			weatherInfo = WeatherForecast.getWeatherForecastInfo("Tallinn");
+			weatherInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String result = WeatherForecast.getCoordinates(weatherInfo);
+		String result = weatherForecast.getCoordinates(weatherInfo);
 		assertTrue(result == (String)result);
 		assertFalse(result.isEmpty());
 		assertTrue(result.contains(":"));
@@ -166,13 +174,14 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testIfReturnedInfoHasSameCityName() {
-		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		WeatherForecast weatherForecast = new WeatherForecast();
+		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
 		String cityName = "Tallinn";
 		JSONObject result;
 		try {
-			result = WeatherForecast.getWeatherForecastInfo(cityName);
-			assertEquals(cityName, WeatherForecast.getCityName(result).toString());
+			result = weatherForecast.getWeatherForecastInfo(cityName);
+			assertEquals(cityName, weatherForecast.getCityName(result).toString());
 		} catch (IOException e) {
 			fail("Failure caused by: " + e.getMessage());
 		}
@@ -180,17 +189,19 @@ public class WeatherForecastTest {
 
 	@Test
 	public void testSetApiUrl() {
+		WeatherForecast weatherForecast = new WeatherForecast();
 		String newUrl = "http://api.openweathermap.org/data/2.5/forecast?q=";
-		WeatherForecast.setApiKey(newUrl);
-		String url = WeatherForecast.getApiKey();
+		weatherForecast.setApiKey(newUrl);
+		String url = weatherForecast.getApiKey();
 		assertEquals(newUrl, url);
 	}
 	
 	@Test
 	public void testSetApiKey() {
+		WeatherForecast weatherForecast = new WeatherForecast();
 		String newKey = "1a8a3563bee4967e64490dbfadf83b7e";
-		WeatherForecast.setApiKey(newKey);
-		String key = WeatherForecast.getApiKey();
+		weatherForecast.setApiKey(newKey);
+		String key = weatherForecast.getApiKey();
 		assertEquals(newKey, key);
 	}
 	

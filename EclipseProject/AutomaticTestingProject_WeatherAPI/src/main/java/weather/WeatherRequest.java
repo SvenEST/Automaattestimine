@@ -13,24 +13,21 @@ public class WeatherRequest {
 		this.cityName = cityName;
 		this.units = units;
 		
-        if (Connection.internetConnectionExists() != true) {
+		Connection con = new Connection();
+        if (con.internetConnectionExists() != true) {
         	System.out.println("No internet connection!");
         }
-        
-		CurrentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		CurrentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
-		CurrentWeather.changeUnit(units);
-		
-		WeatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		WeatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
-		WeatherForecast.changeUnit(units);
 	}
 	
 	public int getCurrentTemperature() {
+        CurrentWeather currentWeather = new CurrentWeather();
+		currentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
+		currentWeather.changeUnit(units);
 		JSONObject weatherInfoJson;
 		try {
-			weatherInfoJson = CurrentWeather.getWeatherInfoJson(cityName);
-			int temperature = CurrentWeather.getTemperature(weatherInfoJson);
+			weatherInfoJson = currentWeather.getWeatherInfoJson(cityName);
+			int temperature = currentWeather.getTemperature(weatherInfoJson);
 			return temperature;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -39,12 +36,16 @@ public class WeatherRequest {
 	}
 	
 	public int getForecastTemperatureForDay(int day) {
+		WeatherForecast weatherForecast = new WeatherForecast();
+		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		weatherForecast.changeUnit(units);
 		JSONObject forecastInfo;
 		int temperature = 0;
 		try {
-			forecastInfo = WeatherForecast.getWeatherForecastInfo(cityName);
-			JSONObject forecastForDay = WeatherForecast.getForecastForDay(forecastInfo , day);
-			temperature = WeatherForecast.getTemperature(forecastForDay);
+			forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
+			JSONObject forecastForDay = weatherForecast.getForecastForDay(forecastInfo , day);
+			temperature = weatherForecast.getTemperature(forecastForDay);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -52,12 +53,16 @@ public class WeatherRequest {
 	}
 	
 	public int getForecastMinTemperatureForDay(int day) {
+		WeatherForecast weatherForecast = new WeatherForecast();
+		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		weatherForecast.changeUnit(units);
 		JSONObject forecastInfo;
 		int temperature = 0;
 		try {
-			forecastInfo = WeatherForecast.getWeatherForecastInfo(cityName);
-			JSONObject forecastForDay = WeatherForecast.getForecastForDay(forecastInfo , day);
-			temperature = WeatherForecast.getMinTemperature(forecastForDay);
+			forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
+			JSONObject forecastForDay = weatherForecast.getForecastForDay(forecastInfo , day);
+			temperature = weatherForecast.getMinTemperature(forecastForDay);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -65,12 +70,16 @@ public class WeatherRequest {
 	}
 	
 	public int getForecastMaxTemperatureForDay(int day) {
+		WeatherForecast weatherForecast = new WeatherForecast();
+		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		weatherForecast.changeUnit(units);
 		JSONObject forecastInfo;
 		int temperature = 0;
 		try {
-			forecastInfo = WeatherForecast.getWeatherForecastInfo(cityName);
-			JSONObject forecastForDay = WeatherForecast.getForecastForDay(forecastInfo , day);
-			temperature = WeatherForecast.getMaxTemperature(forecastForDay);
+			forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
+			JSONObject forecastForDay = weatherForecast.getForecastForDay(forecastInfo , day);
+			temperature = weatherForecast.getMaxTemperature(forecastForDay);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
