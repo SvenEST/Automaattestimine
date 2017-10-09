@@ -186,6 +186,31 @@ public class WeatherForecastTest {
 			fail("Failure caused by: " + e.getMessage());
 		}
 	}
+	
+	@Test
+	public void testChangeUnitsMetric() {
+		WeatherForecast weatherForecast = new WeatherForecast();
+		String newUnit = "Metric";
+		String result = weatherForecast.changeUnit(newUnit);
+		assertEquals(newUnit, result);	
+	}
+	
+	@Test
+	public void testChangeUnitsImperial() {
+		WeatherForecast weatherForecast = new WeatherForecast();
+		String newUnit = "Imperial";
+		String result = weatherForecast.changeUnit(newUnit);
+		System.out.println(result);
+		assertEquals(newUnit, result);
+	}
+	
+	@Test
+	public void testChangeUnitsKelvin() {
+		WeatherForecast weatherForecast = new WeatherForecast();
+		String newUnit = "Kelvin";
+		String result = weatherForecast.changeUnit(newUnit);
+		assertEquals(newUnit, result);
+	}
 
 	@Test
 	public void testSetApiUrl() {

@@ -110,7 +110,7 @@ public class WeatherForecast implements WeatherReport{
 	public String changeUnit(String newUnit) {
 		if(newUnit == "Metric" || newUnit == "Imperial" || newUnit == "Kelvin") {
 			units = newUnit;
-			return "Unit changed to: " + newUnit;
+			return newUnit;
 		} else {
 			return "Unit change failed. Use Metric, Imperial or Kelvin";
 		}
