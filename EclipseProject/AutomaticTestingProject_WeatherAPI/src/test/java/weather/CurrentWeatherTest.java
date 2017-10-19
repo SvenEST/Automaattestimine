@@ -11,15 +11,23 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
+import testHelpers.Validator;
+
 public class CurrentWeatherTest {
 	
 	private static CurrentWeather currentWeather;
+	private static JSONObject currentWeatherInfo;
 	
 	@Before
-	public void setUpTest() {
+	public void setUpTests() {
 		currentWeather = new CurrentWeather();
 		currentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
+		try {
+			currentWeatherInfo = currentWeather.getWeatherInfo("Tallinn");
+		} catch (IOException e) {
+			fail("All test will be ignored. Cause: " + e.getMessage());
+		}
 	}
 
 	@Test
@@ -33,6 +41,17 @@ public class CurrentWeatherTest {
 			assertTrue(result.toString().endsWith("}"));
 		} catch (IOException e) {
 			fail("Failure caused by: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testIfResponseCurrentTemperatureIsValid() {
+		int result = currentWeather.getTemperature(currentWeatherInfo);
+		String units = currentWeather.getUnits();
+		try {
+			Validator.validateTemperature(result, units);
+		} catch (Exception e) {
+			fail("Failure cause: " + e.getMessage());
 		}
 	}
 	
@@ -150,30 +169,25 @@ public class CurrentWeatherTest {
 	@Test
 	public void testIfReturnedWeatherInfoHasSameCityNameAsRequest() {
 		String cityName = "Tallinn";
-		try {
-			JSONObject result = currentWeather.getWeatherInfo(cityName);
-			assertEquals(cityName, currentWeather.getCityName(result).toString());
-		} catch (IOException e) {
-			fail("Failure caused by: " + e.getMessage());
-		}
+		assertEquals(cityName, currentWeather.getCityName(currentWeatherInfo).toString());
 	}
 	
 	@Test
-	public void testChangeUnitsMetric() {
+	public void testChangeUnitsToMetric() {
 		String newUnit = "Metric";
 		String result = currentWeather.changeUnits(newUnit);
 		assertEquals(newUnit, result);	
 	}
 	
 	@Test
-	public void testChangeUnitsImperial() {
+	public void testChangeUnitsToImperial() {
 		String newUnit = "Imperial";
 		String result = currentWeather.changeUnits(newUnit);
 		assertEquals(newUnit, result);
 	}
 	
 	@Test
-	public void testChangeUnitsKelvin() {
+	public void testChangeUnitsToKelvin() {
 		String newUnit = "Kelvin";
 		String result = currentWeather.changeUnits(newUnit);
 		assertEquals(newUnit, result);
@@ -182,8 +196,8 @@ public class CurrentWeatherTest {
 	@Test
 	public void testSetApiUrl() {
 		String newUrl = "http://api.openweathermap.org/data/2.5/weather?q=";
-		currentWeather.setApiKey(newUrl);
-		String url = currentWeather.getApiKey();
+		currentWeather.setApiUrl(newUrl);
+		String url = currentWeather.getApiUrl();
 		assertEquals(newUrl, url);
 	}
 	

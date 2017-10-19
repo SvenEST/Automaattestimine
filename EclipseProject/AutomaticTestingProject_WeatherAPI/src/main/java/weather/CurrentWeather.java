@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 public class CurrentWeather implements WeatherReport {
 	
-	private String units;
+	private String units = "metric";
 	private String apiKey;
 	private String apiUrl;
 	
