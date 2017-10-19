@@ -29,5 +29,8 @@ public class RunConsoleCodeTest {
 		String outputPath = "C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\Sisendfailid\\";
 		WriteFile fileWriter = new WriteFile();
 		System.out.println("Wrote file: " + fileWriter.writeFile(outputPath, "output", inputContent, false));
+		
+		System.out.println("Testing weather request with txt files:");
+		WeatherRequest request2 = new WeatherRequest(inputPath);
 	}
 }
