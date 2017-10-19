@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.json.JSONObject;
 
+import connection.Connection;
+
 public class WeatherRequest {
 	
 	public String cityName;
