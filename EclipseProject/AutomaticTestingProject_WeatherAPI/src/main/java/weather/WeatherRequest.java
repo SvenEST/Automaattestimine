@@ -1,6 +1,8 @@
 package weather;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Path;
 
 import org.json.JSONObject;
@@ -37,6 +39,39 @@ public class WeatherRequest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public WeatherRequest() {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		System.out.println("Please enter a city name and press Enter:");
+		try {
+			while (true) {
+				String userInputCityName = br.readLine();
+				if(userInputCityName != null) {
+					System.out.println("User inserted: " + userInputCityName);
+					this.cityName = userInputCityName;
+					break;
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("Enter prefferred unit. Metric (default), imperial or kelvin?");
+		try {
+			String userInputUnits = br.readLine();
+			System.out.println("User inserted: " + userInputUnits);
+			if (userInputUnits != null) {
+				if (userInputUnits == "Metric" || userInputUnits == "Imperial" || userInputUnits == "Kelvin") {
+					this.units = userInputUnits;
+				}
+			}else{
+				System.out.println("User entered no value. Default unit metric.");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
 	}
 	
 	public void WriteWeatherReportInfoToFile(Path outputFileLocation, String outputFileName) {
