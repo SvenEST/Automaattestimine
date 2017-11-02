@@ -1,6 +1,8 @@
 package weather;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import file.FileReader;
 import file.WriteFile;
@@ -21,16 +23,28 @@ public class RunConsoleCodeTest {
 		System.out.println("Forecast max temperature for day 2 in " + request.getCityName() + ": " + request.getForecastMaxTemperatureForDay(2));
 		System.out.println("Forecast max temperature for day 3 in " + request.getCityName() + ": " + request.getForecastMaxTemperatureForDay(3));
 		
-		System.out.println("Testing file reading:");
+		System.out.println("'Testing' file reading and writing:");
+		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\Sisendfailid\\input.txt");
+		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\Sisendfailid\\");
+		
 		FileReader fileReader = new FileReader();
-		String inputPath = "C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\Sisendfailid\\input.txt";
 		System.out.println("Input file content: " + fileReader.readFile(inputPath));
 		String inputContent = fileReader.readFile(inputPath);
-		String outputPath = "C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\Sisendfailid\\";
-		WriteFile fileWriter = new WriteFile();
-		System.out.println("Wrote file: " + fileWriter.writeFile(outputPath, "output", inputContent, false));
 		
-		System.out.println("Testing weather request with txt files:");
-		WeatherRequest request2 = new WeatherRequest(inputPath);
+		/*
+		WriteFile fileWriter = new WriteFile();
+		String outputFileName = "output.txt";
+		fileWriter.writeFile(outputPath, outputFileName, inputContent, false);
+		FileReader fileReader2 = new FileReader();
+		String recievedOutputContent = fileReader2.readFile(Paths.get(outputPath.toString(), outputFileName));
+		System.out.println("Wrote into output file: " + recievedOutputContent);
+		*/
+		
+		WeatherRequest request2 = new WeatherRequest(inputPath, "metric");
+		String outputFileName = "output.txt";
+		request2.WriteWeatherReportInfoToFile(outputPath, outputFileName);
+		FileReader fileReader2 = new FileReader();
+		String recievedOutputContent = fileReader2.readFile(Paths.get(outputPath.toString(), outputFileName));
+		System.out.println("Wrote into output file: " + recievedOutputContent);
 	}
 }
