@@ -42,36 +42,38 @@ public class WeatherRequest {
 	}
 	
 	public WeatherRequest() {
+		Connection con = new Connection();
+        if (con.internetConnectionExists() != true) {
+        	System.out.println("No internet connection!");
+        }
+        
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		System.out.println("Please enter a city name and press Enter:");
 		try {
-			while (true) {
-				String userInputCityName = br.readLine();
-				if(userInputCityName != null) {
-					System.out.println("User inserted: " + userInputCityName);
-					this.cityName = userInputCityName;
-					break;
-				}
-			}
+			String userInputCityName = br.readLine().trim();
+			System.out.println("User inserted: " + userInputCityName);
+			this.cityName = userInputCityName;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		System.out.println("Enter prefferred unit. Metric (default), imperial or kelvin?");
+		String userInputUnits = null;
 		try {
-			String userInputUnits = br.readLine();
+			userInputUnits = br.readLine().trim();
 			System.out.println("User inserted: " + userInputUnits);
-			if (userInputUnits != null) {
-				if (userInputUnits == "Metric" || userInputUnits == "Imperial" || userInputUnits == "Kelvin") {
-					this.units = userInputUnits;
-				}
-			}else{
-				System.out.println("User entered no value. Default unit metric.");
-			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}	
+		}
+		if (userInputUnits != null) {
+			if (userInputUnits == "Metric" || userInputUnits == "Imperial" || userInputUnits == "Kelvin") {
+				this.units = userInputUnits;
+				System.out.println("current units are: " + units);
+			}
+		}else{
+			System.out.println("User inserted nothing. Default unit metric wil be used.");
+		}
 	}
 	
 	public void WriteWeatherReportInfoToFile(Path outputFileLocation, String outputFileName) {

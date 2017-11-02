@@ -52,7 +52,6 @@ public class RunConsoleCodeTest {
 		System.out.println("Testing weather request with user input from the console:");
 		System.out.println("--------------------------------------------------");
 		WeatherRequest request3 = new WeatherRequest();
-		/*
 		System.out.println("Current temperature in " + request.getCityName() + ": " + request.getCurrentTemperature());
 		System.out.println("Forecast temperature for day 1 in " + request3.getCityName() + ": " + request3.getForecastTemperatureForDay(1));
 		System.out.println("Forecast temperature for day 2 in " + request3.getCityName() + ": " + request3.getForecastTemperatureForDay(2));
@@ -63,7 +62,6 @@ public class RunConsoleCodeTest {
 		System.out.println("Forecast max temperature for day 1 in " + request3.getCityName() + ": " + request3.getForecastMaxTemperatureForDay(1));
 		System.out.println("Forecast max temperature for day 2 in " + request3.getCityName() + ": " + request3.getForecastMaxTemperatureForDay(2));
 		System.out.println("Forecast max temperature for day 3 in " + request3.getCityName() + ": " + request3.getForecastMaxTemperatureForDay(3));
-		*/
 		System.out.println("--------------------------------------------------");
 	}
 }
