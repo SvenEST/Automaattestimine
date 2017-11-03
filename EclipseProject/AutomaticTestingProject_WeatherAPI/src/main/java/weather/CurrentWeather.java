@@ -19,7 +19,7 @@ public class CurrentWeather implements WeatherReport {
 	public JSONObject getWeatherInfo(String city) throws IOException{
 		JSONObject weatherInfoJson = null;
 		try {
-			URL url = new URL(apiUrl + city + "&units=" + units + "&appid=" + apiKey);
+			URL url = new URL(apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey);
 			URLConnection urlCon = url.openConnection();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
 	        String result = reader.readLine();
@@ -79,8 +79,8 @@ public class CurrentWeather implements WeatherReport {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		String GEOcoord = Integer.toString(lat) + ":" + Integer.toString(lon);
-		return GEOcoord;
+		String geoCoord = Integer.toString(lat) + ":" + Integer.toString(lon);
+		return geoCoord;
 	}
 	
 	public String getCityName(JSONObject weatherInfo) {

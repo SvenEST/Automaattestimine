@@ -81,7 +81,7 @@ public class WeatherRequest {
 	public void WriteWeatherReportInfoToFile(Path outputFileLocation, String outputFileName) {
         CurrentWeather currentWeather = new CurrentWeather();
 		currentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
+		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather");
 		currentWeather.changeUnits(units);
 		
 		JSONObject weatherInfoJson;
@@ -98,7 +98,7 @@ public class WeatherRequest {
 	public int getCurrentTemperature() {
         CurrentWeather currentWeather = new CurrentWeather();
 		currentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather?q=");
+		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather");
 		currentWeather.changeUnits(units);
 		JSONObject weatherInfoJson;
 		try {
@@ -114,7 +114,7 @@ public class WeatherRequest {
 	public int getForecastTemperatureForDay(int day) {
 		WeatherForecast weatherForecast = new WeatherForecast();
 		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
 		weatherForecast.changeUnits(units);
 		JSONObject forecastInfo;
 		int temperature = 0;
@@ -131,7 +131,7 @@ public class WeatherRequest {
 	public int getForecastMinTemperatureForDay(int day) {
 		WeatherForecast weatherForecast = new WeatherForecast();
 		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
 		weatherForecast.changeUnits(units);
 		JSONObject forecastInfo;
 		int temperature = 0;
@@ -148,7 +148,7 @@ public class WeatherRequest {
 	public int getForecastMaxTemperatureForDay(int day) {
 		WeatherForecast weatherForecast = new WeatherForecast();
 		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
 		weatherForecast.changeUnits(units);
 		JSONObject forecastInfo;
 		int temperature = 0;

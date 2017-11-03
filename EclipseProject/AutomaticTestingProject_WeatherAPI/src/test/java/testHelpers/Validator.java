@@ -5,13 +5,13 @@ public class Validator {
     public static void validateTemperature(int result, String units) throws Exception{
         int maxTemp = 100;
         int minTemp = -100;
-        if(units.equals("metric")){
+        if(units.equalsIgnoreCase("metric")){
             maxTemp = 100;
             minTemp = -100;
-        }else if(units.equals("imperial")){
+        }else if(units.equalsIgnoreCase("imperial")){
             maxTemp = 140;
             minTemp = -148;
-	    }else if(units.equals("kelvin")){
+	    }else if(units.equalsIgnoreCase("kelvin")){
 	        maxTemp = 373;
 	        minTemp = 173;
 	    }
@@ -22,5 +22,20 @@ public class Validator {
         if (result > maxTemp)
             throw new Exception("Temperature cannot be higher than: " + maxTemp + ", report shows: " + result);
     }
+    
+    public static void validateGeoCoordinates(String geoCoordinates) throws Exception {
+        double latMax = 90;
+        double latMin = -90;
+        double lngMax = 180;
+        double lngMin = -180;
+        /*
+        if(geoCoordinates == null || geoCoordinates.latitude == NO_VALUE || geoCoordinates.longitude == NO_VALUE)
+            throw new Exception("Geo-coordinates must be specified");
+        if(geoCoordinates.latitude>latMax || geoCoordinates.latitude<latMin)
+            throw new Exception("Geo-coordinates latitude is not valid");
+        if(geoCoordinates.longitude>lngMax ||  geoCoordinates.longitude<lngMin)
+            throw new Exception("Geo-coordinates longitude is not valid");
+		*/
+}
 
 }

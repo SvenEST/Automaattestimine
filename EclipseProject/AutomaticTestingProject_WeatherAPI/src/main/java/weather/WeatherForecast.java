@@ -18,7 +18,7 @@ public class WeatherForecast implements WeatherReport{
 	public JSONObject getWeatherForecastInfo(String city) throws IOException{
 		JSONObject weatherInfoJson = null;
 		try {
-			URL url = new URL(apiUrl + city + "&units=" + units + "&appid=" + apiKey);
+			URL url = new URL(apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey);
 			URLConnection urlCon = url.openConnection();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
 	        String result = reader.readLine();

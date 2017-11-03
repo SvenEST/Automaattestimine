@@ -18,7 +18,7 @@ public class WeatherForecastTest {
 	public void setUpTest() {
 		weatherForecast = new WeatherForecast();
 		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
 		try {
 			weatherForecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
 		} catch (IOException e) {
@@ -66,68 +66,7 @@ public class WeatherForecastTest {
 		}
 	}
 	
-	/*
-	@Test
-	public void testGetTemperatureMetric() {
-		weatherForecast.changeUnits("Metric");
-		JSONObject forecastInfo = null;
 		try {
-			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		int result = weatherForecast.getTemperature(weatherForecast.getForecastForSingleDay(forecastInfo, 1));
-		assertTrue(result == (int)result);
-		String units = weatherForecast.getUnits();
-		if (units == "Metric") {
-			assertTrue(result < 100);
-			assertTrue(result > -100);
-		}else{
-			fail("Units not in metric");
-		}
-	}
-	
-	@Test
-	public void testGetTemperatureImperial() {
-		weatherForecast.changeUnits("Imperial");
-		JSONObject forecastInfo = null;
-		try {
-			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		int result = weatherForecast.getTemperature(weatherForecast.getForecastForSingleDay(forecastInfo, 1));
-		assertTrue(result == (int)result);
-		String units = weatherForecast.getUnits();
-		if (units == "Imperial") {
-			assertTrue(result < 212);
-			assertTrue(result > -148);
-		}else{
-			fail("Units not in imperial");
-		}
-	}
-	
-	@Test
-	public void testGetTemperatureKelvin() {
-		weatherForecast.changeUnits("Kelvin");
-		JSONObject forecastInfo = null;
-		try {
-			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		int result = weatherForecast.getTemperature(weatherForecast.getForecastForSingleDay(forecastInfo, 1));
-		assertTrue(result == (int)result);
-		String units = weatherForecast.getUnits();
-		if (units == "Kelvin") {
-			assertTrue(result < 373);
-			assertTrue(result > -173);
-		}else{
-			fail("Units not in Kelvin");
-		}
-	}
-	*/
-	
 	@Test
 	public void testIfReturnedMinTemperatureIsValid() {
 		int result = weatherForecast.getMinTemperature(weatherForecastInfo);
@@ -138,26 +77,6 @@ public class WeatherForecastTest {
 			fail("Failure cause: " + e.getMessage());
 		}
 	}
-
-	/*
-	@Test
-	public void testGetMinTemperature() {
-		weatherForecast.changeUnits("Metric");
-		JSONObject forecastInfo = null;
-		try {
-			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		int result = weatherForecast.getMinTemperature(weatherForecast.getForecastForSingleDay(forecastInfo, 1));
-		assertTrue(result == (int)result);
-		String units = weatherForecast.getUnits();
-		if (units == "Metric") { 
-			assertTrue(result < 100);
-			assertTrue(result > -100);
-		}
-	}
-	*/
 	
 	@Test
 	public void testIfReturnedMaxTemperatureIsValid() {
@@ -169,25 +88,6 @@ public class WeatherForecastTest {
 			fail("Failure cause: " + e.getMessage());
 		}
 	}
-	
-	/*
-	@Test
-	public void testGetMaxTemperature() {
-		weatherForecast.changeUnits("Metric");
-		JSONObject forecastInfo = null;
-		try {
-			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		int result = weatherForecast.getMaxTemperature(weatherForecast.getForecastForSingleDay(forecastInfo, 1));
-		assertTrue(result == (int)result);
-		String units = weatherForecast.getUnits();
-		if (units == "Metric") {
-			assertTrue(result < 100);
-			assertTrue(result > -100);
-		}
-	}*/
 	
 	@Test
 	public void testGetCoordinates() {
@@ -240,7 +140,7 @@ public class WeatherForecastTest {
 
 	@Test
 	public void testSetApiUrl() {
-		String newUrl = "http://api.openweathermap.org/data/2.5/forecast?q=";
+		String newUrl = "http://api.openweathermap.org/data/2.5/forecast";
 		weatherForecast.setApiKey(newUrl);
 		String url = weatherForecast.getApiKey();
 		assertEquals(newUrl, url);
