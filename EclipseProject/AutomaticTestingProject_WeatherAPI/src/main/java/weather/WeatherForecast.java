@@ -16,7 +16,7 @@ public class WeatherForecast implements WeatherReport{
 	private String apiUrl;
 
 	public JSONObject getWeatherForecastInfo(String city) throws IOException{
-		JSONObject weatherInfoJson = null;
+		JSONObject weatherForecastInfo = null;
 		try {
 			URL url = new URL(apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey);
 			URLConnection urlCon = url.openConnection();
@@ -24,32 +24,32 @@ public class WeatherForecast implements WeatherReport{
 	        String result = reader.readLine();
 	        reader.close();
 			try {
-				weatherInfoJson = new JSONObject(result);
-				return weatherInfoJson;
+				weatherForecastInfo = new JSONObject(result);
+				return weatherForecastInfo;
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		return weatherInfoJson;
+		return weatherForecastInfo;
 	}
 	
-	public JSONObject getForecastForSingleDay(JSONObject forecastInfo, int day){
-		JSONArray list;
-		JSONObject forecast = null;
+	public JSONObject getForecastForSingleDay(JSONObject weatherForecastInfo, int dayNumber){
+		JSONArray forecastPerDayList;
+		JSONObject singleDayForecastInfo = null;
 		try {
-			list = forecastInfo.getJSONArray("list");
-			forecast = list.getJSONObject(day);
+			forecastPerDayList = weatherForecastInfo.getJSONArray("list");
+			singleDayForecastInfo = forecastPerDayList.getJSONObject(dayNumber);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return forecast;
+		return singleDayForecastInfo;
 	}
 	
-	public int getTemperature(JSONObject forecastForDay) {
+	public int getTemperature(JSONObject singleDayForecastInfo) {
 		try {
-			JSONObject main = forecastForDay.getJSONObject("main");
+			JSONObject main = singleDayForecastInfo.getJSONObject("main");
 			int temp = main.getInt("temp");
 			return temp;
 		} catch (JSONException e) {
@@ -58,9 +58,9 @@ public class WeatherForecast implements WeatherReport{
 		return 0;
 	}
 	
-	public int getMinTemperature(JSONObject forecastForDay) {
+	public int getMinTemperature(JSONObject singleDayForecastInfo) {
 		try {
-			JSONObject main = forecastForDay.getJSONObject("main");
+			JSONObject main = singleDayForecastInfo.getJSONObject("main");
 			int minTemp = main.getInt("temp_min");
 			return minTemp;
 		} catch (JSONException e) {
@@ -69,9 +69,9 @@ public class WeatherForecast implements WeatherReport{
 		return 0;
 	}
 	
-	public int getMaxTemperature(JSONObject forecastForDay) {
+	public int getMaxTemperature(JSONObject singleDayForecastInfo) {
 		try {
-			JSONObject main = forecastForDay.getJSONObject("main");
+			JSONObject main = singleDayForecastInfo.getJSONObject("main");
 			int maxTemp = main.getInt("temp_max");
 			return maxTemp;
 		} catch (JSONException e) {
@@ -80,26 +80,25 @@ public class WeatherForecast implements WeatherReport{
 		return 0;
 	}
 	
-	public String getCoordinates(JSONObject forecastInfo) {
+	public String getCoordinates(JSONObject singleDayForecastInfo) {
 		int lon = 0;
 		int lat = 0;
 		try {
-			JSONObject city = forecastInfo.getJSONObject("city");
-			JSONObject coord = city.getJSONObject("coord");
+			JSONObject cityInfo = singleDayForecastInfo.getJSONObject("city");
+			JSONObject coord = cityInfo.getJSONObject("coord");
 			lon = coord.getInt("lon");
 			lat = coord.getInt("lat");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		String GEOcoord = Integer.toString(lat) + ":" + Integer.toString(lon);
-		return GEOcoord;
+		String geoCcoord = Integer.toString(lat) + ":" + Integer.toString(lon);
+		return geoCcoord;
 	}
 	
-	public String getCityName(JSONObject weatherInfo) {
-		JSONObject cityInfo;
+	public String getCityName(JSONObject singleDayForecastInfo) {
 		String cityName = null;
 		try {
-			cityInfo = weatherInfo.getJSONObject("city");
+			JSONObject cityInfo = singleDayForecastInfo.getJSONObject("city");
 			cityName = cityInfo.getString("name");
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -107,12 +106,9 @@ public class WeatherForecast implements WeatherReport{
 		return cityName;
 	}
 	
-	public String changeUnits(String newUnit) {
+	public void changeUnits(String newUnit) {
 		if(newUnit.equalsIgnoreCase("Metric") || newUnit.equalsIgnoreCase("Imperial") || newUnit.equalsIgnoreCase("Kelvin")) {
 			this.units = newUnit;
-			return newUnit;
-		} else {
-			return "Unit change failed. Use Metric, Imperial or Kelvin";
 		}
 	}
 

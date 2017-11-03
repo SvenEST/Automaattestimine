@@ -1,6 +1,10 @@
 package weather;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 
 import org.json.JSONObject;
@@ -27,14 +31,14 @@ public class WeatherForecastTest {
 	}
 	
 	@Test
-	public void testGetWeatherForecastInfoJson() {
-		JSONObject result;
+	public void testIfReturnedWeatherForecastInfoIsInJsonFormat() {
+		JSONObject forecastInfo;
 		try {
-			result = weatherForecast.getWeatherForecastInfo("Tallinn");
-			assertTrue(result == (JSONObject)result);
-			assertFalse(result.toString().isEmpty());
-			assertTrue(result.toString().startsWith("{"));
-			assertTrue(result.toString().endsWith("}"));
+			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
+			assertTrue("Response result must be a JSONObject", forecastInfo == (JSONObject)forecastInfo);
+			assertFalse("Response result can't be empty", forecastInfo.toString().isEmpty());
+			assertTrue("Response result must start with '{'", forecastInfo.toString().startsWith("{"));
+			assertTrue("Response result must end with '}'", forecastInfo.toString().endsWith("}"));
 		} catch (IOException e) {
 			fail("Failure caused by: " + e.getMessage());
 		}
@@ -42,37 +46,30 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetWeatherForecastInfoForSingleDayJson() {
-		JSONObject forecastInfo = null;
-		try {
-			forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		JSONObject result = weatherForecast.getForecastForSingleDay(forecastInfo, 1);
-		assertTrue(result == (JSONObject)result);
-		assertFalse(result.toString().isEmpty());
-		assertTrue(result.toString().startsWith("{"));
-		assertTrue(result.toString().endsWith("}"));
+		JSONObject forecastInfoForSingleDay = weatherForecast.getForecastForSingleDay(weatherForecastInfo, 1);
+		assertTrue("Response result must be a JSONObject", forecastInfoForSingleDay == (JSONObject)forecastInfoForSingleDay);
+		assertFalse("Response result can't be empty", forecastInfoForSingleDay.toString().isEmpty());
+		assertTrue("Response result must start with '{'", forecastInfoForSingleDay.toString().startsWith("{"));
+		assertTrue("Response result must end with '}'", forecastInfoForSingleDay.toString().endsWith("}"));
 	}
 	
 	@Test
 	public void testIfReturnedTemperatureIsValid() {
-		int result = weatherForecast.getTemperature(weatherForecastInfo);
+		int temp = weatherForecast.getTemperature(weatherForecastInfo);
 		String units = weatherForecast.getUnits();
 		try {
-			Validator.validateTemperature(result, units);
+			Validator.validateTemperature(temp, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
 	}
 	
-		try {
 	@Test
 	public void testIfReturnedMinTemperatureIsValid() {
-		int result = weatherForecast.getMinTemperature(weatherForecastInfo);
+		int minTemp = weatherForecast.getMinTemperature(weatherForecastInfo);
 		String units = weatherForecast.getUnits();
 		try {
-			Validator.validateTemperature(result, units);
+			Validator.validateTemperature(minTemp, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
@@ -80,10 +77,10 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testIfReturnedMaxTemperatureIsValid() {
-		int result = weatherForecast.getMaxTemperature(weatherForecastInfo);
+		int maxTemp = weatherForecast.getMaxTemperature(weatherForecastInfo);
 		String units = weatherForecast.getUnits();
 		try {
-			Validator.validateTemperature(result, units);
+			Validator.validateTemperature(maxTemp, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
@@ -91,67 +88,57 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetCoordinates() {
-		JSONObject weatherInfo = null;
-		try {
-			weatherInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String result = weatherForecast.getCoordinates(weatherInfo);
-		assertTrue(result == (String)result);
-		assertFalse(result.isEmpty());
-		assertTrue(result.contains(":"));
+		String geoCoords = weatherForecast.getCoordinates(weatherForecastInfo);
+		assertTrue("Coordinates must be string type", geoCoords == (String)geoCoords);
+		assertFalse("Returned coordinates can't be empty", geoCoords.isEmpty());
+		assertTrue("Coordinates must include a ':' separator", geoCoords.contains(":"));
 		//assertTrue(result.length() == 7);
 	}
 	
 	@Test
-	public void testIfReturnedForecastInfoHasSameCityNameAsResult() {
+	public void testIfReturnedForecastInfoHasSameCityNameAsRequested() {
 		String cityName = "Tallinn";
-		JSONObject result;
-		try {
-			result = weatherForecast.getWeatherForecastInfo(cityName);
-			assertEquals(cityName, weatherForecast.getCityName(result).toString());
-		} catch (IOException e) {
-			fail("Failure caused by: " + e.getMessage());
-		}
+		assertEquals(cityName, weatherForecast.getCityName(weatherForecastInfo));
 	}
 	
 	@Test
-	public void testChangeUnitsMetric() {
+	public void testChangingUnitsToMetric() {
 		String newUnit = "Metric";
-		String result = weatherForecast.changeUnits(newUnit);
-		assertEquals(newUnit, result);	
+		weatherForecast.changeUnits(newUnit);
+		String resultUnit = weatherForecast.getUnits();
+		assertEquals(newUnit, resultUnit);	
 	}
 	
 	@Test
-	public void testChangeUnitsImperial() {
+	public void testChangingUnitsToImperial() {
 		String newUnit = "Imperial";
-		String result = weatherForecast.changeUnits(newUnit);
-		System.out.println(result);
-		assertEquals(newUnit, result);
+		weatherForecast.changeUnits(newUnit);
+		String resultUnit = weatherForecast.getUnits();
+		assertEquals(newUnit, resultUnit);
 	}
 	
 	@Test
-	public void testChangeUnitsKelvin() {
+	public void testChangingUnitsToKelvin() {
 		String newUnit = "Kelvin";
-		String result = weatherForecast.changeUnits(newUnit);
-		assertEquals(newUnit, result);
+		weatherForecast.changeUnits(newUnit);
+		String resultUnit = weatherForecast.getUnits();
+		assertEquals(newUnit, resultUnit);
 	}
 
 	@Test
-	public void testSetApiUrl() {
+	public void testSettingNewApiUrl() {
 		String newUrl = "http://api.openweathermap.org/data/2.5/forecast";
 		weatherForecast.setApiKey(newUrl);
-		String url = weatherForecast.getApiKey();
-		assertEquals(newUrl, url);
+		String resultUrl = weatherForecast.getApiKey();
+		assertEquals(newUrl, resultUrl);
 	}
 	
 	@Test
-	public void testSetApiKey() {
+	public void testSettingNewApiKey() {
 		String newKey = "1a8a3563bee4967e64490dbfadf83b7e";
 		weatherForecast.setApiKey(newKey);
-		String key = weatherForecast.getApiKey();
-		assertEquals(newKey, key);
+		String resultKey = weatherForecast.getApiKey();
+		assertEquals(newKey, resultKey);
 	}
 	
 }

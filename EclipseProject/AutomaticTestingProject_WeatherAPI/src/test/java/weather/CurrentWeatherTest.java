@@ -31,14 +31,14 @@ public class CurrentWeatherTest {
 	}
 
 	@Test
-	public void testIfReturnedWeatherInfoIsInJSONformat(){
-		JSONObject result;
+	public void testIfReturnedWeatherInfoIsInJsonFormat(){
+		JSONObject weatherInfo;
 		try {
-			result = currentWeather.getWeatherInfo("Tallinn");
-			assertTrue("Response result must be a JSONObject", result == (JSONObject)result);
-			assertFalse("Response result can't be empty", result.toString().isEmpty());
-			assertTrue("Response result must start with '{'", result.toString().startsWith("{"));
-			assertTrue("Response result must end with '}'", result.toString().endsWith("}"));
+			weatherInfo = currentWeather.getWeatherInfo("Tallinn");
+			assertTrue("Response result must be a JSONObject", weatherInfo == (JSONObject)weatherInfo);
+			assertFalse("Response result can't be empty", weatherInfo.toString().isEmpty());
+			assertTrue("Response result must start with '{'", weatherInfo.toString().startsWith("{"));
+			assertTrue("Response result must end with '}'", weatherInfo.toString().endsWith("}"));
 		} catch (IOException e) {
 			fail("Failure caused by: " + e.getMessage());
 		}
@@ -46,10 +46,10 @@ public class CurrentWeatherTest {
 	
 	@Test
 	public void testIfResponseCurrentTemperatureIsValid() {
-		int temperature = currentWeather.getTemperature(currentWeatherInfo);
+		int temp = currentWeather.getTemperature(currentWeatherInfo);
 		String units = currentWeather.getUnits();
 		try {
-			Validator.validateTemperature(temperature, units);
+			Validator.validateTemperature(temp, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
@@ -57,10 +57,10 @@ public class CurrentWeatherTest {
 	
 	@Test
 	public void testIfResponseMinTemperatureIsValid() {
-		int minTemperature = currentWeather.getMinTemperature(currentWeatherInfo);
+		int minTemp = currentWeather.getMinTemperature(currentWeatherInfo);
 		String units = currentWeather.getUnits();
 		try {
-			Validator.validateTemperature(minTemperature, units);
+			Validator.validateTemperature(minTemp, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
@@ -68,10 +68,10 @@ public class CurrentWeatherTest {
 	
 	@Test
 	public void testIfResponseMaxTemperatureIsValid() {
-		int maxTemperature = currentWeather.getMaxTemperature(currentWeatherInfo);
+		int maxTemp = currentWeather.getMaxTemperature(currentWeatherInfo);
 		String units = currentWeather.getUnits();
 		try {
-			Validator.validateTemperature(maxTemperature, units);
+			Validator.validateTemperature(maxTemp, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
@@ -89,28 +89,31 @@ public class CurrentWeatherTest {
 	@Test
 	public void testIfReturnedWeatherInfoHasSameCityNameAsRequested() {
 		String cityName = "Tallinn";
-		assertEquals(cityName, currentWeather.getCityName(currentWeatherInfo).toString());
+		assertEquals(cityName, currentWeather.getCityName(currentWeatherInfo));
 	}
 	
 	@Test
 	public void testChangingUnitsToMetric() {
 		String newUnit = "Metric";
-		String result = currentWeather.changeUnits(newUnit);
-		assertEquals(newUnit, result);	
+		currentWeather.changeUnits(newUnit);
+		String resultUnit = currentWeather.getUnits();
+		assertEquals(newUnit, resultUnit);	
 	}
 	
 	@Test
 	public void testChangingUnitsToImperial() {
 		String newUnit = "Imperial";
-		String result = currentWeather.changeUnits(newUnit);
-		assertEquals(newUnit, result);
+		currentWeather.changeUnits(newUnit);
+		String resultUnit = currentWeather.getUnits();
+		assertEquals(newUnit, resultUnit);
 	}
 	
 	@Test
 	public void testChangingUnitsToKelvin() {
 		String newUnit = "Kelvin"; 
-		String result = currentWeather.changeUnits(newUnit);
-		assertEquals(newUnit, result);
+		currentWeather.changeUnits(newUnit);
+		String resultUnit = currentWeather.getUnits();
+		assertEquals(newUnit, resultUnit);
 	}
 	
 	@Test

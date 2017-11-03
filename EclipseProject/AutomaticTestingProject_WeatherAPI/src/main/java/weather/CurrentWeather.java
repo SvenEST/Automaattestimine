@@ -84,21 +84,18 @@ public class CurrentWeather implements WeatherReport {
 	}
 	
 	public String getCityName(JSONObject weatherInfo) {
-		String city = null;
+		String cityName = null;
 		try {
-			city = weatherInfo.getString("name");
+			cityName = weatherInfo.getString("name");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return city;
+		return cityName;
 	}
 	
-	public String changeUnits(String newUnit) {
+	public void changeUnits(String newUnit) {
 		if(newUnit.equalsIgnoreCase("Metric") || newUnit.equalsIgnoreCase("Imperial") || newUnit.equalsIgnoreCase("Kelvin")) {
 			this.units = newUnit;
-			return newUnit;
-		} else {
-			return "Unit change failed. Use Metric, Imperial or Kelvin";
 		}
 	}
 
