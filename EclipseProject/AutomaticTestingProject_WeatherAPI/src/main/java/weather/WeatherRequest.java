@@ -111,7 +111,7 @@ public class WeatherRequest {
 		return 0;
 	}
 	
-	public int getForecastTemperatureForDay(int day) {
+	public int getForecastTemperatureForDay(int dayNumber) {
 		WeatherForecast weatherForecast = new WeatherForecast();
 		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
@@ -120,7 +120,7 @@ public class WeatherRequest {
 		int temperature = 0;
 		try {
 			forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
-			JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , day);
+			JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , dayNumber);
 			temperature = weatherForecast.getTemperature(forecastForDay);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -128,7 +128,7 @@ public class WeatherRequest {
 		return temperature;
 	}
 	
-	public int getForecastMinTemperatureForDay(int day) {
+	public int getForecastMinTemperatureForDay(int dayNumber) {
 		WeatherForecast weatherForecast = new WeatherForecast();
 		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
@@ -137,7 +137,7 @@ public class WeatherRequest {
 		int temperature = 0;
 		try {
 			forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
-			JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , day);
+			JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , dayNumber);
 			temperature = weatherForecast.getMinTemperature(forecastForDay);
 		} catch (IOException e) {
 			e.printStackTrace();
