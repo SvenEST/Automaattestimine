@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 public class CurrentWeather implements WeatherReport {
 	
-	private String units = "metric";
+	private String units = "Metric";
 	private String apiKey;
 	private String apiUrl;
 	
@@ -94,8 +94,8 @@ public class CurrentWeather implements WeatherReport {
 	}
 	
 	public String changeUnits(String newUnit) {
-		if(newUnit == "Metric" || newUnit == "Imperial" || newUnit == "Kelvin") {
-			units = newUnit;
+		if(newUnit.equalsIgnoreCase("Metric") || newUnit.equalsIgnoreCase("Imperial") || newUnit.equalsIgnoreCase("Kelvin")) {
+			this.units = newUnit;
 			return newUnit;
 		} else {
 			return "Unit change failed. Use Metric, Imperial or Kelvin";

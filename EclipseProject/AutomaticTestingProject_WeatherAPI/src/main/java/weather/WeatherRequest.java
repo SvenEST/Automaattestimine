@@ -14,12 +14,11 @@ import file.WriteFile;
 public class WeatherRequest {
 	
 	public String cityName;
-	public String units;
+	public String units = "Metric";
 
 	public WeatherRequest(String cityName, String units) {
 		this.cityName = cityName;
 		this.units = units;
-		
 		Connection con = new Connection();
         if (con.internetConnectionExists() != true) {
         	System.out.println("No internet connection!");
@@ -39,6 +38,12 @@ public class WeatherRequest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+        
+        if (units != null) {
+			if (units.equalsIgnoreCase("Metric") || units.equalsIgnoreCase("Imperial") || units.equalsIgnoreCase("Kelvin")) {
+				this.units = units;
+			}
+		}
 	}
 	
 	public WeatherRequest() {
@@ -52,7 +57,6 @@ public class WeatherRequest {
 		System.out.println("Please enter a city name and press Enter:");
 		try {
 			String userInputCityName = br.readLine().trim();
-			System.out.println("User inserted: " + userInputCityName);
 			this.cityName = userInputCityName;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -62,14 +66,12 @@ public class WeatherRequest {
 		String userInputUnits = null;
 		try {
 			userInputUnits = br.readLine().trim();
-			System.out.println("User inserted: " + userInputUnits);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		if (userInputUnits != null) {
-			if (userInputUnits == "Metric" || userInputUnits == "Imperial" || userInputUnits == "Kelvin") {
+			if (userInputUnits.equalsIgnoreCase("Metric") || userInputUnits.equalsIgnoreCase("Imperial") || userInputUnits.equalsIgnoreCase("Kelvin")) {
 				this.units = userInputUnits;
-				System.out.println("current units are: " + units);
 			}
 		}else{
 			System.out.println("User inserted nothing. Default unit metric wil be used.");

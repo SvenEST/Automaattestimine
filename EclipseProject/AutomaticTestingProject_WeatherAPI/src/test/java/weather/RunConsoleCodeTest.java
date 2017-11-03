@@ -11,7 +11,7 @@ public class RunConsoleCodeTest {
 
 	public static void main(String[] args) throws IOException{
 		System.out.println("Getting info using the facade class:");
-		WeatherRequest request = new WeatherRequest("Tallinn", "Metric");
+		WeatherRequest request = new WeatherRequest("Tallinn", "metric");
 		System.out.println("Current temperature in " + request.getCityName() + ": " + request.getCurrentTemperature());
 		System.out.println("Forecast temperature for day 1 in " + request.getCityName() + ": " + request.getForecastTemperatureForDay(1));
 		System.out.println("Forecast temperature for day 2 in " + request.getCityName() + ": " + request.getForecastTemperatureForDay(2));
@@ -30,18 +30,8 @@ public class RunConsoleCodeTest {
 		
 		FileReader fileReader = new FileReader();
 		System.out.println("Input file content: " + fileReader.readFile(inputPath));
-		String inputContent = fileReader.readFile(inputPath);
 		
-		/*
-		WriteFile fileWriter = new WriteFile();
-		String outputFileName = "output.txt";
-		fileWriter.writeFile(outputPath, outputFileName, inputContent, false);
-		FileReader fileReader2 = new FileReader();
-		String recievedOutputContent = fileReader2.readFile(Paths.get(outputPath.toString(), outputFileName));
-		System.out.println("Wrote into output file: " + recievedOutputContent);
-		*/
-		
-		WeatherRequest request2 = new WeatherRequest(inputPath, "metric");
+		WeatherRequest request2 = new WeatherRequest(inputPath, "Metric");
 		String outputFileName = "output.txt";
 		request2.WriteWeatherReportInfoToFile(outputPath, outputFileName);
 		FileReader fileReader2 = new FileReader();
@@ -52,7 +42,7 @@ public class RunConsoleCodeTest {
 		System.out.println("Testing weather request with user input from the console:");
 		System.out.println("--------------------------------------------------");
 		WeatherRequest request3 = new WeatherRequest();
-		System.out.println("Current temperature in " + request.getCityName() + ": " + request.getCurrentTemperature());
+		System.out.println("Current temperature in " + request3.getCityName() + ": " + request3.getCurrentTemperature());
 		System.out.println("Forecast temperature for day 1 in " + request3.getCityName() + ": " + request3.getForecastTemperatureForDay(1));
 		System.out.println("Forecast temperature for day 2 in " + request3.getCityName() + ": " + request3.getForecastTemperatureForDay(2));
 		System.out.println("Forecast temperature for day 3 in " + request3.getCityName() + ": " + request3.getForecastTemperatureForDay(3));

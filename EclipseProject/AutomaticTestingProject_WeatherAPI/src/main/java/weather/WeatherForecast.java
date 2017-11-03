@@ -11,7 +11,7 @@ import org.json.*;
 
 public class WeatherForecast implements WeatherReport{
 	
-	private String units;
+	private String units = "Metric";
 	private String apiKey;
 	private String apiUrl;
 
@@ -108,8 +108,8 @@ public class WeatherForecast implements WeatherReport{
 	}
 	
 	public String changeUnits(String newUnit) {
-		if(newUnit == "Metric" || newUnit == "Imperial" || newUnit == "Kelvin") {
-			units = newUnit;
+		if(newUnit.equalsIgnoreCase("Metric") || newUnit.equalsIgnoreCase("Imperial") || newUnit.equalsIgnoreCase("Kelvin")) {
+			this.units = newUnit;
 			return newUnit;
 		} else {
 			return "Unit change failed. Use Metric, Imperial or Kelvin";

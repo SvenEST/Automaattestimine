@@ -7,15 +7,23 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
+import testHelpers.Validator;
+
 public class WeatherForecastTest {
 	
 	private static WeatherForecast weatherForecast;
+	private static JSONObject weatherForecastInfo;
 	
 	@Before
 	public void setUpTest() {
 		weatherForecast = new WeatherForecast();
 		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast?q=");
+		try {
+			weatherForecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
+		} catch (IOException e) {
+			fail("All test will be ignored. Cause: " + e.getMessage());
+		}
 	}
 	
 	@Test
@@ -47,6 +55,18 @@ public class WeatherForecastTest {
 		assertTrue(result.toString().endsWith("}"));
 	}
 	
+	@Test
+	public void testIfReturnedTemperatureIsValid() {
+		int result = weatherForecast.getTemperature(weatherForecastInfo);
+		String units = weatherForecast.getUnits();
+		try {
+			Validator.validateTemperature(result, units);
+		} catch (Exception e) {
+			fail("Failure cause: " + e.getMessage());
+		}
+	}
+	
+	/*
 	@Test
 	public void testGetTemperatureMetric() {
 		weatherForecast.changeUnits("Metric");
@@ -106,7 +126,20 @@ public class WeatherForecastTest {
 			fail("Units not in Kelvin");
 		}
 	}
+	*/
+	
+	@Test
+	public void testIfReturnedMinTemperatureIsValid() {
+		int result = weatherForecast.getMinTemperature(weatherForecastInfo);
+		String units = weatherForecast.getUnits();
+		try {
+			Validator.validateTemperature(result, units);
+		} catch (Exception e) {
+			fail("Failure cause: " + e.getMessage());
+		}
+	}
 
+	/*
 	@Test
 	public void testGetMinTemperature() {
 		weatherForecast.changeUnits("Metric");
@@ -124,7 +157,20 @@ public class WeatherForecastTest {
 			assertTrue(result > -100);
 		}
 	}
+	*/
 	
+	@Test
+	public void testIfReturnedMaxTemperatureIsValid() {
+		int result = weatherForecast.getMaxTemperature(weatherForecastInfo);
+		String units = weatherForecast.getUnits();
+		try {
+			Validator.validateTemperature(result, units);
+		} catch (Exception e) {
+			fail("Failure cause: " + e.getMessage());
+		}
+	}
+	
+	/*
 	@Test
 	public void testGetMaxTemperature() {
 		weatherForecast.changeUnits("Metric");
@@ -141,7 +187,7 @@ public class WeatherForecastTest {
 			assertTrue(result < 100);
 			assertTrue(result > -100);
 		}
-	}
+	}*/
 	
 	@Test
 	public void testGetCoordinates() {
