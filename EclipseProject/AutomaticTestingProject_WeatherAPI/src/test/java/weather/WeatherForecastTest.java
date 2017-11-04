@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
-import testHelpers.Validator;
+import testhelpers.Validator;
 
 public class WeatherForecastTest {
 	

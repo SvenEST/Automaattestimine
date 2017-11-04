@@ -10,8 +10,10 @@ import java.io.IOException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import testHelpers.Validator;
+import testhelpers.Validator;
 
 public class CurrentWeatherTest {
 	
@@ -28,6 +30,19 @@ public class CurrentWeatherTest {
 		} catch (IOException e) {
 			fail("All test will be ignored. Cause: " + e.getMessage());
 		}
+	}
+	
+	@Mock
+	CurrentWeather currentWeatherMock;
+	
+	@Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
+	
+	@Test
+	public void firtsMockTest() {
+		
+		MockitoAnnotations.initMocks(this);
+		when(currentWeatherMock.getTemperature(weatherInfoJson)).thenReturn(3);
+		verify(currentWeatherMock).getTemperature(weatherInfoJson);
 	}
 
 	@Test

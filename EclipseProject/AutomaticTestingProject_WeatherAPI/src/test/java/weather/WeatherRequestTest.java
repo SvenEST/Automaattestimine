@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import file.FileReader;
-import testHelpers.Validator;
+import testhelpers.Validator;
 
 public class WeatherRequestTest {
 	
