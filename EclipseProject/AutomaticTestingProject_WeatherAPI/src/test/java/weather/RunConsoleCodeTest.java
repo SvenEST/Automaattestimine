@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import file.FileReader;
-import file.WriteFile;
 
 public class RunConsoleCodeTest {
 
@@ -33,7 +32,7 @@ public class RunConsoleCodeTest {
 		
 		WeatherRequest request2 = new WeatherRequest(inputPath, "Metric");
 		String outputFileName = "output.txt";
-		request2.WriteWeatherReportInfoToFile(outputPath, outputFileName);
+		request2.WriteWeatherReportInfoToFile(outputPath, outputFileName, false);
 		FileReader fileReader2 = new FileReader();
 		String recievedOutputContent = fileReader2.readFile(Paths.get(outputPath.toString(), outputFileName));
 		System.out.println("Wrote into output file: " + recievedOutputContent);

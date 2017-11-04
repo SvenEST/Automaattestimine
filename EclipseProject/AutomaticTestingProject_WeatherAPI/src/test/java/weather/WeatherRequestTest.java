@@ -25,7 +25,8 @@ public class WeatherRequestTest {
 	public void testWriteWeatherReportInfoToFile() {
 		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\Sisendfailid\\");
 		String outputFileName = "output.txt";
-		weatherRequest.WriteWeatherReportInfoToFile(outputPath, outputFileName);
+		boolean appendFile = false;
+		weatherRequest.WriteWeatherReportInfoToFile(outputPath, outputFileName, appendFile);
 		FileReader fileReader = new FileReader();
 		String recievedOutputContent = null;
 		try {

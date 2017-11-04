@@ -78,7 +78,7 @@ public class WeatherRequest {
 		}
 	}
 	
-	public void WriteWeatherReportInfoToFile(Path outputFileLocation, String outputFileName) {
+	public void WriteWeatherReportInfoToFile(Path outputFileLocation, String outputFileName, boolean appendFile) {
         CurrentWeather currentWeather = new CurrentWeather();
 		currentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather");
@@ -89,7 +89,7 @@ public class WeatherRequest {
 			weatherInfoJson = currentWeather.getWeatherInfo(cityName);
 			String outputContent = weatherInfoJson.toString();
 			WriteFile fileWriter = new WriteFile();
-			fileWriter.writeFile(outputFileLocation, outputFileName, outputContent, true);
+			fileWriter.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -6,13 +6,21 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
+
+import file.FileReader;
 import testhelpers.Validator;
 
 public class CurrentWeatherTest {
@@ -35,14 +43,20 @@ public class CurrentWeatherTest {
 	@Mock
 	CurrentWeather currentWeatherMock;
 	
-	@Rule public MockitoRule mockitoRule = MockitoJUnit.rule();
-	
 	@Test
-	public void firtsMockTest() {
-		
+	public void firtsMockTest() throws IOException {
+		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\MockingInputs\\CurrentWeatherInfo.txt");
+		FileReader fileReader = new FileReader();
+		JSONObject weatherInfo = null;
+		try {
+			weatherInfo = new JSONObject(fileReader.readFile(inputPath));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 		MockitoAnnotations.initMocks(this);
-		when(currentWeatherMock.getTemperature(weatherInfoJson)).thenReturn(3);
-		verify(currentWeatherMock).getTemperature(weatherInfoJson);
+		when(currentWeatherMock.getWeatherInfo("Tallinn")).thenReturn(weatherInfo);
+		currentWeatherMock.getWeatherInfo("Tallinn");
+		verify(currentWeatherMock, times(1)).getWeatherInfo("Tallinn");
 	}
 
 	@Test

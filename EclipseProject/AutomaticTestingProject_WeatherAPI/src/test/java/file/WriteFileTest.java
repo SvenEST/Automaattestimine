@@ -2,13 +2,10 @@ package file;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
-import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,8 +21,8 @@ public class WriteFileTest {
 	@Before
 	public void setUpTests() {
 		fileName = "FileTest.txt";
-		inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\FailiTestid\\", fileName);
-		outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\FailiTestid\\");
+		inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\FileWritingAndReading\\", fileName);
+		outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\FileWritingAndReading\\");
 		currentDate = new Date();
 		inputContent = "File test at: " + currentDate.toString();
 	}

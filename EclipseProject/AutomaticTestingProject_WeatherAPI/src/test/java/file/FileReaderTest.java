@@ -13,7 +13,7 @@ public class FileReaderTest {
 	@Test
 	public void testFileRead() {
 		FileReader fileReader = new FileReader();
-		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\Sisendfailid\\input.txt");
+		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\FileWritingAndReading\\input.txt");
 		String result = null;
 		try {
 			result = fileReader.readFile(inputPath);
