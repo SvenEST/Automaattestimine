@@ -17,6 +17,7 @@ public class FileReader {
 	        String line = sc.nextLine();
 	        result += line;
 	    }
+	    sc.close();
 		return result;
 	}
 }
