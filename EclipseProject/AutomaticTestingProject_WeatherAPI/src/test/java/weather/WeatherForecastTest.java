@@ -17,9 +17,7 @@ public class WeatherForecastTest {
 	
 	@Before
 	public void setUpTest() {
-		weatherForecast = new WeatherForecast();
-		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
+		weatherForecast = new WeatherForecast("1a8a3563bee4967e64490dbfadf83b7e", "metric");
 		weatherForecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
 		forecastInfoForSingleDay = weatherForecast.getForecastForSingleDay(weatherForecastInfo, 1);
 	}

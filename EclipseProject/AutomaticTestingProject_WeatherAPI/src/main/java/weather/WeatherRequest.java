@@ -23,6 +23,7 @@ public class WeatherRequest {
 	public WeatherRequest(String cityName, String units) {
 		this.cityName = cityName;
 		this.units = units;
+		
 		ConnectionUtility con = new ConnectionUtility("https://www.google.com/");
         if (con.internetConnectionExists() != true) {
         	System.out.println("No internet connection!");
@@ -42,6 +43,7 @@ public class WeatherRequest {
             	for(String cityName: cityNamesList) {
             		cityNamesListTrimmed.add(cityName.trim());
             	}
+            	
             	cityNamesList = cityNamesListTrimmed;     	
     		} catch (IOException e) {
     			e.printStackTrace();
@@ -84,15 +86,8 @@ public class WeatherRequest {
 	}
 	
 	public void WriteWeatherReportInfoToFile(Path outputFileLocation, boolean appendFile) {
-        CurrentWeather currentWeather = new CurrentWeather();
-		currentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather");
-		currentWeather.changeUnits(units);
-		
-		WeatherForecast weatherForecast = new WeatherForecast();
-		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
-		weatherForecast.changeUnits(units);
+        CurrentWeather currentWeather = new CurrentWeather("1a8a3563bee4967e64490dbfadf83b7e", units);
+		WeatherForecast weatherForecast = new WeatherForecast("1a8a3563bee4967e64490dbfadf83b7e", units);
 		
 		JSONObject currentWeatherInfo;
 		JSONObject weatherForecastInfo;
@@ -113,10 +108,7 @@ public class WeatherRequest {
 	}
 	
 	public int getCurrentTemperature() {
-        CurrentWeather currentWeather = new CurrentWeather();
-		currentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather");
-		currentWeather.changeUnits(units);
+		CurrentWeather currentWeather = new CurrentWeather("1a8a3563bee4967e64490dbfadf83b7e", units);
 		JSONObject weatherInfoJson;
 		weatherInfoJson = currentWeather.getWeatherInfo(cityName);
 		int temperature = currentWeather.getTemperature(weatherInfoJson);
@@ -124,10 +116,7 @@ public class WeatherRequest {
 	}
 	
 	public int getForecastTemperatureForDay(int dayNumber) {
-		WeatherForecast weatherForecast = new WeatherForecast();
-		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
-		weatherForecast.changeUnits(units);
+		WeatherForecast weatherForecast = new WeatherForecast("1a8a3563bee4967e64490dbfadf83b7e", units);
 		JSONObject forecastInfo;
 		int temperature = 0;
 		forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
@@ -137,10 +126,7 @@ public class WeatherRequest {
 	}
 	
 	public int getForecastMinTemperatureForDay(int dayNumber) {
-		WeatherForecast weatherForecast = new WeatherForecast();
-		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
-		weatherForecast.changeUnits(units);
+		WeatherForecast weatherForecast = new WeatherForecast("1a8a3563bee4967e64490dbfadf83b7e", units);
 		JSONObject forecastInfo;
 		int temperature = 0;
 		forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
@@ -150,10 +136,7 @@ public class WeatherRequest {
 	}
 	
 	public int getForecastMaxTemperatureForDay(int day) {
-		WeatherForecast weatherForecast = new WeatherForecast();
-		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
-		weatherForecast.changeUnits(units);
+		WeatherForecast weatherForecast = new WeatherForecast("1a8a3563bee4967e64490dbfadf83b7e", units);
 		JSONObject forecastInfo;
 		int temperature = 0;
 		forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);

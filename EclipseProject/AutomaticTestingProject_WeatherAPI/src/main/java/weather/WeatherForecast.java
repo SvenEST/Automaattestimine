@@ -11,9 +11,16 @@ public class WeatherForecast implements WeatherReport{
 	private String units = "Metric";
 	private String apiKey;
 	private String apiUrl;
+	
+	public WeatherForecast(String apiKey, String units) {
+		setApiKey(apiKey);
+		setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
+		changeUnits(units);
+	}
 
 	public JSONObject getWeatherForecastInfo(String city){
-		ConnectionUtility connection = new ConnectionUtility(apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey);
+		String url = apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey;
+		ConnectionUtility connection = new ConnectionUtility(url);
 		JSONObject weatherForecastInfo = null;
 		try {
 			weatherForecastInfo = connection.readJsonFromUrl();

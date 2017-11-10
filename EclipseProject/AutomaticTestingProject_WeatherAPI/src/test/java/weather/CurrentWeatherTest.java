@@ -28,9 +28,7 @@ public class CurrentWeatherTest {
 	
 	@Before
 	public void setUpTests() {
-		currentWeather = new CurrentWeather();
-		currentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
-		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather");
+		currentWeather = new CurrentWeather("1a8a3563bee4967e64490dbfadf83b7e", "metric");
 		currentWeatherInfo = currentWeather.getWeatherInfo("Tallinn");
 	}
 	

@@ -13,8 +13,15 @@ public class CurrentWeather implements WeatherReport {
 	private String apiKey;
 	private String apiUrl;
 	
+	public CurrentWeather(String apiKey, String units) {
+		setApiKey(apiKey);
+		setApiUrl("http://api.openweathermap.org/data/2.5/weather");
+		changeUnits(units);
+	}
+	
 	public JSONObject getWeatherInfo(String city) {
-		ConnectionUtility connection = new ConnectionUtility(apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey);
+		String url = apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey;
+		ConnectionUtility connection = new ConnectionUtility(url);
 		JSONObject weatherInfoJson = null;
 		try {
 			weatherInfoJson = connection.readJsonFromUrl();
