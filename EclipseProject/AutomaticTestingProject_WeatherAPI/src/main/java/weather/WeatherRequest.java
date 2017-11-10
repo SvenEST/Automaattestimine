@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import connection.Connection;
+import connection.ConnectionUtility;
 import file.FileReader;
 import file.WriteFile;
 
@@ -23,14 +23,14 @@ public class WeatherRequest {
 	public WeatherRequest(String cityName, String units) {
 		this.cityName = cityName;
 		this.units = units;
-		Connection con = new Connection();
+		ConnectionUtility con = new ConnectionUtility("https://www.google.com/");
         if (con.internetConnectionExists() != true) {
         	System.out.println("No internet connection!");
         }
 	}
 	
 	public WeatherRequest(Path inputFilePath, String units) {
-		Connection con = new Connection();
+		ConnectionUtility con = new ConnectionUtility("https://www.google.com/");
         if (con.internetConnectionExists() == true) {
         	FileReader fileReader = new FileReader();
         	cityNamesList = new ArrayList<String>();
@@ -52,7 +52,7 @@ public class WeatherRequest {
 	}
 	
 	public WeatherRequest() {
-		Connection con = new Connection();
+		ConnectionUtility con = new ConnectionUtility("https://www.google.com/");
         if (con.internetConnectionExists() == true) {
         	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     		
@@ -96,23 +96,19 @@ public class WeatherRequest {
 		
 		JSONObject currentWeatherInfo;
 		JSONObject weatherForecastInfo;
-		try {
-			for(String cityName: cityNamesList) {
-				currentWeatherInfo = currentWeather.getWeatherInfo(cityName);
-				String outputContent = currentWeatherInfo.toString();
-				WriteFile fileWriter = new WriteFile();
-				String outputFileName = cityName + "_" + "current" + ".txt";
-				fileWriter.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
-			}
-			for(String cityName: cityNamesList) {
-				weatherForecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
-				String outputContent = weatherForecastInfo.toString();
-				WriteFile fileWriter = new WriteFile();
-				String outputFileName = cityName + "_" + "forecast" + ".txt";
-				fileWriter.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		for(String cityName: cityNamesList) {
+			currentWeatherInfo = currentWeather.getWeatherInfo(cityName);
+			String outputContent = currentWeatherInfo.toString();
+			WriteFile fileWriter = new WriteFile();
+			String outputFileName = cityName + "_" + "current" + ".txt";
+			fileWriter.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
+		}
+		for(String cityName: cityNamesList) {
+			weatherForecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
+			String outputContent = weatherForecastInfo.toString();
+			WriteFile fileWriter = new WriteFile();
+			String outputFileName = cityName + "_" + "forecast" + ".txt";
+			fileWriter.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
 		}
 	}
 	
@@ -122,14 +118,9 @@ public class WeatherRequest {
 		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather");
 		currentWeather.changeUnits(units);
 		JSONObject weatherInfoJson;
-		try {
-			weatherInfoJson = currentWeather.getWeatherInfo(cityName);
-			int temperature = currentWeather.getTemperature(weatherInfoJson);
-			return temperature;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return 0;
+		weatherInfoJson = currentWeather.getWeatherInfo(cityName);
+		int temperature = currentWeather.getTemperature(weatherInfoJson);
+		return temperature;
 	}
 	
 	public int getForecastTemperatureForDay(int dayNumber) {
@@ -139,13 +130,9 @@ public class WeatherRequest {
 		weatherForecast.changeUnits(units);
 		JSONObject forecastInfo;
 		int temperature = 0;
-		try {
-			forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
-			JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , dayNumber);
-			temperature = weatherForecast.getTemperature(forecastForDay);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
+		JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , dayNumber);
+		temperature = weatherForecast.getTemperature(forecastForDay);
 		return temperature;
 	}
 	
@@ -156,13 +143,9 @@ public class WeatherRequest {
 		weatherForecast.changeUnits(units);
 		JSONObject forecastInfo;
 		int temperature = 0;
-		try {
-			forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
-			JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , dayNumber);
-			temperature = weatherForecast.getMinTemperature(forecastForDay);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
+		JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , dayNumber);
+		temperature = weatherForecast.getMinTemperature(forecastForDay);
 		return temperature;
 	}
 	
@@ -173,13 +156,9 @@ public class WeatherRequest {
 		weatherForecast.changeUnits(units);
 		JSONObject forecastInfo;
 		int temperature = 0;
-		try {
-			forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
-			JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , day);
-			temperature = weatherForecast.getMaxTemperature(forecastForDay);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
+		JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , day);
+		temperature = weatherForecast.getMaxTemperature(forecastForDay);
 		return temperature;
 	}
 

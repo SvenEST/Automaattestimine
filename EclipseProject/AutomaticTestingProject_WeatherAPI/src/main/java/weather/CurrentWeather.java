@@ -1,14 +1,11 @@
 package weather;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import connection.ConnectionUtility;
 
 public class CurrentWeather implements WeatherReport {
 	
@@ -16,21 +13,12 @@ public class CurrentWeather implements WeatherReport {
 	private String apiKey;
 	private String apiUrl;
 	
-	public JSONObject getWeatherInfo(String city) throws IOException{
+	public JSONObject getWeatherInfo(String city) {
+		ConnectionUtility connection = new ConnectionUtility(apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey);
 		JSONObject weatherInfoJson = null;
 		try {
-			URL url = new URL(apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey);
-			URLConnection urlCon = url.openConnection();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
-	        String result = reader.readLine();
-	        reader.close();
-			try {
-				weatherInfoJson = new JSONObject(result);
-				return weatherInfoJson;
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		} catch (MalformedURLException e) {
+			weatherInfoJson = connection.readJsonFromUrl();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return weatherInfoJson;

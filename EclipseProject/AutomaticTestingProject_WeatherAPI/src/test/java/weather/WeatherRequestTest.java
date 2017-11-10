@@ -24,13 +24,12 @@ public class WeatherRequestTest {
 	@Test
 	public void testWriteWeatherReportInfoToFile() {
 		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\Sisendfailid\\");
-		String outputFileName = "output.txt";
 		boolean appendFile = false;
-		weatherRequest.WriteWeatherReportInfoToFile(outputPath, outputFileName, appendFile);
+		weatherRequest.WriteWeatherReportInfoToFile(outputPath, appendFile);
 		FileReader fileReader = new FileReader();
 		String recievedOutputContent = null;
 		try {
-			recievedOutputContent = fileReader.readFile(Paths.get(outputPath.toString(), outputFileName));
+			recievedOutputContent = fileReader.readFile(Paths.get(outputPath.toString()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

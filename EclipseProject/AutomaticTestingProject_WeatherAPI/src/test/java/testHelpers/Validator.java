@@ -1,5 +1,10 @@
 package testhelpers;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.json.JSONObject;
+
 public class Validator {
 
     public static void validateTemperature(int result, String units) throws Exception{
@@ -21,6 +26,13 @@ public class Validator {
             throw new Exception("Temperature cannot be lower than: " + minTemp + ", report shows: " + result);
         if (result > maxTemp)
             throw new Exception("Temperature cannot be higher than: " + maxTemp + ", report shows: " + result);
+    }
+    
+    public static void validateJsonFormat(JSONObject jsonObject) {
+		assertTrue("Response result must be a JSONObject", jsonObject == (JSONObject)jsonObject);
+		assertFalse("Response result can't be empty", jsonObject.toString().isEmpty());
+		assertTrue("Response result must start with '{'", jsonObject.toString().startsWith("{"));
+		assertTrue("Response result must end with '}'", jsonObject.toString().endsWith("}"));
     }
     
     public static void validateGeoCoordinates(String geoCoordinates) throws Exception {

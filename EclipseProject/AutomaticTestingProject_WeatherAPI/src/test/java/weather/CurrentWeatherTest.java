@@ -1,8 +1,6 @@
 package weather;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -33,11 +31,7 @@ public class CurrentWeatherTest {
 		currentWeather = new CurrentWeather();
 		currentWeather.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		currentWeather.setApiUrl("http://api.openweathermap.org/data/2.5/weather");
-		try {
-			currentWeatherInfo = currentWeather.getWeatherInfo("Tallinn");
-		} catch (IOException e) {
-			fail("All test will be ignored. Cause: " + e.getMessage());
-		}
+		currentWeatherInfo = currentWeather.getWeatherInfo("Tallinn");
 	}
 	
 	@Mock
@@ -51,7 +45,7 @@ public class CurrentWeatherTest {
 		try {
 			weatherInfo = new JSONObject(fileReader.readFile(inputPath));
 		} catch (JSONException e) {
-			e.printStackTrace();
+			fail("Failure cause: " + e.getMessage());
 		}
 		MockitoAnnotations.initMocks(this);
 		when(currentWeatherMock.getWeatherInfo("Tallinn")).thenReturn(weatherInfo);
@@ -61,16 +55,8 @@ public class CurrentWeatherTest {
 
 	@Test
 	public void testIfReturnedWeatherInfoIsInJsonFormat(){
-		JSONObject weatherInfo;
-		try {
-			weatherInfo = currentWeather.getWeatherInfo("Tallinn");
-			assertTrue("Response result must be a JSONObject", weatherInfo == (JSONObject)weatherInfo);
-			assertFalse("Response result can't be empty", weatherInfo.toString().isEmpty());
-			assertTrue("Response result must start with '{'", weatherInfo.toString().startsWith("{"));
-			assertTrue("Response result must end with '}'", weatherInfo.toString().endsWith("}"));
-		} catch (IOException e) {
-			fail("Failure caused by: " + e.getMessage());
-		}
+		JSONObject weatherInfo = currentWeather.getWeatherInfo("Tallinn");
+		Validator.validateJsonFormat(weatherInfo);
 	}
 	
 	@Test
@@ -109,10 +95,11 @@ public class CurrentWeatherTest {
 	@Test
 	public void testIfGeoCoordinatesAreInRequiredFormat() {
 		String geoCoords = currentWeather.getCoordinates(currentWeatherInfo);
-		assertTrue("Coordinates must be string type", geoCoords == (String)geoCoords);
-		assertFalse("Returned coordinates can't be empty", geoCoords.isEmpty());
-		assertTrue("Coordinates must include a ':' separator", geoCoords.contains(":"));
-		//assertTrue(result.length() == 7);
+		try {
+			Validator.validateGeoCoordinates(geoCoords);
+		} catch (Exception e) {
+			fail("Failure cause: " + e.getMessage());
+		}
 	}
 	
 	@Test
