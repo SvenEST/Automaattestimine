@@ -13,6 +13,7 @@ public class WeatherForecastTest {
 	
 	private static WeatherForecast weatherForecast;
 	private static JSONObject weatherForecastInfo;
+	private static JSONObject forecastInfoForSingleDay;
 	
 	@Before
 	public void setUpTest() {
@@ -20,6 +21,7 @@ public class WeatherForecastTest {
 		weatherForecast.setApiKey("1a8a3563bee4967e64490dbfadf83b7e");
 		weatherForecast.setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
 		weatherForecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
+		forecastInfoForSingleDay = weatherForecast.getForecastForSingleDay(weatherForecastInfo, 1);
 	}
 	
 	@Test
@@ -30,13 +32,12 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetWeatherForecastInfoForSingleDayJson() {
-		JSONObject forecastInfoForSingleDay = weatherForecast.getForecastForSingleDay(weatherForecastInfo, 1);
 		Validator.validateJsonFormat(forecastInfoForSingleDay);
 	}
 	
 	@Test
 	public void testIfReturnedTemperatureIsValid() {
-		int temp = weatherForecast.getTemperature(weatherForecastInfo);
+		int temp = weatherForecast.getTemperature(forecastInfoForSingleDay);
 		String units = weatherForecast.getUnits();
 		try {
 			Validator.validateTemperature(temp, units);
@@ -47,7 +48,7 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testIfReturnedMinTemperatureIsValid() {
-		int minTemp = weatherForecast.getMinTemperature(weatherForecastInfo);
+		int minTemp = weatherForecast.getMinTemperature(forecastInfoForSingleDay);
 		String units = weatherForecast.getUnits();
 		try {
 			Validator.validateTemperature(minTemp, units);
@@ -58,7 +59,7 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testIfReturnedMaxTemperatureIsValid() {
-		int maxTemp = weatherForecast.getMaxTemperature(weatherForecastInfo);
+		int maxTemp = weatherForecast.getMaxTemperature(forecastInfoForSingleDay);
 		String units = weatherForecast.getUnits();
 		try {
 			Validator.validateTemperature(maxTemp, units);

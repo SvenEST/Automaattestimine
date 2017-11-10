@@ -40,14 +40,16 @@ public class Validator {
         double latMin = -90;
         double lngMax = 180;
         double lngMin = -180;
-        /*
-        if(geoCoordinates == null || geoCoordinates.latitude == NO_VALUE || geoCoordinates.longitude == NO_VALUE)
-            throw new Exception("Geo-coordinates must be specified");
-        if(geoCoordinates.latitude>latMax || geoCoordinates.latitude<latMin)
+        
+        String[] tempArray;
+        tempArray = geoCoordinates.split(":");
+        double lat = Double.parseDouble(tempArray[0]);
+        double lon = Double.parseDouble(tempArray[1]);
+        
+        if(lat>latMax || lat<latMin)
             throw new Exception("Geo-coordinates latitude is not valid");
-        if(geoCoordinates.longitude>lngMax ||  geoCoordinates.longitude<lngMin)
+        if(lon>lngMax ||  lon<lngMin)
             throw new Exception("Geo-coordinates longitude is not valid");
-		*/
-}
+	}
 
 }

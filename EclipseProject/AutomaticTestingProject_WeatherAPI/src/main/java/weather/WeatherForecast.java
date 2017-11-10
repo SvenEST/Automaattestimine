@@ -68,11 +68,11 @@ public class WeatherForecast implements WeatherReport{
 		return 0;
 	}
 	
-	public String getCoordinates(JSONObject singleDayForecastInfo) {
+	public String getCoordinates(JSONObject weatherForecastInfo) {
 		int lon = 0;
 		int lat = 0;
 		try {
-			JSONObject cityInfo = singleDayForecastInfo.getJSONObject("city");
+			JSONObject cityInfo = weatherForecastInfo.getJSONObject("city");
 			JSONObject coord = cityInfo.getJSONObject("coord");
 			lon = coord.getInt("lon");
 			lat = coord.getInt("lat");
@@ -83,10 +83,10 @@ public class WeatherForecast implements WeatherReport{
 		return geoCcoord;
 	}
 	
-	public String getCityName(JSONObject singleDayForecastInfo) {
+	public String getCityName(JSONObject weatherForecastInfo) {
 		String cityName = null;
 		try {
-			JSONObject cityInfo = singleDayForecastInfo.getJSONObject("city");
+			JSONObject cityInfo = weatherForecastInfo.getJSONObject("city");
 			cityName = cityInfo.getString("name");
 		} catch (JSONException e) {
 			e.printStackTrace();
