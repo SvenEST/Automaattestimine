@@ -11,6 +11,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import file.FileReader;
 import testhelpers.Validator;
@@ -23,8 +26,12 @@ public class WeatherForecastTest {
 	private static JSONObject forecastInfoForSingleDay;
 	private static boolean testsInitialized = false;
 	
+	@Mock
+	WeatherForecast weatherForecastMock;
+	
 	@Before
 	public void setUpTest() throws IOException {
+		MockitoAnnotations.initMocks(this);
 		if (testsInitialized == false) {
 			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\MockingInputs\\WeatherForecastInfo.txt");
 			FileReader fileReader = new FileReader();
@@ -42,7 +49,8 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testIfReturnedWeatherForecastInfoIsInJsonFormat() {
-		JSONObject forecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
+		Mockito.when(weatherForecastMock.getWeatherForecastInfo("Tallinn")).thenReturn(weatherForecastInfoMock);
+		JSONObject forecastInfo = weatherForecastMock.getWeatherForecastInfo("Tallinn");
 		Validator.validateJsonFormat(forecastInfo);
 	}
 	
