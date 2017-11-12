@@ -157,7 +157,7 @@ public class WeatherRequest {
 		return units;
 	}
 
-	public void setUnits(String units) {
+	public void changeUnits(String units) {
 		this.units = units;
 	}
 
