@@ -3,23 +3,41 @@ package weather;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
+import file.FileReader;
 import testhelpers.Validator;
 
 public class WeatherForecastTest {
 	
 	private static WeatherForecast weatherForecast;
-	private static JSONObject weatherForecastInfo;
+	/*private static JSONObject weatherForecastInfo;*/
+	private static JSONObject weatherForecastInfoMock;
 	private static JSONObject forecastInfoForSingleDay;
+	private static boolean testsInitialized = false;
 	
 	@Before
-	public void setUpTest() {
+	public void setUpTest() throws IOException {
+		if (testsInitialized == false) {
+			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\MockingInputs\\WeatherForecastInfo.txt");
+			FileReader fileReader = new FileReader();
+			try {
+				weatherForecastInfoMock = new JSONObject(fileReader.readFile(inputPath));
+			} catch (JSONException e) {
+				fail("Failure cause: " + e.getMessage());
+			}
+			testsInitialized = true;
+		}
 		weatherForecast = new WeatherForecast("1a8a3563bee4967e64490dbfadf83b7e", "metric");
-		weatherForecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");
-		forecastInfoForSingleDay = weatherForecast.getForecastForSingleDay(weatherForecastInfo, 1);
+		/*weatherForecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");*/
+		forecastInfoForSingleDay = weatherForecast.getForecastForSingleDay(weatherForecastInfoMock, 1);
 	}
 	
 	@Test
@@ -68,7 +86,7 @@ public class WeatherForecastTest {
 	
 	@Test
 	public void testGetCoordinates() {
-		String geoCoords = weatherForecast.getCoordinates(weatherForecastInfo);
+		String geoCoords = weatherForecast.getCoordinates(weatherForecastInfoMock);
 		try {
 			Validator.validateGeoCoordinates(geoCoords);
 		} catch (Exception e) {
@@ -79,7 +97,7 @@ public class WeatherForecastTest {
 	@Test
 	public void testIfReturnedForecastInfoHasSameCityNameAsRequested() {
 		String cityName = "Tallinn";
-		assertEquals(cityName, weatherForecast.getCityName(weatherForecastInfo));
+		assertEquals(cityName, weatherForecast.getCityName(weatherForecastInfoMock));
 	}
 	
 	@Test
