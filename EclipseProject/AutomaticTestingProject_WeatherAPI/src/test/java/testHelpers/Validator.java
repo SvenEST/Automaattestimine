@@ -19,7 +19,10 @@ public class Validator {
 	    }else if(units.equalsIgnoreCase("kelvin")){
 	        maxTemp = 373;
 	        minTemp = 173;
+	    }else {
+	    	throw new Exception("Only metric, inperial and kelvin are supported!");
 	    }
+        
         if (result != (int)result)
             throw new Exception("Response temperature is not int");
         if (result < minTemp)
@@ -46,10 +49,14 @@ public class Validator {
         double lat = Double.parseDouble(tempArray[0]);
         double lon = Double.parseDouble(tempArray[1]);
         
-        if(lat>latMax || lat<latMin)
-            throw new Exception("Geo-coordinates latitude is not valid");
-        if(lon>lngMax ||  lon<lngMin)
-            throw new Exception("Geo-coordinates longitude is not valid");
+        if(lat>latMax)
+            throw new Exception("Geo-coordinates latitude can't be bigger than " + latMax);
+        if(lat<latMin)
+        	throw new Exception("\"Geo-coordinates latitude can't be smaller than " + latMin);
+        if(lon>lngMax)
+            throw new Exception("Geo-coordinates longitude can't be bigger than " + lngMax);
+        if(lon<lngMin)
+        	throw new Exception("Geo-coordinates longitude can't be smaller than " + lngMin);
 	}
 
 }
