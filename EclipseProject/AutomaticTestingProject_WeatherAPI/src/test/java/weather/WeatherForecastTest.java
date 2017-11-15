@@ -20,14 +20,14 @@ import testhelpers.Validator;
 
 public class WeatherForecastTest {
 	
-	private static WeatherForecast weatherForecast;
+	private static WeatherForecastParser weatherForecast;
 	/*private static JSONObject weatherForecastInfo;*/
 	private static JSONObject weatherForecastInfoMock;
 	private static JSONObject forecastInfoForSingleDay;
 	private static boolean testsInitialized = false;
 	
 	@Mock
-	WeatherForecast weatherForecastMock;
+	WeatherForecastParser weatherForecastMock;
 	
 	@Before
 	public void setUpTest() throws IOException {
@@ -42,7 +42,7 @@ public class WeatherForecastTest {
 			}
 			testsInitialized = true;
 		}
-		weatherForecast = new WeatherForecast("1a8a3563bee4967e64490dbfadf83b7e", "metric");
+		weatherForecast = new WeatherForecastParser("1a8a3563bee4967e64490dbfadf83b7e", "metric");
 		/*weatherForecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");*/
 		forecastInfoForSingleDay = weatherForecast.getForecastForSingleDay(weatherForecastInfoMock, 1);
 	}

@@ -6,13 +6,13 @@ import org.json.*;
 
 import connection.ConnectionUtility;
 
-public class WeatherForecast implements WeatherReport{
+public class WeatherForecastParser implements CurrentWeatherReport{
 	
 	private String units = "Metric";
 	private String apiKey;
 	private String apiUrl;
 	
-	public WeatherForecast(String apiKey, String units) {
+	public WeatherForecastParser(String apiKey, String units) {
 		setApiKey(apiKey);
 		setApiUrl("http://api.openweathermap.org/data/2.5/forecast");
 		changeUnits(units);

@@ -11,8 +11,6 @@ import java.util.List;
 import org.json.JSONObject;
 
 import connection.ConnectionUtility;
-import file.FileReader;
-import file.WriteFile;
 
 public class WeatherRequest {
 	
@@ -86,8 +84,8 @@ public class WeatherRequest {
 	}
 	
 	public void WriteWeatherReportInfoToFile(Path outputFileLocation, boolean appendFile) {
-        CurrentWeather currentWeather = new CurrentWeather("1a8a3563bee4967e64490dbfadf83b7e", units);
-		WeatherForecast weatherForecast = new WeatherForecast("1a8a3563bee4967e64490dbfadf83b7e", units);
+        CurrentWeatherParser currentWeather = new CurrentWeatherParser("1a8a3563bee4967e64490dbfadf83b7e", units);
+		WeatherForecastParser weatherForecast = new WeatherForecastParser("1a8a3563bee4967e64490dbfadf83b7e", units);
 		
 		JSONObject currentWeatherInfo;
 		JSONObject weatherForecastInfo;
@@ -108,7 +106,7 @@ public class WeatherRequest {
 	}
 	
 	public int getCurrentTemperature() {
-		CurrentWeather currentWeather = new CurrentWeather("1a8a3563bee4967e64490dbfadf83b7e", units);
+		CurrentWeatherParser currentWeather = new CurrentWeatherParser("1a8a3563bee4967e64490dbfadf83b7e", units);
 		JSONObject weatherInfoJson;
 		weatherInfoJson = currentWeather.getWeatherInfo(cityName);
 		int temperature = currentWeather.getTemperature(weatherInfoJson);
@@ -116,7 +114,7 @@ public class WeatherRequest {
 	}
 	
 	public int getForecastTemperatureForDay(int dayNumber) {
-		WeatherForecast weatherForecast = new WeatherForecast("1a8a3563bee4967e64490dbfadf83b7e", units);
+		WeatherForecastParser weatherForecast = new WeatherForecastParser("1a8a3563bee4967e64490dbfadf83b7e", units);
 		JSONObject forecastInfo;
 		int temperature = 0;
 		forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
@@ -126,7 +124,7 @@ public class WeatherRequest {
 	}
 	
 	public int getForecastMinTemperatureForDay(int dayNumber) {
-		WeatherForecast weatherForecast = new WeatherForecast("1a8a3563bee4967e64490dbfadf83b7e", units);
+		WeatherForecastParser weatherForecast = new WeatherForecastParser("1a8a3563bee4967e64490dbfadf83b7e", units);
 		JSONObject forecastInfo;
 		int temperature = 0;
 		forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
@@ -136,7 +134,7 @@ public class WeatherRequest {
 	}
 	
 	public int getForecastMaxTemperatureForDay(int day) {
-		WeatherForecast weatherForecast = new WeatherForecast("1a8a3563bee4967e64490dbfadf83b7e", units);
+		WeatherForecastParser weatherForecast = new WeatherForecastParser("1a8a3563bee4967e64490dbfadf83b7e", units);
 		JSONObject forecastInfo;
 		int temperature = 0;
 		forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
