@@ -20,8 +20,8 @@ public class ConnectionUtility{
 
 	public boolean internetConnectionExists() {
 	    try {
-	        final URL url = new URL(insertedUrl);
-	        final URLConnection connection = url.openConnection();
+	        URL url = new URL(insertedUrl);
+	        URLConnection connection = url.openConnection();
 	        connection.connect();
 	        return true;
 	    } catch (MalformedURLException e) {
@@ -31,17 +31,19 @@ public class ConnectionUtility{
 	    }
 	}
 	
-	public JSONObject readJsonFromUrl () throws IOException {
+	public JSONObject readJsonFromUrl() throws IOException {
 		String resultString = null;
 		try {
 			URL url = new URL(insertedUrl);
 			URLConnection urlCon = url.openConnection();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
-	        resultString = reader.readLine();
-	        reader.close();
+			InputStreamReader inputStreamReader = new InputStreamReader(urlCon.getInputStream());
+			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+	        resultString = bufferedReader.readLine();
+	        bufferedReader.close();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
+		
 		JSONObject resultJson = null;
 		try {
 			resultJson = new JSONObject(resultString);

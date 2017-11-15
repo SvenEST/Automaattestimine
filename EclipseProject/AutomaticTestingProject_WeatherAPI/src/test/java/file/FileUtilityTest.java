@@ -22,7 +22,7 @@ public class FileUtilityTest {
 	@Test
 	public void testFileWriting() {
 		String outputFileName = "FileTest.txt";
-		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\FileWritingAndReading\\");
+		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\FileUtilityTesting\\");
 		Date currentDate = new Date();
 		String fileContent = "File test at: " + currentDate.toString();
 		
@@ -45,7 +45,7 @@ public class FileUtilityTest {
 
 	@Test
 	public void testFileRead() {
-		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\FileWritingAndReading\\input.txt\\");
+		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\FileUtilityTesting\\input.txt\\");
 		String result = null;
 		try {
 			result = fileUtility.readFile(inputPath);
