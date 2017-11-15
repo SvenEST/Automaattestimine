@@ -10,15 +10,16 @@ public class CurrentWeatherReport {
 
 	private String units = "metric";
 	private String apiKey;
-	CurrentWeatherParser currentWeatherParser;
+	private CurrentWeatherParser currentWeatherParser;
+	private JSONObject weatherInfo;
 
 	public CurrentWeatherReport(String cityName, String apiKey, String units) {
 		setApiKey(apiKey);
 		changeUnits(units);
-		JSONObject weatherInfo = getCurrentWeatherInfoFromApi(cityName);
+		weatherInfo = getCurrentWeatherInfoFromApi(cityName);
 		currentWeatherParser = new CurrentWeatherParser(weatherInfo);
 	}
-	
+
 	public JSONObject getCurrentWeatherInfoFromApi(String cityName) {
 		String apiUrl = "http://api.openweathermap.org/data/2.5/weather";
 		String inputFullUrl = apiUrl + "?q=" + cityName + "&units=" + units + "&appid=" + apiKey;
@@ -68,5 +69,9 @@ public class CurrentWeatherReport {
 
 	public String getApiKey() {
 		return apiKey;
+	}
+	
+	public JSONObject getWeatherInfo() {
+		return weatherInfo;
 	}
 }

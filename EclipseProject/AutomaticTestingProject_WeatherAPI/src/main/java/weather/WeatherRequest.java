@@ -11,6 +11,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 import connection.ConnectionUtility;
+import file.FileUtility;
 
 public class WeatherRequest {
 	
@@ -30,22 +31,17 @@ public class WeatherRequest {
 	
 	public WeatherRequest(Path inputFilePath, String units) {
 		ConnectionUtility con = new ConnectionUtility("https://www.google.com/");
-        if (con.internetConnectionExists() == true) {
-        	FileReader fileReader = new FileReader();
+        if (con.internetConnectionExists()) {
+        	FileUtility fileUtility = new FileUtility();
         	cityNamesList = new ArrayList<String>();
-            try {
-    			String cityNames = fileReader.readFile(inputFilePath);
-            	cityNamesList = Arrays.asList(cityNames.split(";"));
-            	
-            	List<String> cityNamesListTrimmed = new ArrayList<String>();
-            	for(String cityName: cityNamesList) {
-            		cityNamesListTrimmed.add(cityName.trim());
-            	}
-            	
-            	cityNamesList = cityNamesListTrimmed;     	
-    		} catch (IOException e) {
-    			e.printStackTrace();
-    		}
+            String cityNames = fileUtility.readFile(inputFilePath);
+			cityNamesList = Arrays.asList(cityNames.split(";"));
+			
+			List<String> cityNamesListTrimmed = new ArrayList<String>();
+			for(String cityName: cityNamesList) {
+				cityNamesListTrimmed.add(cityName.trim());
+			}
+			cityNamesList = cityNamesListTrimmed;
         } else {
         	System.out.println("No internet connection!");
         }
@@ -53,12 +49,12 @@ public class WeatherRequest {
 	
 	public WeatherRequest() {
 		ConnectionUtility con = new ConnectionUtility("https://www.google.com/");
-        if (con.internetConnectionExists() == true) {
-        	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        if (con.internetConnectionExists()) {
+        	BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
     		
     		System.out.println("Please enter a city name and press Enter:");
     		try {
-    			String userInputCityName = br.readLine().trim();
+    			String userInputCityName = bufferedReader.readLine().trim();
     			this.cityName = userInputCityName;
     		} catch (IOException e) {
     			e.printStackTrace();
@@ -67,7 +63,7 @@ public class WeatherRequest {
     		System.out.println("Enter prefferred unit. Metric (default), imperial or kelvin?");
     		String userInputUnits = null;
     		try {
-    			userInputUnits = br.readLine().trim();
+    			userInputUnits = bufferedReader.readLine().trim();
     		} catch (IOException e) {
     			e.printStackTrace();
     		}
@@ -83,80 +79,60 @@ public class WeatherRequest {
         }
 	}
 	
-	public void WriteWeatherReportInfoToFile(Path outputFileLocation, boolean appendFile) {
-        CurrentWeatherParser currentWeather = new CurrentWeatherParser("1a8a3563bee4967e64490dbfadf83b7e", units);
-		WeatherForecastParser weatherForecast = new WeatherForecastParser("1a8a3563bee4967e64490dbfadf83b7e", units);
-		
+	public void WriteWeatherReportInfoToFile(Path outputFileLocation, boolean appendFile){
 		JSONObject currentWeatherInfo;
 		JSONObject weatherForecastInfo;
 		for(String cityName: cityNamesList) {
-			currentWeatherInfo = currentWeather.getWeatherInfo(cityName);
+			CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
+			currentWeatherInfo = currentWeatherReport.getWeatherInfo();
 			String outputContent = currentWeatherInfo.toString();
-			WriteFile fileWriter = new WriteFile();
+			FileUtility fileUtility = new FileUtility();
 			String outputFileName = cityName + "_" + "current" + ".txt";
-			fileWriter.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
+			fileUtility.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
 		}
 		for(String cityName: cityNamesList) {
-			weatherForecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
+			WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
+			weatherForecastInfo = weatherForecastReport.getWeatherForecastInfo(cityName);
 			String outputContent = weatherForecastInfo.toString();
-			WriteFile fileWriter = new WriteFile();
+			FileUtility fileUtility2 = new FileUtility();
 			String outputFileName = cityName + "_" + "forecast" + ".txt";
-			fileWriter.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
+			fileUtility2.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
 		}
 	}
 	
 	public int getCurrentTemperature() {
-		CurrentWeatherParser currentWeather = new CurrentWeatherParser("1a8a3563bee4967e64490dbfadf83b7e", units);
-		JSONObject weatherInfoJson;
-		weatherInfoJson = currentWeather.getWeatherInfo(cityName);
-		int temperature = currentWeather.getTemperature(weatherInfoJson);
+		CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
+		int temperature = currentWeatherReport.getTemperature();
 		return temperature;
 	}
 	
 	public int getForecastTemperatureForDay(int dayNumber) {
-		WeatherForecastParser weatherForecast = new WeatherForecastParser("1a8a3563bee4967e64490dbfadf83b7e", units);
-		JSONObject forecastInfo;
-		int temperature = 0;
-		forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
-		JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , dayNumber);
-		temperature = weatherForecast.getTemperature(forecastForDay);
+		WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
+		int temperature = weatherForecastReport.getTemperature();
 		return temperature;
 	}
 	
 	public int getForecastMinTemperatureForDay(int dayNumber) {
-		WeatherForecastParser weatherForecast = new WeatherForecastParser("1a8a3563bee4967e64490dbfadf83b7e", units);
-		JSONObject forecastInfo;
-		int temperature = 0;
-		forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
-		JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , dayNumber);
-		temperature = weatherForecast.getMinTemperature(forecastForDay);
-		return temperature;
+		WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
+		int minTemperature = weatherForecastReport.getTemperature();
+		return minTemperature;
 	}
 	
-	public int getForecastMaxTemperatureForDay(int day) {
-		WeatherForecastParser weatherForecast = new WeatherForecastParser("1a8a3563bee4967e64490dbfadf83b7e", units);
-		JSONObject forecastInfo;
-		int temperature = 0;
-		forecastInfo = weatherForecast.getWeatherForecastInfo(cityName);
-		JSONObject forecastForDay = weatherForecast.getForecastForSingleDay(forecastInfo , day);
-		temperature = weatherForecast.getMaxTemperature(forecastForDay);
-		return temperature;
+	public int getForecastMaxTemperatureForDay(int dayNumber) {
+		WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
+		int maxTemperature = weatherForecastReport.getTemperature();
+		return maxTemperature;
 	}
-
+	
 	public String getCityName() {
 		return cityName;
-	}
-
-	public void setCityName(String cityName) {
-		this.cityName = cityName;
 	}
 
 	public String getUnits() {
 		return units;
 	}
 
-	public void changeUnits(String units) {
-		this.units = units;
+	public List<String> getCityNamesList() {
+		return cityNamesList;
 	}
-
 }

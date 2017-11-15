@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import file.FileReader;
+import file.FileUtility;
 
 public class RunConsoleCodeTest {
 
@@ -27,8 +27,8 @@ public class RunConsoleCodeTest {
 		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\Sisendfailid\\input.txt");
 		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\Sisendfailid\\");
 		
-		FileReader fileReader = new FileReader();
-		System.out.println("Input file content: " + fileReader.readFile(inputPath));
+		FileUtility fileUtility = new FileUtility();
+		System.out.println("Input file content: " + fileUtility.readFile(inputPath));
 		
 		WeatherRequest request2 = new WeatherRequest(inputPath, "Metric");
 		request2.WriteWeatherReportInfoToFile(outputPath, false);

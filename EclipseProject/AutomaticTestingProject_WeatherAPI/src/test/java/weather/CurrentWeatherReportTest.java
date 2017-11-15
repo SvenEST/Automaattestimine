@@ -17,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 
 import file.FileUtility;
 
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 
 import testhelpers.Validator;
@@ -26,10 +25,7 @@ public class CurrentWeatherReportTest {
 	
 	private JSONObject currentWeatherInfoFromFile;
 	private static boolean testsInitialized;
-	//private CurrentWeatherParser currentWeatherParser;
-	
-	@Mock
-	CurrentWeatherReport currentWeatherReport;
+	private CurrentWeatherReport currentWeatherReport;
 	
 	@Before
 	public void setUpTests() throws IOException {
@@ -42,15 +38,15 @@ public class CurrentWeatherReportTest {
 			} catch (JSONException e) {
 				fail("Failure cause: " + e.getMessage());
 			}
-			System.out.println(currentWeatherInfoFromFile);
-			//currentWeatherParser = new CurrentWeatherParser(currentWeatherInfoFromFile);
 			testsInitialized = true;
 		}
+		currentWeatherReport = new CurrentWeatherReport("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric");
 	}
 
 	@Test
 	public void testIfReturnedWeatherInfoIsInJsonFormat(){
-		Mockito.when(currentWeatherReport.getCurrentWeatherInfoFromApi("Tallinn")).thenReturn(currentWeatherInfoFromFile);
+		//Mockito.when(currentWeatherReport.getCurrentWeatherInfoFromApi("Tallinn")).thenReturn(currentWeatherInfoFromFile);
+		Mockito.when(currentWeatherParser.)
 		JSONObject weatherInfo = currentWeatherReport.getCurrentWeatherInfoFromApi("Tallinn");
 		System.out.println(weatherInfo);
 		System.out.println(currentWeatherInfoFromFile);

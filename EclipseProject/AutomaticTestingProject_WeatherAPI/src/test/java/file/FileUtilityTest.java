@@ -2,7 +2,6 @@ package file;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
@@ -27,19 +26,11 @@ public class FileUtilityTest {
 		String fileContent = "File test at: " + currentDate.toString();
 		
 		boolean appendFile = false;
-		try {
-			fileUtility.writeFile(outputPath, outputFileName, fileContent, appendFile);
-		} catch (IOException e1) {
-			fail("Failure cause: " + e1.getMessage());
-		} 
+		fileUtility.writeFile(outputPath, outputFileName, fileContent, appendFile); 
 		
 		String recievedContent = null;
 		Path inputPath = Paths.get(outputPath.toString(), outputFileName);
-		try {
-			recievedContent = fileUtility.readFile(inputPath);
-		} catch (IOException e2) {
-			fail("Failure cause: " + e2.getMessage());
-		}
+		recievedContent = fileUtility.readFile(inputPath);
 		assertEquals(fileContent, recievedContent);
 	}
 
@@ -47,11 +38,7 @@ public class FileUtilityTest {
 	public void testFileRead() {
 		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\FileUtilityTesting\\input.txt\\");
 		String result = null;
-		try {
-			result = fileUtility.readFile(inputPath);
-		} catch (IOException e) {
-			fail("Failure cause: " + e.getMessage());
-		}
+		result = fileUtility.readFile(inputPath);
 		assertFalse(result.isEmpty());
 	}
 }
