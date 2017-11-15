@@ -18,7 +18,7 @@ import org.mockito.MockitoAnnotations;
 import file.FileReader;
 import testhelpers.Validator;
 
-public class WeatherForecastTest {
+public class WeatherForecastReportTest {
 	
 	private static WeatherForecastParser weatherForecast;
 	/*private static JSONObject weatherForecastInfo;*/

@@ -89,6 +89,10 @@ public class WeatherForecastParser{
 		return cityName;
 	}
 
+	public JSONObject getSingleDayForecastInfo() {
+		return singleDayForecastInfo;
+	}
+
 	/*public String getUnits() {
 		return units;
 	}
