@@ -52,7 +52,7 @@ public class WeatherForecastReport {
 		return weatherForecastParser.getMaxTemperature();
 	}
 	
-	public String getCoordinates(JSONObject weatherForecastInfo) {
+	public String getGeoCoordinates() {
 		return weatherForecastParser.getGeoCoordinates();
 	}
 	
@@ -66,8 +66,15 @@ public class WeatherForecastReport {
 		}
 	}
 	
+	public String getUnits() {
+		return units;
+	}
+
 	public void setApiKey(String apiKey) {
 		this.apiKey = apiKey;
 	}
 
+	public String getApiKey() {
+		return apiKey;
+	}
 }

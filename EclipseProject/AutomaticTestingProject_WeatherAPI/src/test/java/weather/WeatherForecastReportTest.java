@@ -15,56 +15,48 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import file.FileReader;
+import file.FileUtility;
 import testhelpers.Validator;
 
 public class WeatherForecastReportTest {
 	
-	private static WeatherForecastParser weatherForecast;
-	/*private static JSONObject weatherForecastInfo;*/
-	private static JSONObject weatherForecastInfoMock;
-	private static JSONObject forecastInfoForSingleDay;
+	private static JSONObject weatherForecastInfoFromFile;
 	private static boolean testsInitialized = false;
 	
 	@Mock
-	WeatherForecastParser weatherForecastMock;
+	WeatherForecastReport weatherForecastReport;
 	
 	@Before
 	public void setUpTest() throws IOException {
 		MockitoAnnotations.initMocks(this);
 		if (testsInitialized == false) {
-			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\MockingInputs\\WeatherForecastInfo.txt");
-			FileReader fileReader = new FileReader();
+			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherForecastReportTesting\\WeatherForecastInfo.txt");
+			FileUtility fileUtility = new FileUtility();
 			try {
-				weatherForecastInfoMock = new JSONObject(fileReader.readFile(inputPath));
+				weatherForecastInfoFromFile = new JSONObject(fileUtility.readFile(inputPath));
 			} catch (JSONException e) {
 				fail("Failure cause: " + e.getMessage());
 			}
 			testsInitialized = true;
 		}
-		weatherForecast = new WeatherForecastParser("1a8a3563bee4967e64490dbfadf83b7e", "metric");
-		/*weatherForecastInfo = weatherForecast.getWeatherForecastInfo("Tallinn");*/
-		forecastInfoForSingleDay = weatherForecast.getForecastForSingleDay(weatherForecastInfoMock, 1);
+		weatherForecastReport = new WeatherForecastReport("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric", 1);
 	}
 	
 	@Test
 	public void testIfReturnedWeatherForecastInfoIsInJsonFormat() {
-		Mockito.when(weatherForecastMock.getWeatherForecastInfo("Tallinn")).thenReturn(weatherForecastInfoMock);
-		JSONObject forecastInfo = weatherForecastMock.getWeatherForecastInfo("Tallinn");
+		//Mockito.when(weatherForecastMock.getWeatherForecastInfo("Tallinn")).thenReturn(weatherForecastInfoMock);
+		JSONObject forecastInfo = weatherForecastReport.getWeatherForecastInfo("Tallinn");
 		Validator.validateJsonFormat(forecastInfo);
 	}
 	
 	@Test
-	public void testGetWeatherForecastInfoForSingleDayJson() {
-		Validator.validateJsonFormat(forecastInfoForSingleDay);
-	}
-	
-	@Test
-	public void testIfReturnedTemperatureIsValid() {
-		int temp = weatherForecast.getTemperature(forecastInfoForSingleDay);
-		String units = weatherForecast.getUnits();
+	public void testIfResoponseTemperatureIsValid() {
+		int temperature = weatherForecastReport.getTemperature();
+		String units = weatherForecastReport.getUnits();
+		System.out.println(temperature);
+		System.out.println(units);
 		try {
-			Validator.validateTemperature(temp, units);
+			Validator.validateTemperature(temperature, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
@@ -72,10 +64,10 @@ public class WeatherForecastReportTest {
 	
 	@Test
 	public void testIfReturnedMinTemperatureIsValid() {
-		int minTemp = weatherForecast.getMinTemperature(forecastInfoForSingleDay);
-		String units = weatherForecast.getUnits();
+		int minTemperature = weatherForecastReport.getMinTemperature();
+		String units = weatherForecastReport.getUnits();
 		try {
-			Validator.validateTemperature(minTemp, units);
+			Validator.validateTemperature(minTemperature, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
@@ -83,10 +75,10 @@ public class WeatherForecastReportTest {
 	
 	@Test
 	public void testIfReturnedMaxTemperatureIsValid() {
-		int maxTemp = weatherForecast.getMaxTemperature(forecastInfoForSingleDay);
-		String units = weatherForecast.getUnits();
+		int maxTemperature = weatherForecastReport.getMaxTemperature();
+		String units = weatherForecastReport.getUnits();
 		try {
-			Validator.validateTemperature(maxTemp, units);
+			Validator.validateTemperature(maxTemperature, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
@@ -94,7 +86,7 @@ public class WeatherForecastReportTest {
 	
 	@Test
 	public void testGetCoordinates() {
-		String geoCoords = weatherForecast.getCoordinates(weatherForecastInfoMock);
+		String geoCoords = weatherForecastReport.getGeoCoordinates();
 		try {
 			Validator.validateGeoCoordinates(geoCoords);
 		} catch (Exception e) {
@@ -104,47 +96,48 @@ public class WeatherForecastReportTest {
 	
 	@Test
 	public void testIfReturnedForecastInfoHasSameCityNameAsRequested() {
-		String cityName = "Tallinn";
-		assertEquals(cityName, weatherForecast.getCityName(weatherForecastInfoMock));
+		String insertedCityName = "Tallinn";
+		String returnedCityName = weatherForecastReport.getCityName();
+		assertEquals(insertedCityName, returnedCityName);
 	}
 	
 	@Test
 	public void testChangingUnitsToMetric() {
 		String newUnit = "Metric";
-		weatherForecast.changeUnits(newUnit);
-		String resultUnit = weatherForecast.getUnits();
+		weatherForecastReport.changeUnits(newUnit);
+		String resultUnit = weatherForecastReport.getUnits();
 		assertEquals(newUnit, resultUnit);	
 	}
 	
 	@Test
 	public void testChangingUnitsToImperial() {
 		String newUnit = "Imperial";
-		weatherForecast.changeUnits(newUnit);
-		String resultUnit = weatherForecast.getUnits();
+		weatherForecastReport.changeUnits(newUnit);
+		String resultUnit = weatherForecastReport.getUnits();
 		assertEquals(newUnit, resultUnit);
 	}
 	
 	@Test
 	public void testChangingUnitsToKelvin() {
 		String newUnit = "Kelvin";
-		weatherForecast.changeUnits(newUnit);
-		String resultUnit = weatherForecast.getUnits();
+		weatherForecastReport.changeUnits(newUnit);
+		String resultUnit = weatherForecastReport.getUnits();
 		assertEquals(newUnit, resultUnit);
 	}
-
+	/*
 	@Test
 	public void testSettingNewApiUrl() {
 		String newUrl = "http://api.openweathermap.org/data/2.5/forecast";
-		weatherForecast.setApiKey(newUrl);
-		String resultUrl = weatherForecast.getApiKey();
+		weatherForecastReport.setApiUrl(newUrl);
+		String resultUrl = weatherForecastReport.getApiUrl();
 		assertEquals(newUrl, resultUrl);
-	}
+	}*/
 	
 	@Test
 	public void testSettingNewApiKey() {
 		String newKey = "1a8a3563bee4967e64490dbfadf83b7e";
-		weatherForecast.setApiKey(newKey);
-		String resultKey = weatherForecast.getApiKey();
+		weatherForecastReport.setApiKey(newKey);
+		String resultKey = weatherForecastReport.getApiKey();
 		assertEquals(newKey, resultKey);
 	}
 	
