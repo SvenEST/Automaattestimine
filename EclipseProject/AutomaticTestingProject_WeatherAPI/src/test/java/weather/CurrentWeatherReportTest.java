@@ -40,9 +40,14 @@ public class CurrentWeatherReportTest {
 			} catch (JSONException e) {
 				fail("Failure cause: " + e.getMessage());
 			}
+			
+			Mockito.when(currentWeatherReport.getCurrentWeatherInfoFromApi("Tallinn")).
+			currentWeatherReport = new CurrentWeatherReport("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric");
+			//currentWeatherReport.setCurrentWeatherParser(new CurrentWeatherParser(currentWeatherInfoFromFile));
 			testsInitialized = true;
 		}
-		currentWeatherReport = new CurrentWeatherReport("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric");
+		//currentWeatherReport.setWeatherInfo(currentWeatherInfoFromFile);
+		//currentWeatherReport.setUnits("metric");
 	}
 
 	@Test
@@ -50,11 +55,11 @@ public class CurrentWeatherReportTest {
 		//Mockito.when(currentWeatherReport.getCurrentWeatherInfoFromApi("Tallinn")).thenReturn(currentWeatherInfoFromFile);
 		JSONObject weatherInfo = currentWeatherReport.getCurrentWeatherInfoFromApi("Tallinn");
 		Validator.validateJsonFormat(weatherInfo);
-		Mockito.verify(currentWeatherReport, times(1)).getCurrentWeatherInfoFromApi("Tallinn");
+		//Mockito.verify(currentWeatherReport, times(1)).getCurrentWeatherInfoFromApi("Tallinn");
 	}
 	
 	@Test
-	public void testIfResponseTemperatureIsValid() { 
+	public void testIfResponseTemperatureIsValid() {
 		int temperature = currentWeatherReport.getTemperature();
 		String units = currentWeatherReport.getUnits();
 		try {

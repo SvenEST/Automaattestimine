@@ -11,12 +11,11 @@ public class CurrentWeatherReport {
 	private String units = "metric";
 	private String apiKey;
 	private CurrentWeatherParser currentWeatherParser;
-	private JSONObject weatherInfo;
 
 	public CurrentWeatherReport(String cityName, String apiKey, String units) {
 		setApiKey(apiKey);
 		changeUnits(units);
-		weatherInfo = getCurrentWeatherInfoFromApi(cityName);
+		JSONObject weatherInfo = getCurrentWeatherInfoFromApi(cityName);
 		currentWeatherParser = new CurrentWeatherParser(weatherInfo);
 	}
 
@@ -70,8 +69,12 @@ public class CurrentWeatherReport {
 	public String getApiKey() {
 		return apiKey;
 	}
-	
-	public JSONObject getWeatherInfo() {
-		return weatherInfo;
+
+	public void setUnits(String units) {
+		this.units = units;
+	}
+
+	public void setCurrentWeatherParser(CurrentWeatherParser currentWeatherParser) {
+		this.currentWeatherParser = currentWeatherParser;
 	}
 }

@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import file.FileReader;
 import testhelpers.Validator;
 
 public class WeatherRequestTest {
