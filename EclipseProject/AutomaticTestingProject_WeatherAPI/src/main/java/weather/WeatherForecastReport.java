@@ -16,18 +16,18 @@ public class WeatherForecastReport {
 	public WeatherForecastReport(String cityName, String apiKey, String units) {
 		setApiKey(apiKey);
 		changeUnits(units);
-		forecastInfo = getWeatherForecastInfo(cityName);
+		forecastInfo = getWeatherForecastInfoFromApi(cityName);
 		weatherForecastParser = new WeatherForecastParser(forecastInfo);
 	}
 	
 	public WeatherForecastReport(String cityName, String apiKey, String units, int dayNumber) {
 		setApiKey(apiKey);
 		changeUnits(units);
-		forecastInfo = getWeatherForecastInfo(cityName);
+		forecastInfo = getWeatherForecastInfoFromApi(cityName);
 		weatherForecastParser = new WeatherForecastParser(forecastInfo, dayNumber);
 	}
 
-	public JSONObject getWeatherForecastInfo(String city){
+	public JSONObject getWeatherForecastInfoFromApi(String city){
 		String apiUrl = "http://api.openweathermap.org/data/2.5/forecast";
 		String url = apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey;
 		ConnectionUtility connection = new ConnectionUtility(url);
@@ -76,5 +76,9 @@ public class WeatherForecastReport {
 
 	public String getApiKey() {
 		return apiKey;
+	}
+
+	public JSONObject getForecastInfo() {
+		return forecastInfo;
 	}
 }

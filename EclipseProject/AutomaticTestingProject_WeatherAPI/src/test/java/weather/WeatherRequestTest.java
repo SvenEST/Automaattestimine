@@ -9,14 +9,46 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import file.FileUtility;
 import testhelpers.Validator;
 
 public class WeatherRequestTest {
+
+	private boolean testsInitialized;
+	//private JSONObject currentWeatherInfoFromFile;
+	//private JSONObject weatherForecastInfoFromFile;
 	
-	private WeatherRequest weatherRequest = new WeatherRequest("Tallinn", "metric");
+	@Mock
+	WeatherRequest weatherRequest;
+
+	@Before
+	public void setUpTests() {
+		if (testsInitialized != true) {
+			/*FileUtility fileUtility = new FileUtility();
+			
+			Path currentWeatherInputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\CurrentWeatherInfo.txt");
+			try {
+				currentWeatherInfoFromFile = new JSONObject(fileUtility.readFile(currentWeatherInputPath));
+			} catch (JSONException e) {
+				fail("Failure cause: " + e.getMessage());
+			}
+		
+			Path weatherForecastinputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\WeatherForecastInfo.txt");
+			try {
+				weatherForecastInfoFromFile = new JSONObject(fileUtility.readFile(weatherForecastinputPath));
+			} catch (JSONException e) {
+				fail("Failure cause: " + e.getMessage());
+			}*/
+			
+			//weatherRequest = new WeatherRequest("Tallinn", "metric");
+			testsInitialized = true;
+		}
+	}
 	
 	@Test
 	public void testWriteWeatherReportInfoToFile() {
@@ -44,11 +76,15 @@ public class WeatherRequestTest {
 	}
 	
 	@Test
-	public void testIfResponseCurrentTemperatureIsValid() {
-		int temp = weatherRequest.getCurrentTemperature();
+	public void testIfResponseTemperatureIsValid() {
+		Mockito.when(weatherRequest.getCurrentTemperature()).thenReturn(1);
+		Mockito.when(weatherRequest.getUnits()).thenReturn("metric");
+		int temperature = weatherRequest.getCurrentTemperature();
 		String units = weatherRequest.getUnits();
+		System.out.println(temperature);
+		System.out.println(units);
 		try {
-			Validator.validateTemperature(temp, units);
+			Validator.validateTemperature(temperature, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}

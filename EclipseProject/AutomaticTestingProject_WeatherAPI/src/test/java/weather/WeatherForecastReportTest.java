@@ -3,13 +3,11 @@ package weather;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.Before;
 import org.junit.Test;
 
 import file.FileUtility;
@@ -19,7 +17,7 @@ public class WeatherForecastReportTest {
 	
 	final WeatherForecastReport weatherForecastReport = new WeatherForecastReport("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric", 1) {
 		@Override
-		public JSONObject getWeatherForecastInfo(String city){
+		public JSONObject getWeatherForecastInfoFromApi(String city){
 			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherForecastReportTesting\\WeatherForecastInfo.txt");
 			FileUtility fileUtility = new FileUtility();
 			JSONObject weatherForecastInfoFromFile = null;
@@ -34,7 +32,7 @@ public class WeatherForecastReportTest {
 	
 	@Test
 	public void testIfReturnedWeatherForecastInfoIsInJsonFormat() {
-		JSONObject forecastInfo = weatherForecastReport.getWeatherForecastInfo("Tallinn");
+		JSONObject forecastInfo = weatherForecastReport.getWeatherForecastInfoFromApi("Tallinn");
 		Validator.validateJsonFormat(forecastInfo);
 	}
 	

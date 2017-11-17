@@ -79,6 +79,10 @@ public class CurrentWeatherReport {
 		this.currentWeatherParser = currentWeatherParser;
 	}
 
+	public void setWeatherInfo(JSONObject weatherInfo) {
+		this.weatherInfo = weatherInfo;
+	}
+
 	public JSONObject getWeatherInfo() {
 		return weatherInfo;
 	}

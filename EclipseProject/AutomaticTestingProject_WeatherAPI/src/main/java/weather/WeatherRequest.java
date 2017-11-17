@@ -16,8 +16,8 @@ import file.FileUtility;
 public class WeatherRequest {
 	
 	public String cityName;
-	public String units = "Metric";
 	List<String> cityNamesList;
+	public String units = "Metric";
 
 	public WeatherRequest(String cityName, String units) {
 		this.cityName = cityName;
@@ -79,6 +79,7 @@ public class WeatherRequest {
         }
 	}
 	
+	
 	public void WriteWeatherReportInfoToFile(Path outputFileLocation, boolean appendFile){
 		JSONObject currentWeatherInfo;
 		JSONObject weatherForecastInfo;
@@ -92,7 +93,7 @@ public class WeatherRequest {
 		}
 		for(String cityName: cityNamesList) {
 			WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
-			weatherForecastInfo = weatherForecastReport.getWeatherForecastInfo(cityName);
+			weatherForecastInfo = weatherForecastReport.getForecastInfo();
 			String outputContent = weatherForecastInfo.toString();
 			FileUtility fileUtility2 = new FileUtility();
 			String outputFileName = cityName + "_forecast.txt";
@@ -132,6 +133,10 @@ public class WeatherRequest {
 		return cityName;
 	}
 	
+	public List<String> getCityNamesList() {
+		return cityNamesList;
+	}
+	
 	public void changeUnits(String newUnit) {
 		if(newUnit.equalsIgnoreCase("Metric") || newUnit.equalsIgnoreCase("Imperial") || newUnit.equalsIgnoreCase("Kelvin")) {
 			this.units = newUnit;
@@ -140,9 +145,5 @@ public class WeatherRequest {
 
 	public String getUnits() {
 		return units;
-	}
-
-	public List<String> getCityNamesList() {
-		return cityNamesList;
 	}
 }
