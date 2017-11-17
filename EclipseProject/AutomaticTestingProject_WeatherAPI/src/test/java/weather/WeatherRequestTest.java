@@ -18,36 +18,12 @@ import file.FileUtility;
 import testhelpers.Validator;
 
 public class WeatherRequestTest {
-
-	private boolean testsInitialized;
-	//private JSONObject currentWeatherInfoFromFile;
-	//private JSONObject weatherForecastInfoFromFile;
 	
-	@Mock
-	WeatherRequest weatherRequest;
+	private WeatherRequest weatherRequest;
 
 	@Before
 	public void setUpTests() {
-		if (testsInitialized != true) {
-			/*FileUtility fileUtility = new FileUtility();
-			
-			Path currentWeatherInputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\CurrentWeatherInfo.txt");
-			try {
-				currentWeatherInfoFromFile = new JSONObject(fileUtility.readFile(currentWeatherInputPath));
-			} catch (JSONException e) {
-				fail("Failure cause: " + e.getMessage());
-			}
-		
-			Path weatherForecastinputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\WeatherForecastInfo.txt");
-			try {
-				weatherForecastInfoFromFile = new JSONObject(fileUtility.readFile(weatherForecastinputPath));
-			} catch (JSONException e) {
-				fail("Failure cause: " + e.getMessage());
-			}*/
-			
-			//weatherRequest = new WeatherRequest("Tallinn", "metric");
-			testsInitialized = true;
-		}
+		weatherRequest = Mockito.mock(WeatherRequest.class);
 	}
 	
 	@Test
@@ -79,10 +55,9 @@ public class WeatherRequestTest {
 	public void testIfResponseTemperatureIsValid() {
 		Mockito.when(weatherRequest.getCurrentTemperature()).thenReturn(1);
 		Mockito.when(weatherRequest.getUnits()).thenReturn("metric");
+		
 		int temperature = weatherRequest.getCurrentTemperature();
 		String units = weatherRequest.getUnits();
-		System.out.println(temperature);
-		System.out.println(units);
 		try {
 			Validator.validateTemperature(temperature, units);
 		} catch (Exception e) {
@@ -93,6 +68,10 @@ public class WeatherRequestTest {
 	@Test
 	public void testIfForecastTemperatureForSingleDayIsValid() {
 		int dayNumber = 1;
+		
+		Mockito.when(weatherRequest.getForecastTemperatureForDay(dayNumber)).thenReturn(1);
+		Mockito.when(weatherRequest.getUnits()).thenReturn("metric");
+		
 		int temp = weatherRequest.getForecastTemperatureForDay(dayNumber);
 		String units = weatherRequest.getUnits();
 		try {
@@ -105,6 +84,10 @@ public class WeatherRequestTest {
 	@Test
 	public void testIfForecastMinTemperatureForSingleDayIsValid() {
 		int dayNumber = 1;
+		
+		Mockito.when(weatherRequest.getForecastTemperatureForDay(dayNumber)).thenReturn(1);
+		Mockito.when(weatherRequest.getUnits()).thenReturn("metric");
+		
 		int minTemp = weatherRequest.getForecastMinTemperatureForDay(dayNumber);
 		String units = weatherRequest.getUnits();
 		try {
@@ -117,6 +100,10 @@ public class WeatherRequestTest {
 	@Test
 	public void testIfForecastMaxTemperatureForSingleDayIsValid() {
 		int dayNumber = 1;
+		
+		Mockito.when(weatherRequest.getForecastTemperatureForDay(dayNumber)).thenReturn(1);
+		Mockito.when(weatherRequest.getUnits()).thenReturn("metric");
+		
 		int maxTemp = weatherRequest.getForecastMaxTemperatureForDay(dayNumber);
 		String units = weatherRequest.getUnits();
 		try {
@@ -128,6 +115,8 @@ public class WeatherRequestTest {
 	
 	@Test
 	public void testSettingNewCityName() {
+		Mockito.when(weatherRequest.getCityName()).thenReturn("Tallinn");
+		
 		String newCityName = "Tallinn";
 		weatherRequest.setCityName(newCityName);
 		String resultCityName = weatherRequest.getCityName();
@@ -136,7 +125,9 @@ public class WeatherRequestTest {
 	
 	@Test
 	public void testChangingUnitsToMetric() {
-		String newUnit = "Metric";
+		Mockito.when(weatherRequest.getUnits()).thenReturn("metric");
+		
+		String newUnit = "metric";
 		weatherRequest.changeUnits(newUnit);
 		String resultUnit = weatherRequest.getUnits();
 		assertEquals(newUnit, resultUnit);
@@ -144,7 +135,9 @@ public class WeatherRequestTest {
 	
 	@Test
 	public void testChangingUnitsToImperial() {
-		String newUnit = "Imperial";
+		Mockito.when(weatherRequest.getUnits()).thenReturn("imperial");
+		
+		String newUnit = "imperial";
 		weatherRequest.changeUnits(newUnit);
 		String resultUnit = weatherRequest.getUnits();
 		assertEquals(newUnit, resultUnit);
@@ -152,7 +145,9 @@ public class WeatherRequestTest {
 	
 	@Test
 	public void testChangingUnitsToKelvin() {
-		String newUnit = "Kelvin"; 
+		Mockito.when(weatherRequest.getUnits()).thenReturn("kelvin");
+		
+		String newUnit = "kelvin"; 
 		weatherRequest.changeUnits(newUnit);
 		String resultUnit = weatherRequest.getUnits();
 		assertEquals(newUnit, resultUnit);
