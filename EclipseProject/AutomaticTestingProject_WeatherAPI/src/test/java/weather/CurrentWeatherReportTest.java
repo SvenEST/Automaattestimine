@@ -11,51 +11,38 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import file.FileUtility;
-
-import static org.mockito.Mockito.times;
 
 import testhelpers.Validator;
 
 public class CurrentWeatherReportTest {
 	
-	private JSONObject currentWeatherInfoFromFile;
-	private static boolean testsInitialized;
-
-	@Mock
-	CurrentWeatherReport currentWeatherReport;
-	
-	@Before
-	public void setUpTests() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		if (testsInitialized != true) {
+	final CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric") {
+		@Override
+		public JSONObject getCurrentWeatherInfoFromApi(String cityName) {
 			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\CurrentWeatherReportTesting\\CurrentWeatherInfo.txt");
 			FileUtility fileUtility = new FileUtility();
+			JSONObject currentWeatherInfoFromFile = null;
 			try {
 				currentWeatherInfoFromFile = new JSONObject(fileUtility.readFile(inputPath));
 			} catch (JSONException e) {
 				fail("Failure cause: " + e.getMessage());
 			}
-			
-			Mockito.when(currentWeatherReport.getCurrentWeatherInfoFromApi("Tallinn")).
-			currentWeatherReport = new CurrentWeatherReport("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric");
-			//currentWeatherReport.setCurrentWeatherParser(new CurrentWeatherParser(currentWeatherInfoFromFile));
-			testsInitialized = true;
+			return currentWeatherInfoFromFile;
 		}
-		//currentWeatherReport.setWeatherInfo(currentWeatherInfoFromFile);
-		//currentWeatherReport.setUnits("metric");
+	};
+	
+	@Before
+	public void setUpTests() throws IOException {
+		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
 	public void testIfReturnedWeatherInfoIsInJsonFormat(){
-		//Mockito.when(currentWeatherReport.getCurrentWeatherInfoFromApi("Tallinn")).thenReturn(currentWeatherInfoFromFile);
 		JSONObject weatherInfo = currentWeatherReport.getCurrentWeatherInfoFromApi("Tallinn");
 		Validator.validateJsonFormat(weatherInfo);
-		//Mockito.verify(currentWeatherReport, times(1)).getCurrentWeatherInfoFromApi("Tallinn");
 	}
 	
 	@Test
@@ -67,8 +54,6 @@ public class CurrentWeatherReportTest {
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
-		//Mockito.verify(currentWeatherReport, times(1)).getTemperature();
-		//Mockito.verify(currentWeatherReport, times(1)).getUnits();
 	}
 	
 	@Test
@@ -80,8 +65,6 @@ public class CurrentWeatherReportTest {
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
-		//Mockito.verify(currentWeatherReport, times(1)).getMinTemperature();
-		//Mockito.verify(currentWeatherReport, times(1)).getUnits();
 	}
 	
 	@Test
@@ -93,8 +76,6 @@ public class CurrentWeatherReportTest {
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
-		//Mockito.verify(currentWeatherReport, times(1)).getMaxTemperature();
-		//Mockito.verify(currentWeatherReport, times(1)).getUnits();
 	}
 	
 	@Test
@@ -105,7 +86,6 @@ public class CurrentWeatherReportTest {
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
-		//Mockito.verify(currentWeatherReport, times(1)).getGeoCoordinates();
 	}
 	
 	@Test
@@ -122,8 +102,6 @@ public class CurrentWeatherReportTest {
 		currentWeatherReport.changeUnits(newUnit);
 		String resultUnit = currentWeatherReport.getUnits();
 		assertEquals(newUnit, resultUnit);
-		//Mockito.verify(currentWeatherReport, times(1)).changeUnits(newUnit);
-		//Mockito.verify(currentWeatherReport, times(1)).getUnits();
 	}
 	
 	@Test
@@ -132,8 +110,6 @@ public class CurrentWeatherReportTest {
 		currentWeatherReport.changeUnits(newUnit);
 		String resultUnit = currentWeatherReport.getUnits();
 		assertEquals(newUnit, resultUnit);
-		//Mockito.verify(currentWeatherReport, times(1)).changeUnits(newUnit);
-		//Mockito.verify(currentWeatherReport, times(1)).getUnits();
 	}
 	
 	@Test
@@ -142,22 +118,7 @@ public class CurrentWeatherReportTest {
 		currentWeatherReport.changeUnits(newUnit);
 		String resultUnit = currentWeatherReport.getUnits();
 		assertEquals(newUnit, resultUnit);
-		//Mockito.verify(currentWeatherReport, times(1)).changeUnits(newUnit);
-		//Mockito.verify(currentWeatherReport, times(1)).getUnits();
 	}
-	
-	/*
-	@Test
-	public void testSettingNewApiUrl() {
-		Mockito.when(currentWeatherMock.getApiUrl()).thenReturn("http://api.openweathermap.org/data/2.5/weather");
-		String newUrl = "http://api.openweathermap.org/data/2.5/weather";
-		currentWeatherMock.setApiUrl(newUrl);
-		String resultUrl = currentWeatherMock.getApiUrl();
-		assertEquals(newUrl, resultUrl);
-		Mockito.verify(currentWeatherMock, times(1)).setApiUrl(newUrl);
-		Mockito.verify(currentWeatherMock, times(1)).getApiUrl();
-	}
-	*/
 	
 	@Test
 	public void testSettingNewApiKey() {
@@ -165,7 +126,5 @@ public class CurrentWeatherReportTest {
 		currentWeatherReport.setApiKey(newKey);
 		String resultKey = currentWeatherReport.getApiKey();
 		assertEquals(newKey, resultKey);
-		//Mockito.verify(currentWeatherReport, times(1)).setApiKey(newKey);
-		//Mockito.verify(currentWeatherReport, times(1)).getApiKey();
 	}
 }
