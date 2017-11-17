@@ -33,11 +33,6 @@ public class CurrentWeatherReportTest {
 			return currentWeatherInfoFromFile;
 		}
 	};
-	
-	@Before
-	public void setUpTests() throws IOException {
-		MockitoAnnotations.initMocks(this);
-	}
 
 	@Test
 	public void testIfReturnedWeatherInfoIsInJsonFormat(){

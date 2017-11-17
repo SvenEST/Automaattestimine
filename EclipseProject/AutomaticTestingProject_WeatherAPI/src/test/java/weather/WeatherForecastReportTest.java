@@ -11,40 +11,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import file.FileUtility;
 import testhelpers.Validator;
 
 public class WeatherForecastReportTest {
 	
-	private static JSONObject weatherForecastInfoFromFile;
-	private static boolean testsInitialized = false;
-	
-	@Mock
-	WeatherForecastReport weatherForecastReport;
-	
-	@Before
-	public void setUpTest() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		if (testsInitialized == false) {
+	final WeatherForecastReport weatherForecastReport = new WeatherForecastReport("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric", 1) {
+		@Override
+		public JSONObject getWeatherForecastInfo(String city){
 			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherForecastReportTesting\\WeatherForecastInfo.txt");
 			FileUtility fileUtility = new FileUtility();
+			JSONObject weatherForecastInfoFromFile = null;
 			try {
 				weatherForecastInfoFromFile = new JSONObject(fileUtility.readFile(inputPath));
 			} catch (JSONException e) {
 				fail("Failure cause: " + e.getMessage());
 			}
-			testsInitialized = true;
+			return weatherForecastInfoFromFile;
 		}
-		weatherForecastReport = new WeatherForecastReport("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric", 1);
-	}
+	};
 	
 	@Test
 	public void testIfReturnedWeatherForecastInfoIsInJsonFormat() {
-		//Mockito.when(weatherForecastMock.getWeatherForecastInfo("Tallinn")).thenReturn(weatherForecastInfoMock);
 		JSONObject forecastInfo = weatherForecastReport.getWeatherForecastInfo("Tallinn");
 		Validator.validateJsonFormat(forecastInfo);
 	}
@@ -124,14 +113,6 @@ public class WeatherForecastReportTest {
 		String resultUnit = weatherForecastReport.getUnits();
 		assertEquals(newUnit, resultUnit);
 	}
-	/*
-	@Test
-	public void testSettingNewApiUrl() {
-		String newUrl = "http://api.openweathermap.org/data/2.5/forecast";
-		weatherForecastReport.setApiUrl(newUrl);
-		String resultUrl = weatherForecastReport.getApiUrl();
-		assertEquals(newUrl, resultUrl);
-	}*/
 	
 	@Test
 	public void testSettingNewApiKey() {
@@ -140,5 +121,4 @@ public class WeatherForecastReportTest {
 		String resultKey = weatherForecastReport.getApiKey();
 		assertEquals(newKey, resultKey);
 	}
-	
 }
