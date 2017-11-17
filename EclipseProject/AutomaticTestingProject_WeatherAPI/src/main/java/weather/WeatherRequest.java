@@ -31,20 +31,20 @@ public class WeatherRequest {
 	
 	public WeatherRequest(Path inputFilePath, String units) {
 		ConnectionUtility con = new ConnectionUtility("https://www.google.com/");
-        if (con.internetConnectionExists()) {
-        	FileUtility fileUtility = new FileUtility();
-        	cityNamesList = new ArrayList<String>();
-            String cityNames = fileUtility.readFile(inputFilePath);
-			cityNamesList = Arrays.asList(cityNames.split(";"));
-			
-			List<String> cityNamesListTrimmed = new ArrayList<String>();
-			for(String cityName: cityNamesList) {
-				cityNamesListTrimmed.add(cityName.trim());
-			}
-			cityNamesList = cityNamesListTrimmed;
-        } else {
+        if (con.internetConnectionExists() != true) {
         	System.out.println("No internet connection!");
         }
+        
+    	FileUtility fileUtility = new FileUtility();
+    	cityNamesList = new ArrayList<String>();
+        String allCityNames = fileUtility.readFile(inputFilePath);
+		cityNamesList = Arrays.asList(allCityNames.split(";"));
+		
+		List<String> cityNamesListTrimmed = new ArrayList<String>();
+		for(String cityName: cityNamesList) {
+			cityNamesListTrimmed.add(cityName.trim());
+		}
+		cityNamesList = cityNamesListTrimmed;
 	}
 	
 	public WeatherRequest() {
@@ -87,7 +87,7 @@ public class WeatherRequest {
 			currentWeatherInfo = currentWeatherReport.getWeatherInfo();
 			String outputContent = currentWeatherInfo.toString();
 			FileUtility fileUtility = new FileUtility();
-			String outputFileName = cityName + "_" + "current" + ".txt";
+			String outputFileName = cityName + "_current.txt";
 			fileUtility.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
 		}
 		for(String cityName: cityNamesList) {
@@ -95,7 +95,7 @@ public class WeatherRequest {
 			weatherForecastInfo = weatherForecastReport.getWeatherForecastInfo(cityName);
 			String outputContent = weatherForecastInfo.toString();
 			FileUtility fileUtility2 = new FileUtility();
-			String outputFileName = cityName + "_" + "forecast" + ".txt";
+			String outputFileName = cityName + "_forecast.txt";
 			fileUtility2.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
 		}
 	}
@@ -124,8 +124,18 @@ public class WeatherRequest {
 		return maxTemperature;
 	}
 	
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
 	public String getCityName() {
 		return cityName;
+	}
+	
+	public void changeUnits(String newUnit) {
+		if(newUnit.equalsIgnoreCase("Metric") || newUnit.equalsIgnoreCase("Imperial") || newUnit.equalsIgnoreCase("Kelvin")) {
+			this.units = newUnit;
+		}
 	}
 
 	public String getUnits() {

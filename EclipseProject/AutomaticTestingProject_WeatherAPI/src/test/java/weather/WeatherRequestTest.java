@@ -1,44 +1,48 @@
 package weather;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.times;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
+import file.FileUtility;
 import testhelpers.Validator;
 
 public class WeatherRequestTest {
 	
-	private static WeatherRequest weatherRequest;
-
-	@Before
-	public void setUpTests() {
-		weatherRequest = new WeatherRequest("Tallinn", "metric");
-	}
+	private WeatherRequest weatherRequest = new WeatherRequest("Tallinn", "metric");
 	
 	@Test
 	public void testWriteWeatherReportInfoToFile() {
-		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\Sisendfailid\\");
-		boolean appendFile = false;
-		weatherRequest.WriteWeatherReportInfoToFile(outputPath, appendFile);
+		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\");
+		Path inputFilePath = Paths.get(outputPath.toString(), "input.txt");
+		WeatherRequest weatherRequestWithInputFile = new WeatherRequest(inputFilePath, "metric");
 		
-		/*
-		FileReader fileReader = new FileReader();
-		String recievedOutputContent = null;
-		try {
-			recievedOutputContent = fileReader.readFile(outputPath);           //Ainult path, Faili nimi puudu
-		} catch (IOException e) {
-			e.printStackTrace();
+		boolean appendFile = false;
+		weatherRequestWithInputFile.WriteWeatherReportInfoToFile(outputPath, appendFile);
+		
+		List<String> cityNamesList = weatherRequestWithInputFile.getCityNamesList();
+		
+		List<String> fileNames = new ArrayList<String>();
+		for (String cityName: cityNamesList) {
+			fileNames.add(cityName + "_current.txt");
+			fileNames.add(cityName + "_forecast.txt");
 		}
-		assertFalse(recievedOutputContent.isEmpty());*/
+		
+		FileUtility fileUtility = new FileUtility();
+		for(String fileName: fileNames) {
+			Path readPath = Paths.get(outputPath.toString(), fileName);
+			String recievedOutputContent = fileUtility.readFile(readPath);
+			assertFalse(recievedOutputContent.isEmpty());
+		}
 	}
-
+	
 	@Test
 	public void testIfResponseCurrentTemperatureIsValid() {
 		int temp = weatherRequest.getCurrentTemperature();
