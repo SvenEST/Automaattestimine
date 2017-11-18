@@ -11,7 +11,6 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import file.FileUtility;
@@ -20,6 +19,28 @@ import testhelpers.Validator;
 public class WeatherRequestTest {
 	
 	private WeatherRequest weatherRequest;
+	
+	private WeatherRequest weatherRequestWithInputFile = new WeatherRequest(Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\input.txt\\"), "metric"){
+		@Override
+		public void WriteWeatherReportInfoToFile(Path outputFileLocation, boolean appendFile){
+			List<String> cityNamesList = weatherRequestWithInputFile.getCityNamesList();
+			System.out.println(cityNamesList);
+			for(String cityName: cityNamesList) {
+				FileUtility fileUtility = new FileUtility();
+			    Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\CurrentWeatherInfo.txt");
+				String outputContent = fileUtility.readFile(inputPath);
+				String outputFileName = cityName + "_current.txt";
+				fileUtility.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
+			}
+			for(String cityName: cityNamesList) {
+				FileUtility fileUtility2 = new FileUtility();
+				Path inputPath2 = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\WeatherForecastInfo.txt");
+				String outputContent = fileUtility2.readFile(inputPath2);
+				String outputFileName = cityName + "_forecast.txt";
+				fileUtility2.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
+			}
+		}
+	};
 
 	@Before
 	public void setUpTests() {
@@ -27,15 +48,15 @@ public class WeatherRequestTest {
 	}
 	
 	@Test
-	public void testWriteWeatherReportInfoToFile() {
+	public void testWritingWeatherReportInfoToFile() {
 		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\");
-		Path inputFilePath = Paths.get(outputPath.toString(), "input.txt");
-		WeatherRequest weatherRequestWithInputFile = new WeatherRequest(inputFilePath, "metric");
-		
+		//Path inputFilePath = Paths.get(outputPath.toString(), "input.txt");
+		//WeatherRequest weatherRequestWithInputFile = new WeatherRequest(inputFilePath, "metric");
 		boolean appendFile = false;
 		weatherRequestWithInputFile.WriteWeatherReportInfoToFile(outputPath, appendFile);
 		
 		List<String> cityNamesList = weatherRequestWithInputFile.getCityNamesList();
+		System.out.println(cityNamesList);
 		
 		List<String> fileNames = new ArrayList<String>();
 		for (String cityName: cityNamesList) {
