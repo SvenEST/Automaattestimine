@@ -24,13 +24,14 @@ public class FileUtilityTest {
 		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\FileUtilityTesting\\");
 		Date currentDate = new Date();
 		String fileContent = "File test at: " + currentDate.toString();
-		
 		boolean appendFile = false;
+		
 		fileUtility.writeFile(outputPath, outputFileName, fileContent, appendFile); 
 		
 		String recievedContent = null;
 		Path inputPath = Paths.get(outputPath.toString(), outputFileName);
 		recievedContent = fileUtility.readFile(inputPath);
+		
 		assertEquals(fileContent, recievedContent);
 	}
 
