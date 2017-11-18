@@ -133,10 +133,14 @@ public class WeatherRequest {
 		return cityName;
 	}
 	
+	public void setCityNamesList(List<String> cityNamesList) {
+		this.cityNamesList = cityNamesList;
+	}
+	
 	public List<String> getCityNamesList() {
 		return cityNamesList;
 	}
-	
+
 	public void changeUnits(String newUnit) {
 		if(newUnit.equalsIgnoreCase("Metric") || newUnit.equalsIgnoreCase("Imperial") || newUnit.equalsIgnoreCase("Kelvin")) {
 			this.units = newUnit;

@@ -52,4 +52,12 @@ public class ConnectionUtility{
 		}
 		return resultJson;
 	}
+
+	public String getInsertedUrl() {
+		return insertedUrl;
+	}
+
+	public void setInsertedUrl(String insertedUrl) {
+		this.insertedUrl = insertedUrl;
+	}
 }

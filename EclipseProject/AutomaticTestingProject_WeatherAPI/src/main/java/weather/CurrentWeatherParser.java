@@ -67,4 +67,12 @@ public class CurrentWeatherParser{
 		}
 		return cityName;
 	}
+
+	public JSONObject getWeatherInfo() {
+		return weatherInfo;
+	}
+
+	public void setWeatherInfo(JSONObject weatherInfo) {
+		this.weatherInfo = weatherInfo;
+	}
 }

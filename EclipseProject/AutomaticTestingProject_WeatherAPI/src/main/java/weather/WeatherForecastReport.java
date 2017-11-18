@@ -78,7 +78,19 @@ public class WeatherForecastReport {
 		return apiKey;
 	}
 
+	public WeatherForecastParser getWeatherForecastParser() {
+		return weatherForecastParser;
+	}
+
+	public void setWeatherForecastParser(WeatherForecastParser weatherForecastParser) {
+		this.weatherForecastParser = weatherForecastParser;
+	}
+
 	public JSONObject getForecastInfo() {
 		return forecastInfo;
+	}
+	
+	public void setForecastInfo(JSONObject forecastInfo) {
+		this.forecastInfo = forecastInfo;
 	}
 }

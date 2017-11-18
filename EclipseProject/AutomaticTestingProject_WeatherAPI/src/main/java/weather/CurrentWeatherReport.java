@@ -70,13 +70,13 @@ public class CurrentWeatherReport {
 	public String getApiKey() {
 		return apiKey;
 	}
-
-	public void setUnits(String units) {
-		this.units = units;
-	}
-
+	
 	public void setCurrentWeatherParser(CurrentWeatherParser currentWeatherParser) {
 		this.currentWeatherParser = currentWeatherParser;
+	}
+
+	public CurrentWeatherParser getCurrentWeatherParser() {
+		return currentWeatherParser;
 	}
 
 	public void setWeatherInfo(JSONObject weatherInfo) {
