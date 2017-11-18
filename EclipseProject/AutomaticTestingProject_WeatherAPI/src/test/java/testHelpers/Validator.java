@@ -20,7 +20,7 @@ public class Validator {
 	        maxTemp = 373;
 	        minTemp = 173;
 	    }else {
-	    	throw new Exception("Only metric, inperial and kelvin are supported!");
+	    	throw new Exception("Only metric, imperial and kelvin are supported!");
 	    }
         
         if (result != (int)result)
@@ -31,11 +31,11 @@ public class Validator {
             throw new Exception("Temperature cannot be higher than: " + maxTemp + ", report shows: " + result);
     }
     
-    public static void validateJsonFormat(JSONObject jsonObject) {
-		assertTrue("Response result must be a JSONObject", jsonObject == (JSONObject)jsonObject);
-		assertFalse("Response result can't be empty", jsonObject.toString().isEmpty());
-		assertTrue("Response result must start with '{'", jsonObject.toString().startsWith("{"));
-		assertTrue("Response result must end with '}'", jsonObject.toString().endsWith("}"));
+    public static void validateJsonFormat(JSONObject insertedObject) {
+		assertTrue("Response result must be a JSONObject", insertedObject == (JSONObject)insertedObject);
+		assertFalse("Response result can't be empty", insertedObject.toString().isEmpty());
+		assertTrue("Response result must start with '{'", insertedObject.toString().startsWith("{"));
+		assertTrue("Response result must end with '}'", insertedObject.toString().endsWith("}"));
     }
     
     public static void validateGeoCoordinates(String geoCoordinates) throws Exception {
@@ -50,13 +50,13 @@ public class Validator {
         double lon = Double.parseDouble(tempArray[1]);
         
         if(lat>latMax)
-            throw new Exception("Geo-coordinates latitude can't be bigger than " + latMax);
+            throw new Exception("Geo-coordinates latitude can't be bigger than " + latMax + ", report shows: " + lat);
         if(lat<latMin)
-        	throw new Exception("\"Geo-coordinates latitude can't be smaller than " + latMin);
+        	throw new Exception("Geo-coordinates latitude can't be smaller than " + latMin + ", report shows: " + lat);
         if(lon>lngMax)
-            throw new Exception("Geo-coordinates longitude can't be bigger than " + lngMax);
+            throw new Exception("Geo-coordinates longitude can't be bigger than " + lngMax + ", report shows: " + lon);
         if(lon<lngMin)
-        	throw new Exception("Geo-coordinates longitude can't be smaller than " + lngMin);
+        	throw new Exception("Geo-coordinates longitude can't be smaller than " + lngMin + ", report shows: " + lon);
 	}
 
 }

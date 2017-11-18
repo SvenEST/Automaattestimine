@@ -92,24 +92,4 @@ public class WeatherForecastParser{
 	public JSONObject getSingleDayForecastInfo() {
 		return singleDayForecastInfo;
 	}
-
-	/*public String getUnits() {
-		return units;
-	}
-	
-	public void setApiUrl(String apiUrl) {
-		this.apiUrl = apiUrl;
-	}
-
-	public String getApiUrl() {
-		return apiUrl;
-	}
-	
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
-	}
-
-	public String getApiKey() {
-		return apiKey;
-	}*/
 }
