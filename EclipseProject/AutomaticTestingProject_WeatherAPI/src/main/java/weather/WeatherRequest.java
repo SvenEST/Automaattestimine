@@ -114,6 +114,12 @@ public class WeatherRequest {
 		return maxTemperature;
 	}
 	
+	public String getGeoCoordinates() {
+		CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
+		String coordinates = currentWeatherReport.getGeoCoordinates();
+		return coordinates;
+	}
+	
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}

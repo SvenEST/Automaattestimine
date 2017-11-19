@@ -21,6 +21,7 @@ public class RunConsoleCodeTest {
 		System.out.println("Forecast max temperature for day 1 in " + request.getCityName() + ": " + request.getForecastMaxTemperatureForDay(1));
 		System.out.println("Forecast max temperature for day 2 in " + request.getCityName() + ": " + request.getForecastMaxTemperatureForDay(2));
 		System.out.println("Forecast max temperature for day 3 in " + request.getCityName() + ": " + request.getForecastMaxTemperatureForDay(3));
+		System.out.println("Weather request geo coordinates: " + request.getGeoCoordinates());
 		
 		System.out.println("");
 		System.out.println("'Testing' file reading and writing:");
