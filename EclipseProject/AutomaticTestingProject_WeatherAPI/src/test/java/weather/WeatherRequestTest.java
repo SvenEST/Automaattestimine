@@ -22,9 +22,8 @@ public class WeatherRequestTest {
 	
 	private WeatherRequest weatherRequestWithInputFile = new WeatherRequest(Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\input.txt\\"), "metric"){
 		@Override
-		public void WriteWeatherReportInfoToFile(Path outputFileLocation, boolean appendFile){
+		public void WriteWeatherReportsInfoToFiles(Path outputFileLocation, boolean appendFile){
 			List<String> cityNamesList = weatherRequestWithInputFile.getCityNamesList();
-			System.out.println(cityNamesList);
 			for(String cityName: cityNamesList) {
 				FileUtility fileUtility = new FileUtility();
 			    Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\CurrentWeatherInfo.txt");
@@ -53,10 +52,9 @@ public class WeatherRequestTest {
 		//Path inputFilePath = Paths.get(outputPath.toString(), "input.txt");
 		//WeatherRequest weatherRequestWithInputFile = new WeatherRequest(inputFilePath, "metric");
 		boolean appendFile = false;
-		weatherRequestWithInputFile.WriteWeatherReportInfoToFile(outputPath, appendFile);
+		weatherRequestWithInputFile.WriteWeatherReportsInfoToFiles(outputPath, appendFile);
 		
 		List<String> cityNamesList = weatherRequestWithInputFile.getCityNamesList();
-		System.out.println(cityNamesList);
 		
 		List<String> fileNames = new ArrayList<String>();
 		for (String cityName: cityNamesList) {

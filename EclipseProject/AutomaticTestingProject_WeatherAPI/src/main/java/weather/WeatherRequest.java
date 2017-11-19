@@ -22,19 +22,9 @@ public class WeatherRequest {
 	public WeatherRequest(String cityName, String units) {
 		this.cityName = cityName;
 		this.units = units;
-		
-		ConnectionUtility con = new ConnectionUtility("https://www.google.com/");
-        if (con.internetConnectionExists() != true) {
-        	System.out.println("No internet connection!");
-        }
 	}
 	
 	public WeatherRequest(Path inputFilePath, String units) {
-		ConnectionUtility con = new ConnectionUtility("https://www.google.com/");
-        if (con.internetConnectionExists() != true) {
-        	System.out.println("No internet connection!");
-        }
-        
     	FileUtility fileUtility = new FileUtility();
     	cityNamesList = new ArrayList<String>();
         String allCityNames = fileUtility.readFile(inputFilePath);
@@ -57,7 +47,7 @@ public class WeatherRequest {
     			String userInputCityName = bufferedReader.readLine().trim();
     			this.cityName = userInputCityName;
     		} catch (IOException e) {
-    			e.printStackTrace();
+    			System.out.println("Failed to get user input city name: " + e.getMessage());
     		}
     		
     		System.out.println("Enter prefferred unit. Metric (default), imperial or kelvin?");
@@ -65,14 +55,15 @@ public class WeatherRequest {
     		try {
     			userInputUnits = bufferedReader.readLine().trim();
     		} catch (IOException e) {
-    			e.printStackTrace();
+    			System.out.println("Failed to get user input units: " + e.getMessage());
     		}
+    		
     		if (userInputUnits != null) {
     			if (userInputUnits.equalsIgnoreCase("Metric") || userInputUnits.equalsIgnoreCase("Imperial") || userInputUnits.equalsIgnoreCase("Kelvin")) {
     				this.units = userInputUnits;
     			}
     		}else{
-    			System.out.println("User inserted nothing. Default unit metric wil be used.");
+    			System.out.println("User inserted unit not recognized. Default unit metric wil be used.");
     		}
         } else {
         	System.out.println("No internet connection!");
@@ -80,12 +71,10 @@ public class WeatherRequest {
 	}
 	
 	
-	public void WriteWeatherReportInfoToFile(Path outputFileLocation, boolean appendFile){
-		JSONObject currentWeatherInfo;
-		JSONObject weatherForecastInfo;
+	public void WriteWeatherReportsInfoToFiles(Path outputFileLocation, boolean appendFile){
 		for(String cityName: cityNamesList) {
 			CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
-			currentWeatherInfo = currentWeatherReport.getWeatherInfo();
+			JSONObject currentWeatherInfo = currentWeatherReport.getWeatherInfo();
 			String outputContent = currentWeatherInfo.toString();
 			FileUtility fileUtility = new FileUtility();
 			String outputFileName = cityName + "_current.txt";
@@ -93,7 +82,7 @@ public class WeatherRequest {
 		}
 		for(String cityName: cityNamesList) {
 			WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
-			weatherForecastInfo = weatherForecastReport.getForecastInfo();
+			JSONObject weatherForecastInfo = weatherForecastReport.getForecastInfo();
 			String outputContent = weatherForecastInfo.toString();
 			FileUtility fileUtility2 = new FileUtility();
 			String outputFileName = cityName + "_forecast.txt";

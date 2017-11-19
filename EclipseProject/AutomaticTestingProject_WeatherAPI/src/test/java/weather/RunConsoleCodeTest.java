@@ -31,7 +31,7 @@ public class RunConsoleCodeTest {
 		System.out.println("Input file content: " + fileUtility.readFile(inputPath));
 		
 		WeatherRequest request2 = new WeatherRequest(inputPath, "Metric");
-		request2.WriteWeatherReportInfoToFile(outputPath, false);
+		request2.WriteWeatherReportsInfoToFiles(outputPath, false);
 		System.out.println("Wrote output files");
 		
 		System.out.println("");
