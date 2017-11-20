@@ -3,6 +3,7 @@ package weather;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -64,5 +65,11 @@ public class CurrentWeatherReportTest {
 		String insertedCityName = "Tallinn";
 		String returnedCityName = currentWeatherReport.getCityName();
 		assertEquals(insertedCityName, returnedCityName);
+	}
+	
+	@Test
+	public void testIfReturnedWeatherInfoIsInJsonFormat(){
+		JSONObject weatherInfo = currentWeatherReport.getWeatherInfo();
+		Validator.validateJsonFormat(weatherInfo);
 	}
 }
