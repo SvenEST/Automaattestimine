@@ -49,8 +49,6 @@ public class WeatherRequestTest {
 	@Test
 	public void testWritingWeatherReportInfoToFile() {
 		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\");
-		//Path inputFilePath = Paths.get(outputPath.toString(), "input.txt");
-		//WeatherRequest weatherRequestWithInputFile = new WeatherRequest(inputFilePath, "metric");
 		boolean appendFile = false;
 		weatherRequestWithInputFile.WriteWeatherReportsInfoToFiles(outputPath, appendFile);
 		
