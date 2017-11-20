@@ -1,36 +1,17 @@
 package weather;
 
-import java.io.IOException;
-
 import org.json.JSONObject;
-
-import connection.ConnectionUtility;
 
 public class CurrentWeatherReport {
 
-	private String units = "metric";
-	private String apiKey;
-	private JSONObject weatherInfo;
-	private CurrentWeatherParser currentWeatherParser;
+	private final JSONObject weatherInfo;
+	private final CurrentWeatherReportFactory factory;
+	private final CurrentWeatherParser currentWeatherParser;
 
 	public CurrentWeatherReport(String cityName, String apiKey, String units) {
-		setApiKey(apiKey);
-		changeUnits(units);
-		weatherInfo = getCurrentWeatherInfoFromApi(cityName);
+		factory = new CurrentWeatherReportFactory(cityName, apiKey, units);
+		weatherInfo = factory.getCurrentWeatherInfoFromApi(cityName);
 		currentWeatherParser = new CurrentWeatherParser(weatherInfo);
-	}
-
-	public JSONObject getCurrentWeatherInfoFromApi(String cityName) {
-		String apiUrl = "http://api.openweathermap.org/data/2.5/weather";
-		String inputFullUrl = apiUrl + "?q=" + cityName + "&units=" + units + "&appid=" + apiKey;
-		ConnectionUtility connection = new ConnectionUtility(inputFullUrl);
-		JSONObject weatherInfo = null;
-		try {
-			weatherInfo = connection.readJsonFromUrl();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return weatherInfo;
 	}
 
 	public int getTemperature() {
@@ -52,38 +33,13 @@ public class CurrentWeatherReport {
 	public String getCityName() {
 		return currentWeatherParser.getCityName();
 	}
-	
-	public void changeUnits(String newUnit) {
-		if(newUnit.equalsIgnoreCase("metric") || newUnit.equalsIgnoreCase("imperial") || newUnit.equalsIgnoreCase("Kelvin")) {
-			this.units = newUnit;
-		}
-	}
-	
-	public String getUnits() {
-		return units;
-	}
-	
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
-	}
-
-	public String getApiKey() {
-		return apiKey;
-	}
-	
-	public void setCurrentWeatherParser(CurrentWeatherParser currentWeatherParser) {
-		this.currentWeatherParser = currentWeatherParser;
-	}
-
-	public CurrentWeatherParser getCurrentWeatherParser() {
-		return currentWeatherParser;
-	}
-
-	public void setWeatherInfo(JSONObject weatherInfo) {
-		this.weatherInfo = weatherInfo;
-	}
 
 	public JSONObject getWeatherInfo() {
 		return weatherInfo;
+	}
+	
+	public String getUnits() {
+		String units = factory.getUnits();
+		return units;
 	}
 }

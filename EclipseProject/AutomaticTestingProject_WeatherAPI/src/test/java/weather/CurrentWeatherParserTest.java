@@ -1,6 +1,5 @@
 package weather;
 
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
@@ -12,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockitoAnnotations;
 
 import file.FileUtility;
 import testhelpers.Validator;
@@ -26,7 +24,6 @@ public class CurrentWeatherParserTest {
 
 	@Before
 	public void setUpTests() throws IOException {
-		MockitoAnnotations.initMocks(this);
 		if (testsInitialized != true) {
 			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\CurrentWeatherParserTesting\\CurrentWeatherInfo.txt");
 			FileUtility fileUtility = new FileUtility();
