@@ -14,7 +14,7 @@ public class Validator {
             maxTemp = 100;
             minTemp = -100;
         }else if(units.equalsIgnoreCase("imperial")){
-            maxTemp = 140;
+            maxTemp = 212;
             minTemp = -148;
 	    }else if(units.equalsIgnoreCase("kelvin")){
 	        maxTemp = 373;
@@ -24,7 +24,7 @@ public class Validator {
 	    }
         
         if (result != (int)result)
-            throw new Exception("Response temperature is not int");
+            throw new Exception("Response temperature is not an int value");
         if (result < minTemp)
             throw new Exception("Temperature cannot be lower than: " + minTemp + ", report shows: " + result);
         if (result > maxTemp)

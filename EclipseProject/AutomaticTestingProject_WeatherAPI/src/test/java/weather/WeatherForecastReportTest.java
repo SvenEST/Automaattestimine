@@ -3,6 +3,7 @@ package weather;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,8 +24,6 @@ public class WeatherForecastReportTest {
 	public void testIfResoponseTemperatureIsValid() {
 		int temperature = weatherForecastReport.getTemperature();
 		String units = weatherForecastReport.getUnits();
-		System.out.println(temperature);
-		System.out.println(units);
 		try {
 			Validator.validateTemperature(temperature, units);
 		} catch (Exception e) {
@@ -69,5 +68,11 @@ public class WeatherForecastReportTest {
 		String insertedCityName = "Tallinn";
 		String returnedCityName = weatherForecastReport.getCityName();
 		assertEquals(insertedCityName, returnedCityName);
+	}
+	
+	@Test
+	public void testIfReturnedForecastInfoIsInJsonFormat(){
+		JSONObject weatherInfo = weatherForecastReport.getForecastInfo();
+		Validator.validateJsonFormat(weatherInfo);
 	}
 }

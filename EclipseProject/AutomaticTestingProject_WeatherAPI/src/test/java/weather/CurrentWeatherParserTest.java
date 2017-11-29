@@ -17,10 +17,10 @@ import testhelpers.Validator;
 
 public class CurrentWeatherParserTest {
 
-	private JSONObject currentWeatherInfoFromFile;
-	private CurrentWeatherParser currentWeatherParser;
+	private static JSONObject currentWeatherInfoFromFile;
+	private static CurrentWeatherParser currentWeatherParser;
 	private String units = "metric";
-	private boolean testsInitialized;
+	private static boolean testsInitialized;
 
 	@Before
 	public void setUpTests() throws IOException {

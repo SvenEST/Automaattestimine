@@ -11,6 +11,7 @@ import testhelpers.Validator;
 
 public class CurrentWeatherReportTest {
 
+	
 	CurrentWeatherReport currentWeatherReport;
 	String units;
 	

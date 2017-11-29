@@ -11,21 +11,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockitoAnnotations;
 
 import file.FileUtility;
 import testhelpers.Validator;
 
 public class WeatherForecastParserTest {
 
-	private JSONObject forecastInfoFromFile;
-	private WeatherForecastParser weatherForecastParser;
+	private static JSONObject forecastInfoFromFile;
+	private static WeatherForecastParser weatherForecastParser;
 	private String units = "metric";
-	private boolean testsInitialized;
+	private static boolean testsInitialized;
 
 	@Before
 	public void setUpTests() throws IOException {
-		MockitoAnnotations.initMocks(this);
 		if (testsInitialized != true) {
 			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherForecastParserTesting\\WeatherForecastInfo.txt");
 			FileUtility fileUtility = new FileUtility();

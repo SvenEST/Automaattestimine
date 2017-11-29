@@ -4,9 +4,9 @@ import org.json.JSONObject;
 
 public class WeatherForecastReport {
 
+	private final WeatherForecastReportFactory weatherForecastReportFactory;
 	private final JSONObject forecastInfo;
 	private final WeatherForecastParser weatherForecastParser;
-	private final WeatherForecastReportFactory weatherForecastReportFactory;
 	
 	public WeatherForecastReport(String cityName, String apiKey, String units) {
 		weatherForecastReportFactory = new WeatherForecastReportFactory(cityName, apiKey, units);

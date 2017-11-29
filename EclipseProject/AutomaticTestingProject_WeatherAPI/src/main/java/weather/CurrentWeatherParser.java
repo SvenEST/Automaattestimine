@@ -71,8 +71,4 @@ public class CurrentWeatherParser{
 	public JSONObject getWeatherInfo() {
 		return weatherInfo;
 	}
-
-	public void setWeatherInfo(JSONObject weatherInfo) {
-		this.weatherInfo = weatherInfo;
-	}
 }

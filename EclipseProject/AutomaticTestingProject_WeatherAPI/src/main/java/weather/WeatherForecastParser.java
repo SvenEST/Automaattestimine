@@ -93,15 +93,7 @@ public class WeatherForecastParser{
 		return forecastInfo;
 	}
 
-	public void setForecastInfo(JSONObject forecastInfo) {
-		this.forecastInfo = forecastInfo;
-	}
-
 	public JSONObject getSingleDayForecastInfo() {
 		return singleDayForecastInfo;
-	}
-	
-	public void setSingleDayForecastInfo(JSONObject singleDayForecastInfo) {
-		this.singleDayForecastInfo = singleDayForecastInfo;
 	}
 }

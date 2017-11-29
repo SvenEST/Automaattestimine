@@ -9,7 +9,7 @@ import connection.ConnectionUtility;
 
 public class CurrentWeatherReportFactory {
 
-	private String units = "metric";
+	private String units;
 	private String apiKey;
 	
 	public CurrentWeatherReportFactory(String cityName, String apiKey, String units) {
@@ -33,6 +33,8 @@ public class CurrentWeatherReportFactory {
 	public void changeUnits(String newUnit) {
 		if(newUnit.equalsIgnoreCase("metric") || newUnit.equalsIgnoreCase("imperial") || newUnit.equalsIgnoreCase("Kelvin")) {
 			this.units = newUnit;
+		} else {
+			this.units = "metric";
 		}
 	}
 	

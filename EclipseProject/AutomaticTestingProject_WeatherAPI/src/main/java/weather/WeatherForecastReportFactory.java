@@ -1,5 +1,7 @@
 package weather;
 
+import static org.junit.Assert.fail;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -9,7 +11,7 @@ import connection.ConnectionUtility;
 
 public class WeatherForecastReportFactory {
 
-	private String units = "metric";
+	private String units;
 	private String apiKey;
 	
 	public WeatherForecastReportFactory(String cityName, String apiKey, String units) {
@@ -24,8 +26,8 @@ public class WeatherForecastReportFactory {
 			URL url = new URL(apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey);
 			ConnectionUtility connection = new ConnectionUtility(url);
 			forecastInfo = connection.readJsonFromUrl();
-		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
+		} catch (MalformedURLException e) {
+			fail("Failure cause: " + e.getMessage());
 		}
 		return forecastInfo;
 	}
@@ -33,6 +35,8 @@ public class WeatherForecastReportFactory {
 	public void changeUnits(String newUnit) {
 		if(newUnit.equalsIgnoreCase("Metric") || newUnit.equalsIgnoreCase("Imperial") || newUnit.equalsIgnoreCase("Kelvin")) {
 			this.units = newUnit;
+		} else {
+			this.units = "metric";
 		}
 	}
 	
