@@ -13,23 +13,26 @@ public class WeatherRequest {
 	
 	public String cityName;
 	List<String> cityNamesList;
-	public String units = "Metric";
+	public String units;
 
 	public WeatherRequest(String cityName, String units) {
 		this.cityName = cityName;
-		this.units = units;
+		changeUnits(units);
 	}
 	
 	public WeatherRequest(Path inputFilePath, String units) {
     	FileUtility fileUtility = new FileUtility();
-    	cityNamesList = new ArrayList<String>();
+    	
         String allCityNames = fileUtility.readFile(inputFilePath);
+        cityNamesList = new ArrayList<String>();
 		cityNamesList = Arrays.asList(allCityNames.split(";"));
 		
+		//Removes possible spaces from city names
 		List<String> cityNamesListTrimmed = new ArrayList<String>();
 		for(String cityName: cityNamesList) {
 			cityNamesListTrimmed.add(cityName.trim());
 		}
+		
 		cityNamesList = cityNamesListTrimmed;
 	}
 	
@@ -53,12 +56,9 @@ public class WeatherRequest {
 		}
 		
 		if (userInputUnits != null) {
-			if (userInputUnits.equalsIgnoreCase("Metric") || userInputUnits.equalsIgnoreCase("Imperial") || userInputUnits.equalsIgnoreCase("Kelvin")) {
-				this.units = userInputUnits;
-			}
-		}else{
 			System.out.println("User inserted unit not recognized. Default unit metric wil be used.");
 		}
+		changeUnits(userInputUnits);
 	}
 	
 	
@@ -122,8 +122,8 @@ public class WeatherRequest {
 	
 	public String getGeoCoordinates() {
 		CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
-		String coordinates = currentWeatherReport.getGeoCoordinates();
-		return coordinates;
+		String geoCoordinates = currentWeatherReport.getGeoCoordinates();
+		return geoCoordinates;
 	}
 	
 	public void setCityName(String cityName) {
@@ -145,6 +145,8 @@ public class WeatherRequest {
 	public void changeUnits(String newUnit) {
 		if(newUnit.equalsIgnoreCase("Metric") || newUnit.equalsIgnoreCase("Imperial") || newUnit.equalsIgnoreCase("Kelvin")) {
 			this.units = newUnit;
+		} else {
+			this.units = "metric";
 		}
 	}
 

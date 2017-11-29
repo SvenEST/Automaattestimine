@@ -23,20 +23,11 @@ public class WeatherRequestTest {
 	private WeatherRequest weatherRequestWithInputFile = new WeatherRequest(Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\input.txt\\"), "metric"){
 		@Override
 		public void WriteWeatherReportsInfoToFiles(Path outputFileLocation, boolean appendFile){
-			List<String> cityNamesList = weatherRequestWithInputFile.getCityNamesList();
 			for(String cityName: cityNamesList) {
+				String outputContent = cityName + " test!";
 				FileUtility fileUtility = new FileUtility();
-			    Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\CurrentWeatherInfo.txt");
-				String outputContent = fileUtility.readFile(inputPath);
-				String outputFileName = cityName + "_current.txt";
+				String outputFileName = cityName + ".txt";
 				fileUtility.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
-			}
-			for(String cityName: cityNamesList) {
-				FileUtility fileUtility2 = new FileUtility();
-				Path inputPath2 = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\WeatherForecastInfo.txt");
-				String outputContent = fileUtility2.readFile(inputPath2);
-				String outputFileName = cityName + "_forecast.txt";
-				fileUtility2.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
 			}
 		}
 	};
@@ -56,8 +47,7 @@ public class WeatherRequestTest {
 		
 		List<String> fileNames = new ArrayList<String>();
 		for (String cityName: cityNamesList) {
-			fileNames.add(cityName + "_current.txt");
-			fileNames.add(cityName + "_forecast.txt");
+			fileNames.add(cityName + ".txt");
 		}
 		
 		FileUtility fileUtility = new FileUtility();
@@ -80,6 +70,9 @@ public class WeatherRequestTest {
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
+		
+		Mockito.verify(weatherRequest, Mockito.times(1)).getCurrentTemperature();
+		Mockito.verify(weatherRequest, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
@@ -96,6 +89,9 @@ public class WeatherRequestTest {
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
+		
+		Mockito.verify(weatherRequest, Mockito.times(1)).getForecastTemperatureForDay(dayNumber);
+		Mockito.verify(weatherRequest, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
@@ -112,6 +108,9 @@ public class WeatherRequestTest {
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
+		
+		Mockito.verify(weatherRequest, Mockito.times(1)).getForecastMinTemperatureForDay(dayNumber);
+		Mockito.verify(weatherRequest, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
@@ -128,6 +127,9 @@ public class WeatherRequestTest {
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
+		
+		Mockito.verify(weatherRequest, Mockito.times(1)).getForecastMaxTemperatureForDay(dayNumber);
+		Mockito.verify(weatherRequest, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
@@ -138,6 +140,8 @@ public class WeatherRequestTest {
 		weatherRequest.setCityName(newCityName);
 		String resultCityName = weatherRequest.getCityName();
 		assertEquals(newCityName, resultCityName);
+		
+		Mockito.verify(weatherRequest, Mockito.times(1)).getCityName();
 	}
 	
 	@Test
@@ -148,6 +152,8 @@ public class WeatherRequestTest {
 		weatherRequest.changeUnits(newUnit);
 		String resultUnit = weatherRequest.getUnits();
 		assertEquals(newUnit, resultUnit);
+		
+		Mockito.verify(weatherRequest, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
@@ -158,6 +164,8 @@ public class WeatherRequestTest {
 		weatherRequest.changeUnits(newUnit);
 		String resultUnit = weatherRequest.getUnits();
 		assertEquals(newUnit, resultUnit);
+		
+		Mockito.verify(weatherRequest, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
@@ -168,6 +176,8 @@ public class WeatherRequestTest {
 		weatherRequest.changeUnits(newUnit);
 		String resultUnit = weatherRequest.getUnits();
 		assertEquals(newUnit, resultUnit);
+		
+		Mockito.verify(weatherRequest, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
