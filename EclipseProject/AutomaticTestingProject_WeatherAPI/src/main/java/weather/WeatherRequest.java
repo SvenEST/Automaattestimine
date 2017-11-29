@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.json.JSONObject;
-
 import connection.ConnectionUtility;
 import file.FileUtility;
 
@@ -73,20 +71,30 @@ public class WeatherRequest {
 	
 	public void WriteWeatherReportsInfoToFiles(Path outputFileLocation, boolean appendFile){
 		for(String cityName: cityNamesList) {
+			String outputContent = null;
+			
 			CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
-			JSONObject currentWeatherInfo = currentWeatherReport.getWeatherInfo();
-			String outputContent = currentWeatherInfo.toString();
+			String geoCoords = currentWeatherReport.getGeoCoordinates();
+			int currentTemp = currentWeatherReport.getTemperature();
+			
+			String lineSeperator = System.getProperty("line.separator");
+			outputContent = "city: " + cityName + lineSeperator +  
+							"coordinates: " + geoCoords + lineSeperator +  
+					        "current temperature: " + currentTemp + lineSeperator;
+			
+			int[] days = {1, 2, 3};
+			for(int dayNumber: days) {
+				WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
+				int forecastMaxTemp = weatherForecastReport.getMaxTemperature();
+				int forecastMinTemp = weatherForecastReport.getMinTemperature();
+				outputContent += "forecast day " + dayNumber + " info: " + lineSeperator + 
+							"\t" + "maximum temperature: " + forecastMaxTemp + lineSeperator +
+							"\t" + "minimum temperature: " + forecastMinTemp + lineSeperator;
+			}
+			
 			FileUtility fileUtility = new FileUtility();
-			String outputFileName = cityName + "_current.txt";
+			String outputFileName = cityName + ".txt";
 			fileUtility.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
-		}
-		for(String cityName: cityNamesList) {
-			WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
-			JSONObject weatherForecastInfo = weatherForecastReport.getForecastInfo();
-			String outputContent = weatherForecastInfo.toString();
-			FileUtility fileUtility2 = new FileUtility();
-			String outputFileName = cityName + "_forecast.txt";
-			fileUtility2.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
 		}
 	}
 	
