@@ -169,4 +169,9 @@ public class WeatherRequestTest {
 		String resultUnit = weatherRequest.getUnits();
 		assertEquals(newUnit, resultUnit);
 	}
+	
+	@Test
+	public void testForEveryCityInInputAReportIsWrittenToFile(){
+	}
+	
 }

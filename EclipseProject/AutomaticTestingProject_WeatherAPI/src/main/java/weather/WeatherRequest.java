@@ -71,7 +71,7 @@ public class WeatherRequest {
 		}
 	}
 	
-	public String createFileOutputContent(String cityName) {
+	private String createFileOutputContent(String cityName) {
 		String outputContent = null;
 		
 		CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);

@@ -18,7 +18,7 @@ public class WeatherForecastParser{
 		singleDayForecastInfo = getForecastForSingleDay(forecastInfo, dayNumber);
 	}
 	
-	public JSONObject getForecastForSingleDay(JSONObject weatherForecastInfo, int dayNumber){
+	private JSONObject getForecastForSingleDay(JSONObject weatherForecastInfo, int dayNumber){
 		JSONArray forecastPerDayList;
 		JSONObject singleDayForecastInfo = null;
 		try {
