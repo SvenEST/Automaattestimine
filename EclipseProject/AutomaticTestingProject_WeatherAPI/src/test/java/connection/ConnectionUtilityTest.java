@@ -47,21 +47,14 @@ public class ConnectionUtilityTest {
 		Mockito.when(connectionUtility.internetConnectionExists()).thenReturn(true);
 		boolean result = connectionUtility.internetConnectionExists();
 		assertTrue(result);
+		Mockito.verify(connectionUtility, Mockito.times(1)).internetConnectionExists();
 	}
 	
 	@Test
 	public void testReadingJsonFromUrl() {
-		try {
-			Mockito.when(connectionUtility.readJsonFromUrl()).thenReturn(currentWeatherInfoFromFile);
-		} catch (IOException e1) {
-			fail("Failure cause: " + e1.getMessage());
-		}
-		
-		try {
-			JSONObject result = connectionUtility.readJsonFromUrl();
-			Validator.validateJsonFormat(result);
-		} catch (IOException e2) {
-			fail("Failure cause: " + e2.getMessage());
-		}
+		Mockito.when(connectionUtility.readJsonFromUrl()).thenReturn(currentWeatherInfoFromFile);
+		JSONObject result = connectionUtility.readJsonFromUrl();
+		Validator.validateJsonFormat(result);
+		Mockito.verify(connectionUtility, Mockito.times(1)).readJsonFromUrl();
 	}
 }

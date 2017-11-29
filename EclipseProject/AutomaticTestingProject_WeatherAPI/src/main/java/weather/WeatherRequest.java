@@ -71,31 +71,36 @@ public class WeatherRequest {
 	
 	public void WriteWeatherReportsInfoToFiles(Path outputFileLocation, boolean appendFile){
 		for(String cityName: cityNamesList) {
-			String outputContent = null;
-			
-			CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
-			String geoCoords = currentWeatherReport.getGeoCoordinates();
-			int currentTemp = currentWeatherReport.getTemperature();
-			
-			String lineSeperator = System.getProperty("line.separator");
-			outputContent = "city: " + cityName + lineSeperator +  
-							"coordinates: " + geoCoords + lineSeperator +  
-					        "current temperature: " + currentTemp + lineSeperator;
-			
-			int[] days = {1, 2, 3};
-			for(int dayNumber: days) {
-				WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
-				int forecastMaxTemp = weatherForecastReport.getMaxTemperature();
-				int forecastMinTemp = weatherForecastReport.getMinTemperature();
-				outputContent += "forecast day " + dayNumber + " info: " + lineSeperator + 
-							"\t" + "maximum temperature: " + forecastMaxTemp + lineSeperator +
-							"\t" + "minimum temperature: " + forecastMinTemp + lineSeperator;
-			}
-			
+			String outputContent = createFileOutputContent(cityName);
 			FileUtility fileUtility = new FileUtility();
 			String outputFileName = cityName + ".txt";
 			fileUtility.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
 		}
+	}
+	
+	public String createFileOutputContent(String cityName) {
+		String outputContent = null;
+		
+		CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
+		String geoCoords = currentWeatherReport.getGeoCoordinates();
+		int currentTemp = currentWeatherReport.getTemperature();
+		
+		String lineSeperator = System.getProperty("line.separator");
+		outputContent = "city: " + cityName + lineSeperator +  
+						"coordinates: " + geoCoords + lineSeperator +  
+				        "current temperature: " + currentTemp + lineSeperator;
+		
+		int[] days = {1, 2, 3};
+		for(int dayNumber: days) {
+			WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
+			int forecastMaxTemp = weatherForecastReport.getMaxTemperature();
+			int forecastMinTemp = weatherForecastReport.getMinTemperature();
+			outputContent += "forecast day " + dayNumber + " info: " + lineSeperator + 
+						"\t" + "maximum temperature: " + forecastMaxTemp + lineSeperator +
+						"\t" + "minimum temperature: " + forecastMinTemp + lineSeperator;
+		}
+		
+		return outputContent;
 	}
 	
 	public int getCurrentTemperature() {

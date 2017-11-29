@@ -12,16 +12,15 @@ import org.json.JSONObject;
 
 public class ConnectionUtility{
 	
-	public String insertedUrl;
+	public URL insertedUrl;
 	
-	public ConnectionUtility(String url) {
+	public ConnectionUtility(URL url) {
 		this.insertedUrl = url;
 	}
 
 	public boolean internetConnectionExists() {
 	    try {
-	        URL url = new URL(insertedUrl);
-	        URLConnection connection = url.openConnection();
+	        URLConnection connection = insertedUrl.openConnection();
 	        connection.connect();
 	        return true;
 	    } catch (MalformedURLException e) {
@@ -31,19 +30,19 @@ public class ConnectionUtility{
 	    }
 	}
 	
-	public JSONObject readJsonFromUrl() throws IOException {
+	public JSONObject readJsonFromUrl(){
 		String resultString = null;
 		try {
-			URL url = new URL(insertedUrl);
-			URLConnection urlCon = url.openConnection();
+			URLConnection urlCon = insertedUrl.openConnection();
 			InputStreamReader inputStreamReader = new InputStreamReader(urlCon.getInputStream());
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 	        resultString = bufferedReader.readLine();
 	        bufferedReader.close();
-		} catch (MalformedURLException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		//Changing result to JSONObject format
 		JSONObject resultJson = null;
 		try {
 			resultJson = new JSONObject(resultString);
@@ -53,11 +52,11 @@ public class ConnectionUtility{
 		return resultJson;
 	}
 
-	public String getInsertedUrl() {
+	public URL getInsertedUrl() {
 		return insertedUrl;
 	}
 
-	public void setInsertedUrl(String insertedUrl) {
+	public void setInsertedUrl(URL insertedUrl) {
 		this.insertedUrl = insertedUrl;
 	}
 }
