@@ -7,8 +7,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import connection.ConnectionUtility;
 import file.FileUtility;
 
 public class WeatherRequest {
@@ -36,36 +34,31 @@ public class WeatherRequest {
 	}
 	
 	public WeatherRequest() {
-		ConnectionUtility con = new ConnectionUtility("https://www.google.com/");
-        if (con.internetConnectionExists()) {
-        	BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-    		
-    		System.out.println("Please enter a city name and press Enter:");
-    		try {
-    			String userInputCityName = bufferedReader.readLine().trim();
-    			this.cityName = userInputCityName;
-    		} catch (IOException e) {
-    			System.out.println("Failed to get user input city name: " + e.getMessage());
-    		}
-    		
-    		System.out.println("Enter prefferred unit. Metric (default), imperial or kelvin?");
-    		String userInputUnits = null;
-    		try {
-    			userInputUnits = bufferedReader.readLine().trim();
-    		} catch (IOException e) {
-    			System.out.println("Failed to get user input units: " + e.getMessage());
-    		}
-    		
-    		if (userInputUnits != null) {
-    			if (userInputUnits.equalsIgnoreCase("Metric") || userInputUnits.equalsIgnoreCase("Imperial") || userInputUnits.equalsIgnoreCase("Kelvin")) {
-    				this.units = userInputUnits;
-    			}
-    		}else{
-    			System.out.println("User inserted unit not recognized. Default unit metric wil be used.");
-    		}
-        } else {
-        	System.out.println("No internet connection!");
-        }
+    	BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+		
+		System.out.println("Please enter a city name and press Enter:");
+		try {
+			String userInputCityName = bufferedReader.readLine().trim();
+			this.cityName = userInputCityName;
+		} catch (IOException e) {
+			System.out.println("Failed to get user input city name: " + e.getMessage());
+		}
+		
+		System.out.println("Enter prefferred unit. Metric (default), imperial or kelvin?");
+		String userInputUnits = null;
+		try {
+			userInputUnits = bufferedReader.readLine().trim();
+		} catch (IOException e) {
+			System.out.println("Failed to get user input units: " + e.getMessage());
+		}
+		
+		if (userInputUnits != null) {
+			if (userInputUnits.equalsIgnoreCase("Metric") || userInputUnits.equalsIgnoreCase("Imperial") || userInputUnits.equalsIgnoreCase("Kelvin")) {
+				this.units = userInputUnits;
+			}
+		}else{
+			System.out.println("User inserted unit not recognized. Default unit metric wil be used.");
+		}
 	}
 	
 	

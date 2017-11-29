@@ -1,6 +1,7 @@
 package weather;
 
-import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.json.JSONObject;
 
@@ -18,13 +19,13 @@ public class WeatherForecastReportFactory {
 
 	public JSONObject getWeatherForecastInfoFromApi(String city){
 		String apiUrl = "http://api.openweathermap.org/data/2.5/forecast";
-		String url = apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey;
-		ConnectionUtility connection = new ConnectionUtility(url);
 		JSONObject forecastInfo = null;
 		try {
+			URL url = new URL(apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey);
+			ConnectionUtility connection = new ConnectionUtility(url);
 			forecastInfo = connection.readJsonFromUrl();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
 		}
 		return forecastInfo;
 	}
