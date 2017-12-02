@@ -34,6 +34,7 @@ public class WeatherRequest {
 		}
 		
 		cityNamesList = cityNamesListTrimmed;
+		changeUnits(units);
 	}
 	
 	public WeatherRequest() {
@@ -55,7 +56,7 @@ public class WeatherRequest {
 			System.out.println("Failed to get user input units: " + e.getMessage());
 		}
 		
-		if (userInputUnits != null) {
+		if (userInputUnits.isEmpty()) {
 			System.out.println("User inserted unit not recognized. Default unit metric wil be used.");
 		}
 		changeUnits(userInputUnits);

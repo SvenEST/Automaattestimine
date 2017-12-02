@@ -31,7 +31,7 @@ public class RunConsoleCodeTest {
 		FileUtility fileUtility = new FileUtility();
 		System.out.println("Input file content: " + fileUtility.readFile(inputPath));
 		
-		WeatherRequest request2 = new WeatherRequest(inputPath, "Metric");
+		WeatherRequest request2 = new WeatherRequest(inputPath, "metric");
 		request2.WriteWeatherReportsInfoToFiles(outputPath, false);
 		System.out.println("Wrote output files");
 		
@@ -49,6 +49,7 @@ public class RunConsoleCodeTest {
 		System.out.println("Forecast max temperature for day 1 in " + request3.getCityName() + ": " + request3.getForecastMaxTemperatureForDay(1));
 		System.out.println("Forecast max temperature for day 2 in " + request3.getCityName() + ": " + request3.getForecastMaxTemperatureForDay(2));
 		System.out.println("Forecast max temperature for day 3 in " + request3.getCityName() + ": " + request3.getForecastMaxTemperatureForDay(3));
+		System.out.println("Weather request geo coordinates: " + request3.getGeoCoordinates());
 		System.out.println("--------------------------------------------------");
 	}
 }
