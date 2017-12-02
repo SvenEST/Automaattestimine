@@ -1,6 +1,6 @@
 city: London
 coordinates: 51:0
-current temperature: 1
+current temperature: 2
 forecast day 1 info: 
 	maximum temperature: 4
 	minimum temperature: 3

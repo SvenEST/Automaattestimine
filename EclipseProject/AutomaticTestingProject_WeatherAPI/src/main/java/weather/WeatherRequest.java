@@ -76,11 +76,12 @@ public class WeatherRequest {
 		String outputContent = null;
 		
 		CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
+		String cityNameFromReport = currentWeatherReport.getCityName();
 		String geoCoords = currentWeatherReport.getGeoCoordinates();
 		int currentTemp = currentWeatherReport.getTemperature();
 		
 		String lineSeperator = System.getProperty("line.separator");
-		outputContent = "city: " + cityName + lineSeperator +  
+		outputContent = "city: " + cityNameFromReport + lineSeperator +  
 						"coordinates: " + geoCoords + lineSeperator +  
 				        "current temperature: " + currentTemp + lineSeperator;
 		
