@@ -11,13 +11,11 @@ import testhelpers.Validator;
 
 public class WeatherForecastReportTest {
 	
-	WeatherForecastReport weatherForecastReport;
-	String units;
+	private WeatherForecastReport weatherForecastReport;
 	
 	@Before
 	public void setUpTests() {
 		weatherForecastReport = new WeatherForecastReport("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric", 1);
-		units = weatherForecastReport.getUnits();
 	}
 	
 	@Test

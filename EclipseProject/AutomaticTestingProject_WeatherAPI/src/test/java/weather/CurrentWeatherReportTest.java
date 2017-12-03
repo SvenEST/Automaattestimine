@@ -10,10 +10,9 @@ import org.junit.Test;
 import testhelpers.Validator;
 
 public class CurrentWeatherReportTest {
-
 	
-	CurrentWeatherReport currentWeatherReport;
-	String units;
+	private CurrentWeatherReport currentWeatherReport;
+	private String units;
 	
 	@Before
 	public void setUpTests() {

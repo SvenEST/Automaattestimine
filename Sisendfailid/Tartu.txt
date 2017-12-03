@@ -1,12 +1,12 @@
 city: Tartu
 coordinates: 58:26
-current temperature: 1
+current temperature: 2
 forecast day 1 info: 
-	maximum temperature: 2
+	maximum temperature: 0
 	minimum temperature: 0
 forecast day 2 info: 
-	maximum temperature: 1
+	maximum temperature: 0
 	minimum temperature: 0
 forecast day 3 info: 
-	maximum temperature: 1
+	maximum temperature: 0
 	minimum temperature: 0
