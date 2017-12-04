@@ -8,27 +8,6 @@ import org.junit.Test;
 public class CurrentWeatherReportFactoryTest {
 
 	private CurrentWeatherReportFactory currentWeatherReportFactory;
-
-	/*final CurrentWeatherReportFactory currentWeatherReportFactory = new CurrentWeatherReportFactory("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric") {
-		@Override
-		public JSONObject getCurrentWeatherInfoFromApi(String cityName) {
-			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\CurrentWeatherReportFactoryTesting\\CurrentWeatherInfo.txt");
-			FileUtility fileUtility = new FileUtility();
-			JSONObject currentWeatherInfoFromFile = null;
-			try {
-				currentWeatherInfoFromFile = new JSONObject(fileUtility.readFile(inputPath));
-			} catch (JSONException e) {
-				fail("Failure cause: " + e.getMessage());
-			}
-			return currentWeatherInfoFromFile;
-		}
-	};
-
-	@Test
-	public void testIfReturnedWeatherInfoIsInJsonFormat(){
-		JSONObject weatherInfo = currentWeatherReportFactory.getCurrentWeatherInfoFromApi();
-		Validator.validateJsonFormat(weatherInfo);
-	}*/
 	
 	@Before
 	public void setUpTests() {
