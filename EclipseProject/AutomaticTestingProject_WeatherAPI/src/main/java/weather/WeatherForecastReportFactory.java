@@ -13,17 +13,25 @@ public class WeatherForecastReportFactory {
 
 	private String units;
 	private String apiKey;
+	private String cityName;
 	
 	public WeatherForecastReportFactory(String cityName, String apiKey, String units) {
 		this.apiKey = apiKey;
+		this.cityName = cityName;
 		changeUnits(units);
 	}
 
-	public JSONObject getWeatherForecastInfoFromApi(String city){
+	public WeatherForecastReport createWeatherForecastReport(int dayNumber) {
+		JSONObject weatherInfo = getWeatherForecastInfoFromApi();
+		WeatherForecastReport weatherforecastReport = new WeatherForecastReport(weatherInfo, dayNumber);
+		return weatherforecastReport;
+	}
+	
+	private JSONObject getWeatherForecastInfoFromApi(){
 		String apiUrl = "http://api.openweathermap.org/data/2.5/forecast";
 		JSONObject forecastInfo = null;
 		try {
-			URL url = new URL(apiUrl + "?q=" + city + "&units=" + units + "&appid=" + apiKey);
+			URL url = new URL(apiUrl + "?q=" + cityName + "&units=" + units + "&appid=" + apiKey);
 			ConnectionUtility connection = new ConnectionUtility(url);
 			forecastInfo = connection.readJsonFromUrl();
 		} catch (MalformedURLException e) {

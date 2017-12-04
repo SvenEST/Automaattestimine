@@ -11,13 +11,21 @@ public class CurrentWeatherReportFactory {
 
 	private String units;
 	private String apiKey;
+	private String cityName;
 	
 	public CurrentWeatherReportFactory(String cityName, String apiKey, String units) {
 		this.apiKey = apiKey;
+		this.cityName = cityName;
 		changeUnits(units);
 	}
+	
+	public CurrentWeatherReport createCurrentWeatherReport() {
+		JSONObject weatherInfo = getCurrentWeatherInfoFromApi();
+		CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(weatherInfo);
+		return currentWeatherReport;
+	}
 
-	public JSONObject getCurrentWeatherInfoFromApi(String cityName) {
+	private JSONObject getCurrentWeatherInfoFromApi() {
 		String apiUrl = "http://api.openweathermap.org/data/2.5/weather";
 		JSONObject weatherInfo = null;
 		try {
@@ -48,5 +56,13 @@ public class CurrentWeatherReportFactory {
 
 	public String getApiKey() {
 		return apiKey;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
 }

@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.json.JSONObject;
-
 import file.FileUtility;
 
 public class WeatherService {
@@ -76,20 +74,16 @@ public class WeatherService {
 	public void updateWeather(int dayNumber) {
 		CurrentWeatherReportFactory currentWeatherReportFactory = new CurrentWeatherReportFactory(cityName, apiKey, units);
 		WeatherForecastReportFactory weatherForecastReportFactory = new WeatherForecastReportFactory(cityName, apiKey, units);
-		currentWeatherReport = updateCurrentWeather(currentWeatherReportFactory, cityName);
-		weatherForecastReport = updateForecastWeather(weatherForecastReportFactory, cityName, dayNumber);
+		updateCurrentWeather(currentWeatherReportFactory, cityName);
+		updateForecastWeather(weatherForecastReportFactory, cityName, dayNumber);
 	}
 	
-	public CurrentWeatherReport updateCurrentWeather(CurrentWeatherReportFactory currentWeatherReportFactory, String cityName) {
-		JSONObject currentWeatherInfo = currentWeatherReportFactory.getCurrentWeatherInfoFromApi(cityName);
-		CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(currentWeatherInfo);
-		return currentWeatherReport;
+	public void updateCurrentWeather(CurrentWeatherReportFactory currentWeatherReportFactory, String cityName) {
+		currentWeatherReport = currentWeatherReportFactory.createCurrentWeatherReport();
 	}
 	
-	public WeatherForecastReport updateForecastWeather(WeatherForecastReportFactory weatherForecastReportFactory, String cityName, int dayNumber) {
-		JSONObject weatherForecastInfo = weatherForecastReportFactory.getWeatherForecastInfoFromApi(cityName);
-		WeatherForecastReport weatherForecastReport = new WeatherForecastReport(weatherForecastInfo, dayNumber);
-		return weatherForecastReport;
+	public void updateForecastWeather(WeatherForecastReportFactory weatherForecastReportFactory, String cityName, int dayNumber) {
+		weatherForecastReport = weatherForecastReportFactory.createWeatherForecastReport(dayNumber);
 	}
 	
 	
@@ -134,19 +128,19 @@ public class WeatherService {
 		return temperature;
 	}
 	
-	public int getForecastTemperatureForDay(int dayNumber) {
+	public int getForecastTemperatureForDay() {
 		//WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
 		int temperature = weatherForecastReport.getTemperature();
 		return temperature;
 	}
 	
-	public int getForecastMinTemperatureForDay(int dayNumber) {
+	public int getForecastMinTemperatureForDay() {
 		//WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
 		int minTemperature = weatherForecastReport.getTemperature();
 		return minTemperature;
 	}
 	
-	public int getForecastMaxTemperatureForDay(int dayNumber) {
+	public int getForecastMaxTemperatureForDay() {
 		//WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
 		int maxTemperature = weatherForecastReport.getTemperature();
 		return maxTemperature;

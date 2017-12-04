@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -16,7 +18,7 @@ import org.mockito.Mockito;
 import file.FileUtility;
 import testhelpers.Validator;
 
-public class WeatherRequestTest {
+public class WeatherServiceTest {
 	
 	private WeatherService weatherService;
 	private boolean testsInitialized;
@@ -39,17 +41,46 @@ public class WeatherRequestTest {
 	public void setUpTests() {
 		if (testsInitialized != true) {
 			weatherService = new WeatherService("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric");
-			weatherService.updateWeather(1);
-			Mockito.mock();
+			
+			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\CurrentWeatherInfo.txt");
+			FileUtility fileUtility = new FileUtility();
+			JSONObject currentWeatherInfoFromFile = null;
+			try {
+				currentWeatherInfoFromFile = new JSONObject(fileUtility.readFile(inputPath));
+			} catch (JSONException e) {
+				fail("Failure cause: " + e.getMessage());
+			}
+			
+			Path inputPath2 = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\WeatherForecastInfo.txt");
+			FileUtility fileUtility2 = new FileUtility();
+			JSONObject weatherForecastInfoFromFile = null;
+			try {
+				weatherForecastInfoFromFile = new JSONObject(fileUtility2.readFile(inputPath2));
+			} catch (JSONException e) {
+				fail("Failure cause: " + e.getMessage());
+			}
+			
+			CurrentWeatherReportFactory currentWeatherReportFactoryMock = Mockito.mock(CurrentWeatherReportFactory.class);
+			WeatherForecastReportFactory weatherForecastReportFactoryMock = Mockito.mock(WeatherForecastReportFactory.class);
+			
+			CurrentWeatherReport dummyCurrentWeatherReport = new CurrentWeatherReport(currentWeatherInfoFromFile);
+			Mockito.when(currentWeatherReportFactoryMock.createCurrentWeatherReport()).thenReturn(dummyCurrentWeatherReport);
+			weatherService.updateCurrentWeather(currentWeatherReportFactoryMock, "Tallinn");
+			
+			int dayNumber = 1;
+			WeatherForecastReport dummyWeatherForecastReport = new WeatherForecastReport(weatherForecastInfoFromFile, dayNumber);
+			Mockito.when(weatherForecastReportFactoryMock.createWeatherForecastReport(Mockito.anyInt())).thenReturn(dummyWeatherForecastReport);
+			weatherService.updateForecastWeather(weatherForecastReportFactoryMock, "Tallinn", dayNumber);
 		}
 	}
 	
 	@Test
 	public void testWritingWeatherReportInfoToFile() {
-		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\");
+		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\input.txt\\");
+		WeatherService weatherService = new WeatherService(inputPath, "1a8a3563bee4967e64490dbfadf83b7e", "metric");
+		
+		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\");
 		boolean appendFile = false;
-		//weatherRequestWithInputFile.WriteWeatherReportsInfoToFiles(outputPath, appendFile);
-		//List<String> cityNamesList = weatherRequestWithInputFile.getCityNamesList();
 		
 		weatherService.WriteWeatherReportsInfoToFiles(outputPath, appendFile);
 		List<String> cityNamesList = weatherService.getCityNamesList();
@@ -69,9 +100,6 @@ public class WeatherRequestTest {
 	
 	@Test
 	public void testIfResponseTemperatureIsValid() {
-		//Mockito.when(weatherService.getCurrentTemperature()).thenReturn(1);
-		//Mockito.when(weatherService.getUnits()).thenReturn("metric");
-		
 		int temperature = weatherService.getCurrentTemperature();
 		String units = weatherService.getUnits();
 		try {
@@ -79,118 +107,77 @@ public class WeatherRequestTest {
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
-		
-		//Mockito.verify(weatherService, Mockito.times(1)).getCurrentTemperature();
-		//Mockito.verify(weatherService, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
 	public void testIfForecastTemperatureForSingleDayIsValid() {
-		int dayNumber = 1;
-		
-		//Mockito.when(weatherService.getForecastTemperatureForDay(dayNumber)).thenReturn(1);
-		//Mockito.when(weatherService.getUnits()).thenReturn("metric");
-		
-		int temp = weatherService.getForecastTemperatureForDay(dayNumber);
+		int temp = weatherService.getForecastTemperatureForDay();
 		String units = weatherService.getUnits();
 		try {
 			Validator.validateTemperature(temp, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
-		
-		//Mockito.verify(weatherService, Mockito.times(1)).getForecastTemperatureForDay(dayNumber);
-		//Mockito.verify(weatherService, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
 	public void testIfForecastMinTemperatureForSingleDayIsValid() {
-		int dayNumber = 1;
-		
-		//Mockito.when(weatherService.getForecastTemperatureForDay(dayNumber)).thenReturn(1);
-		//Mockito.when(weatherService.getUnits()).thenReturn("metric");
-		
-		int minTemp = weatherService.getForecastMinTemperatureForDay(dayNumber);
+		int minTemp = weatherService.getForecastMinTemperatureForDay();
 		String units = weatherService.getUnits();
 		try {
 			Validator.validateTemperature(minTemp, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
-		
-		//Mockito.verify(weatherService, Mockito.times(1)).getForecastMinTemperatureForDay(dayNumber);
-		//Mockito.verify(weatherService, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
 	public void testIfForecastMaxTemperatureForSingleDayIsValid() {
-		int dayNumber = 1;
-		
-		//Mockito.when(weatherService.getForecastTemperatureForDay(dayNumber)).thenReturn(1);
-		//Mockito.when(weatherService.getUnits()).thenReturn("metric");
-		
-		int maxTemp = weatherService.getForecastMaxTemperatureForDay(dayNumber);
+		int maxTemp = weatherService.getForecastMaxTemperatureForDay();
 		String units = weatherService.getUnits();
 		try {
 			Validator.validateTemperature(maxTemp, units);
 		} catch (Exception e) {
 			fail("Failure cause: " + e.getMessage());
 		}
-		
-		//Mockito.verify(weatherService, Mockito.times(1)).getForecastMaxTemperatureForDay(dayNumber);
-		//Mockito.verify(weatherService, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
 	public void testSettingNewCityName() {
-		//Mockito.when(weatherService.getCityName()).thenReturn("Tallinn");
-		
 		String newCityName = "Tallinn";
 		weatherService.setCityName(newCityName);
 		String resultCityName = weatherService.getCityName();
 		assertEquals(newCityName, resultCityName);
-		
-		//Mockito.verify(weatherService, Mockito.times(1)).getCityName();
 	}
 	
 	@Test
 	public void testChangingUnitsToMetric() {
-		//Mockito.when(weatherService.getUnits()).thenReturn("metric");
-		
 		String newUnit = "metric";
 		weatherService.changeUnits(newUnit);
 		String resultUnit = weatherService.getUnits();
 		assertEquals(newUnit, resultUnit);
-		
-		//Mockito.verify(weatherService, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
 	public void testChangingUnitsToImperial() {
-		//Mockito.when(weatherService.getUnits()).thenReturn("imperial");
-		
 		String newUnit = "imperial";
 		weatherService.changeUnits(newUnit);
 		String resultUnit = weatherService.getUnits();
 		assertEquals(newUnit, resultUnit);
-		
-		//Mockito.verify(weatherService, Mockito.times(1)).getUnits();
 	}
 	
 	@Test
 	public void testChangingUnitsToKelvin() {
-		//Mockito.when(weatherService.getUnits()).thenReturn("kelvin");
-		
 		String newUnit = "kelvin"; 
 		weatherService.changeUnits(newUnit);
 		String resultUnit = weatherService.getUnits();
 		assertEquals(newUnit, resultUnit);
-		
-		//Mockito.verify(weatherService, Mockito.times(1)).getUnits();
 	}
 	
+	/*
 	@Test
 	public void testForEveryCityInInputAReportIsWrittenToFile(){
 	}
+	*/
 	
 }
