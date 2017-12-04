@@ -62,6 +62,12 @@ public class WeatherRequest {
 		changeUnits(userInputUnits);
 	}
 	
+	public CurrentWeatherReport updateweather(Current.. currentWeatherReportFactory, String name) {
+		weatherInfo = currentWeatherReportFactory.getCurrentWeatherInfoFromApi(cityName);
+		return weatherInfo;
+
+	}
+	
 	
 	public void WriteWeatherReportsInfoToFiles(Path outputFileLocation, boolean appendFile){
 		for(String cityName: cityNamesList) {
