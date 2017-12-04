@@ -1,23 +1,16 @@
 package weather;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.junit.Before;
 import org.junit.Test;
-
-import file.FileUtility;
-import testhelpers.Validator;
 
 public class WeatherForecastReportFactoryTest {
 
-	final WeatherForecastReportFactory weatherForecastReportFactory = new WeatherForecastReportFactory("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric") {
+	private WeatherForecastReportFactory weatherForecastReportFactory;
+
+	/*final WeatherForecastReportFactory weatherForecastReportFactory = new WeatherForecastReportFactory("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric") {
 		@Override
-		public JSONObject getWeatherForecastInfoFromApi(String city){
+		public JSONObject getWeatherForecastInfoFromApi(){
 			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherForecastReportTesting\\WeatherForecastInfo.txt");
 			FileUtility fileUtility = new FileUtility();
 			JSONObject weatherForecastInfoFromFile = null;
@@ -32,8 +25,13 @@ public class WeatherForecastReportFactoryTest {
 	
 	@Test
 	public void testIfReturnedWeatherForecastInfoIsInJsonFormat() {
-		JSONObject forecastInfo = weatherForecastReportFactory.getWeatherForecastInfoFromApi("Tallinn");
+		JSONObject forecastInfo = weatherForecastReportFactory.getWeatherForecastInfoFromApi();
 		Validator.validateJsonFormat(forecastInfo);
+	}*/
+	
+	@Before
+	public void setUpTests() {
+		weatherForecastReportFactory = new WeatherForecastReportFactory("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric");
 	}
 	
 	@Test

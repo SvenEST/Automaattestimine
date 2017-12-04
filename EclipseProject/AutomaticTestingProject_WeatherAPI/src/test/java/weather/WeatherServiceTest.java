@@ -75,7 +75,7 @@ public class WeatherServiceTest {
 	}
 	
 	@Test
-	public void testWritingWeatherReportInfoToFile() {
+	public void testForEveryCityInInputAReportIsWrittenToFile() {
 		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\input.txt\\");
 		WeatherService weatherService = new WeatherService(inputPath, "1a8a3563bee4967e64490dbfadf83b7e", "metric");
 		
@@ -173,11 +173,4 @@ public class WeatherServiceTest {
 		String resultUnit = weatherService.getUnits();
 		assertEquals(newUnit, resultUnit);
 	}
-	
-	/*
-	@Test
-	public void testForEveryCityInInputAReportIsWrittenToFile(){
-	}
-	*/
-	
 }

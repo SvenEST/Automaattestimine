@@ -1,6 +1,6 @@
 city: Helsinki
 coordinates: 60:24
-current temperature: 1
+current temperature: 0
 forecast day 1 info: 
 	maximum temperature: 0
 	minimum temperature: 0

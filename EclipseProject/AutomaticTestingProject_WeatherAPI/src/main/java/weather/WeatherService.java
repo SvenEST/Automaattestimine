@@ -71,7 +71,7 @@ public class WeatherService {
 		changeUnits(userInputUnits);
 	}
 	
-	public void updateWeather(int dayNumber) {
+	public void updateWeather(String cityName, int dayNumber) {
 		CurrentWeatherReportFactory currentWeatherReportFactory = new CurrentWeatherReportFactory(cityName, apiKey, units);
 		WeatherForecastReportFactory weatherForecastReportFactory = new WeatherForecastReportFactory(cityName, apiKey, units);
 		updateCurrentWeather(currentWeatherReportFactory, cityName);
@@ -97,8 +97,9 @@ public class WeatherService {
 	}
 	
 	private String createFileOutputContent(String cityName) {
-		String outputContent = null;
+		updateWeather(cityName, 1);
 		
+		String outputContent = null;
 		//CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
 		String cityNameFromReport = currentWeatherReport.getCityName();
 		String geoCoords = currentWeatherReport.getGeoCoordinates();
@@ -111,6 +112,7 @@ public class WeatherService {
 		
 		int[] days = {1, 2, 3};
 		for(int dayNumber: days) {
+			updateWeather(cityName, dayNumber);
 			//WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
 			int forecastMaxTemp = weatherForecastReport.getMaxTemperature();
 			int forecastMinTemp = weatherForecastReport.getMinTemperature();
