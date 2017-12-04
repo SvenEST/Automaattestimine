@@ -3,21 +3,37 @@ package weather;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
+import file.FileUtility;
 import testhelpers.Validator;
 
 public class CurrentWeatherReportTest {
 	
 	private CurrentWeatherReport currentWeatherReport;
 	private String units;
+	private boolean testsInitialized;
 	
 	@Before
 	public void setUpTests() {
-		currentWeatherReport = new CurrentWeatherReport("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric");
-		units = currentWeatherReport.getUnits();
+		if (testsInitialized != true) {
+			units = "metric";
+			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\CurrentWeatherReportTesting\\CurrentWeatherInfo.txt");
+			FileUtility fileUtility = new FileUtility();
+			JSONObject currentWeatherInfoFromFile = null;
+			try {
+				currentWeatherInfoFromFile = new JSONObject(fileUtility.readFile(inputPath));
+			} catch (JSONException e) {
+				fail("Failure cause: " + e.getMessage());
+			}
+			currentWeatherReport = new CurrentWeatherReport(currentWeatherInfoFromFile);
+		}
 	}
 	
 	@Test

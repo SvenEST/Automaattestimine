@@ -10,7 +10,7 @@ public class RunConsoleCodeTest {
 
 	public static void main(String[] args) throws IOException{
 		System.out.println("Getting info using the facade class:");
-		WeatherRequest request = new WeatherRequest("Tallinn", "metric");
+		WeatherService request = new WeatherService("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric");
 		System.out.println("Current temperature in " + request.getCityName() + ": " + request.getCurrentTemperature());
 		System.out.println("Forecast temperature for day 1 in " + request.getCityName() + ": " + request.getForecastTemperatureForDay(1));
 		System.out.println("Forecast temperature for day 2 in " + request.getCityName() + ": " + request.getForecastTemperatureForDay(2));
@@ -31,14 +31,14 @@ public class RunConsoleCodeTest {
 		FileUtility fileUtility = new FileUtility();
 		System.out.println("Input file content: " + fileUtility.readFile(inputPath));
 		
-		WeatherRequest request2 = new WeatherRequest(inputPath, "metric");
+		WeatherService request2 = new WeatherService(inputPath, "1a8a3563bee4967e64490dbfadf83b7e", "metric");
 		request2.WriteWeatherReportsInfoToFiles(outputPath, false);
 		System.out.println("Wrote output files");
 		
 		System.out.println("");
 		System.out.println("Testing weather request with user input from the console:");
 		System.out.println("--------------------------------------------------");
-		WeatherRequest request3 = new WeatherRequest();
+		WeatherService request3 = new WeatherService("1a8a3563bee4967e64490dbfadf83b7e");
 		System.out.println("Current temperature in " + request3.getCityName() + ": " + request3.getCurrentTemperature());
 		System.out.println("Forecast temperature for day 1 in " + request3.getCityName() + ": " + request3.getForecastTemperatureForDay(1));
 		System.out.println("Forecast temperature for day 2 in " + request3.getCityName() + ": " + request3.getForecastTemperatureForDay(2));

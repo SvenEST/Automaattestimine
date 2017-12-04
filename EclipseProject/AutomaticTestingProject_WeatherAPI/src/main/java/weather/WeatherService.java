@@ -7,20 +7,29 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.json.JSONObject;
+
 import file.FileUtility;
 
-public class WeatherRequest {
+public class WeatherService {
 	
-	public String cityName;
-	List<String> cityNamesList;
-	public String units;
+	private String cityName;
+	private List<String> cityNamesList;
+	private String units;
+	private CurrentWeatherReport currentWeatherReport;
+	private WeatherForecastReport weatherForecastReport;
+	private String apiKey;
 
-	public WeatherRequest(String cityName, String units) {
+	public WeatherService(String cityName, String apiKey, String units) {
 		this.cityName = cityName;
+		this.apiKey = apiKey;
 		changeUnits(units);
 	}
 	
-	public WeatherRequest(Path inputFilePath, String units) {
+	public WeatherService(Path inputFilePath, String apiKey, String units) {
+		this.apiKey = apiKey;
+		
     	FileUtility fileUtility = new FileUtility();
     	
         String allCityNames = fileUtility.readFile(inputFilePath);
@@ -37,7 +46,9 @@ public class WeatherRequest {
 		changeUnits(units);
 	}
 	
-	public WeatherRequest() {
+	public WeatherService(String apiKey) {
+		this.apiKey = apiKey;
+		
     	BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		
 		System.out.println("Please enter a city name and press Enter:");
@@ -62,10 +73,23 @@ public class WeatherRequest {
 		changeUnits(userInputUnits);
 	}
 	
-	public CurrentWeatherReport updateweather(Current.. currentWeatherReportFactory, String name) {
-		weatherInfo = currentWeatherReportFactory.getCurrentWeatherInfoFromApi(cityName);
-		return weatherInfo;
-
+	public void updateWeather(int dayNumber) {
+		CurrentWeatherReportFactory currentWeatherReportFactory = new CurrentWeatherReportFactory(cityName, apiKey, units);
+		WeatherForecastReportFactory weatherForecastReportFactory = new WeatherForecastReportFactory(cityName, apiKey, units);
+		currentWeatherReport = updateCurrentWeather(currentWeatherReportFactory, cityName);
+		weatherForecastReport = updateForecastWeather(weatherForecastReportFactory, cityName, dayNumber);
+	}
+	
+	public CurrentWeatherReport updateCurrentWeather(CurrentWeatherReportFactory currentWeatherReportFactory, String cityName) {
+		JSONObject currentWeatherInfo = currentWeatherReportFactory.getCurrentWeatherInfoFromApi(cityName);
+		CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(currentWeatherInfo);
+		return currentWeatherReport;
+	}
+	
+	public WeatherForecastReport updateForecastWeather(WeatherForecastReportFactory weatherForecastReportFactory, String cityName, int dayNumber) {
+		JSONObject weatherForecastInfo = weatherForecastReportFactory.getWeatherForecastInfoFromApi(cityName);
+		WeatherForecastReport weatherForecastReport = new WeatherForecastReport(weatherForecastInfo, dayNumber);
+		return weatherForecastReport;
 	}
 	
 	
@@ -81,7 +105,7 @@ public class WeatherRequest {
 	private String createFileOutputContent(String cityName) {
 		String outputContent = null;
 		
-		CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
+		//CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
 		String cityNameFromReport = currentWeatherReport.getCityName();
 		String geoCoords = currentWeatherReport.getGeoCoordinates();
 		int currentTemp = currentWeatherReport.getTemperature();
@@ -93,7 +117,7 @@ public class WeatherRequest {
 		
 		int[] days = {1, 2, 3};
 		for(int dayNumber: days) {
-			WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
+			//WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
 			int forecastMaxTemp = weatherForecastReport.getMaxTemperature();
 			int forecastMinTemp = weatherForecastReport.getMinTemperature();
 			outputContent += "forecast day " + dayNumber + " info: " + lineSeperator + 
@@ -105,31 +129,31 @@ public class WeatherRequest {
 	}
 	
 	public int getCurrentTemperature() {
-		CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
+		//CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
 		int temperature = currentWeatherReport.getTemperature();
 		return temperature;
 	}
 	
 	public int getForecastTemperatureForDay(int dayNumber) {
-		WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
+		//WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
 		int temperature = weatherForecastReport.getTemperature();
 		return temperature;
 	}
 	
 	public int getForecastMinTemperatureForDay(int dayNumber) {
-		WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
+		//WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
 		int minTemperature = weatherForecastReport.getTemperature();
 		return minTemperature;
 	}
 	
 	public int getForecastMaxTemperatureForDay(int dayNumber) {
-		WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
+		//WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
 		int maxTemperature = weatherForecastReport.getTemperature();
 		return maxTemperature;
 	}
 	
 	public String getGeoCoordinates() {
-		CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
+		//CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
 		String geoCoordinates = currentWeatherReport.getGeoCoordinates();
 		return geoCoordinates;
 	}

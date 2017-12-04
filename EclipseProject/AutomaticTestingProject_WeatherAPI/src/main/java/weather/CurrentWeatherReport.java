@@ -4,13 +4,11 @@ import org.json.JSONObject;
 
 public class CurrentWeatherReport {
 
-	private final CurrentWeatherReportFactory currentWeatherReportFactory;
 	private final JSONObject weatherInfo;
 	private final CurrentWeatherParser currentWeatherParser;
 
-	public CurrentWeatherReport(String cityName, String apiKey, String units) {
-		currentWeatherReportFactory = new CurrentWeatherReportFactory(cityName, apiKey, units);
-		weatherInfo = currentWeatherReportFactory.getCurrentWeatherInfoFromApi(cityName);
+	public CurrentWeatherReport(JSONObject weatherInfo) {
+		this.weatherInfo = weatherInfo;
 		currentWeatherParser = new CurrentWeatherParser(weatherInfo);
 	}
 
@@ -36,9 +34,5 @@ public class CurrentWeatherReport {
 
 	public JSONObject getWeatherInfo() {
 		return weatherInfo;
-	}
-	
-	public String getUnits() {
-		return currentWeatherReportFactory.getUnits();
 	}
 }
