@@ -1,12 +1,12 @@
-city: Tallinn
-coordinates: 59:24
-current temperature: 0
+city: London
+coordinates: 51:0
+current temperature: 7
 forecast day 1 info: 
-	maximum temperature: 0
-	minimum temperature: -1
+	maximum temperature: 6
+	minimum temperature: 6
 forecast day 2 info: 
-	maximum temperature: 0
-	minimum temperature: -1
+	maximum temperature: 6
+	minimum temperature: 6
 forecast day 3 info: 
-	maximum temperature: 0
-	minimum temperature: -1
+	maximum temperature: 5
+	minimum temperature: 4

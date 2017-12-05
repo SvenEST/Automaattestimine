@@ -1,12 +1,12 @@
-city: Tallinn
-coordinates: 59:24
+city: Tartu
+coordinates: 58:26
 current temperature: 0
 forecast day 1 info: 
 	maximum temperature: 0
-	minimum temperature: -1
+	minimum temperature: 0
 forecast day 2 info: 
 	maximum temperature: 0
-	minimum temperature: -1
+	minimum temperature: 0
 forecast day 3 info: 
 	maximum temperature: 0
-	minimum temperature: -1
+	minimum temperature: 0

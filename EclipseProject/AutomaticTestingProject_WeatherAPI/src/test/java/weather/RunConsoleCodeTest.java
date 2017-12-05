@@ -45,8 +45,6 @@ public class RunConsoleCodeTest {
 		System.out.println("Input file content: " + fileUtility.readFile(inputPath));
 		
 		WeatherService weatherService2 = new WeatherService(inputPath, "1a8a3563bee4967e64490dbfadf83b7e", "metric");
-		System.out.println(weatherService2.getCityName());
-		weatherService2.updateWeather(1);
 		weatherService2.WriteWeatherReportsInfoToFiles(outputPath, false);
 		System.out.println("Wrote output files");
 		
