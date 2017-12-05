@@ -180,15 +180,15 @@ public class WeatherService {
 		return currentWeatherReport;
 	}
 
-	public void setCurrentWeatherReport(CurrentWeatherReport currentWeatherReport) {
-		this.currentWeatherReport = currentWeatherReport;
-	}
-
 	public WeatherForecastReport getWeatherForecastReport() {
 		return weatherForecastReport;
 	}
 
-	public void setWeatherForecastReport(WeatherForecastReport weatherForecastReport) {
-		this.weatherForecastReport = weatherForecastReport;
+	public String getApiKey() {
+		return apiKey;
+	}
+
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
 	}
 }

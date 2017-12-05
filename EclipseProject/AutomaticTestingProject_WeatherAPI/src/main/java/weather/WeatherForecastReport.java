@@ -17,13 +17,6 @@ public class WeatherForecastReport {
 		weatherForecastParser = new WeatherForecastParser(forecastInfo, dayNumber);
 	}
 	
-	/*
-	public WeatherForecastReport(String cityName, String apiKey, String units, int dayNumber) {
-		weatherForecastReportFactory = new WeatherForecastReportFactory(cityName, apiKey, units);
-		forecastInfo = weatherForecastReportFactory.getWeatherForecastInfoFromApi(cityName);
-		weatherForecastParser = new WeatherForecastParser(forecastInfo, dayNumber);
-	}*/
-	
 	public int getTemperature() {
 		return weatherForecastParser.getTemperature();
 	}

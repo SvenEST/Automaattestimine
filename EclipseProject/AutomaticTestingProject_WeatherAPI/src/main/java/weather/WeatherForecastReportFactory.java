@@ -59,4 +59,12 @@ public class WeatherForecastReportFactory {
 	public String getApiKey() {
 		return apiKey;
 	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
 }

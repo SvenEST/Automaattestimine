@@ -39,9 +39,17 @@ public class WeatherForecastReportFactoryTest {
 	
 	@Test
 	public void testSettingNewApiKey() {
-		String newKey = "1a8a3563bee4967e64490dbfadf83b7e";
+		String newKey = "1a8a3563bee4967e64490dbfadf83b7eTEST";
 		weatherForecastReportFactory.setApiKey(newKey);
 		String resultKey = weatherForecastReportFactory.getApiKey();
 		assertEquals(newKey, resultKey);
+	}
+	
+	@Test
+	public void testSettingNewCityName() {
+		String newCityName = "London";
+		weatherForecastReportFactory.setCityName(newCityName);
+		String resultCityName = weatherForecastReportFactory.getCityName();
+		assertEquals(newCityName, resultCityName);
 	}
 }

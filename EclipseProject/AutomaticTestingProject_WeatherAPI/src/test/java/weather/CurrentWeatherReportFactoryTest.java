@@ -45,4 +45,12 @@ public class CurrentWeatherReportFactoryTest {
 		String resultKey = currentWeatherReportFactory.getApiKey();
 		assertEquals(newKey, resultKey);
 	}
+	
+	@Test
+	public void testSettingNewCityName() {
+		String newCityName = "London";
+		currentWeatherReportFactory.setCityName(newCityName);
+		String resultCityName = currentWeatherReportFactory.getCityName();
+		assertEquals(newCityName, resultCityName);
+	}
 }

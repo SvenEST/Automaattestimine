@@ -1,7 +1,6 @@
 package weather;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 import java.nio.file.Path;
@@ -62,30 +61,6 @@ public class WeatherServiceTest {
 	}
 	
 	@Test
-	public void testForEveryCityInInputAReportIsWrittenToFile() {
-		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\input.txt\\");
-		WeatherService weatherService = new WeatherService(inputPath, "1a8a3563bee4967e64490dbfadf83b7e", "metric");
-		
-		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\");
-		boolean appendFile = false;
-		
-		weatherService.WriteWeatherReportsInfoToFiles(outputPath, appendFile);
-		List<String> cityNamesList = weatherService.getCityNamesList();
-		
-		List<String> fileNames = new ArrayList<String>();
-		for (String cityName: cityNamesList) {
-			fileNames.add(cityName + ".txt");
-		}
-		
-		FileUtility fileUtility = new FileUtility();
-		for(String fileName: fileNames) {
-			Path readPath = Paths.get(outputPath.toString(), fileName);
-			String recievedOutputContent = fileUtility.readFile(readPath);
-			assertFalse(recievedOutputContent.isEmpty());
-		}
-	}
-	
-	@Test
 	public void testIfResponseTemperatureIsValid() {
 		int temperature = weatherService.getCurrentTemperature();
 		String units = weatherService.getUnits();
@@ -130,11 +105,31 @@ public class WeatherServiceTest {
 	}
 	
 	@Test
+	public void testIfReturnedGeoCoordinatesAreValid() {
+		String geoCoordinates = weatherService.getGeoCoordinates();
+		try {
+			Validator.validateGeoCoordinates(geoCoordinates);
+		} catch (Exception e) {
+			fail("Failure cause: " + e.getMessage());
+		}
+	}
+	
+	@Test
 	public void testSettingNewCityName() {
 		String newCityName = "Tallinn";
 		weatherService.setCityName(newCityName);
 		String resultCityName = weatherService.getCityName();
 		assertEquals(newCityName, resultCityName);
+	}
+	
+	@Test
+	public void testSettingNewCityNamesList() {
+		List<String> newCityNames= new ArrayList<>();
+		newCityNames.add("London");
+		newCityNames.add("Kiev");
+		weatherService.setCityNamesList(newCityNames);
+		List<String> resultCityNames = weatherService.getCityNamesList();
+		assertEquals(newCityNames, resultCityNames);
 	}
 	
 	@Test
@@ -159,5 +154,13 @@ public class WeatherServiceTest {
 		weatherService.changeUnits(newUnit);
 		String resultUnit = weatherService.getUnits();
 		assertEquals(newUnit, resultUnit);
+	}
+	
+	@Test
+	public void testSettingNewApiKey() {
+		String newKey = "1a8a3563bee4967e64490dbfadf83b7eTEST";
+		weatherService.setApiKey(newKey);
+		String resultKey = weatherService.getApiKey();
+		assertEquals(newKey, resultKey);
 	}
 }
