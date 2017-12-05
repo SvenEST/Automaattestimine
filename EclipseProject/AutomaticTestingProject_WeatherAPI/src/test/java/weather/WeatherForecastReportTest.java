@@ -33,7 +33,6 @@ public class WeatherForecastReportTest {
 				fail("Failure cause: " + e.getMessage());
 			}
 			weatherForecastReport = new WeatherForecastReport(weatherForecastInfoFromFile, 1);
-			testsInitialized = true;
 		}
 	}
 	

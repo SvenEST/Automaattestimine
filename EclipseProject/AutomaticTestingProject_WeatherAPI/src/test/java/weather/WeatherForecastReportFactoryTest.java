@@ -8,6 +8,27 @@ public class WeatherForecastReportFactoryTest {
 
 	private WeatherForecastReportFactory weatherForecastReportFactory;
 
+	/*final WeatherForecastReportFactory weatherForecastReportFactory = new WeatherForecastReportFactory("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric") {
+		@Override
+		public JSONObject getWeatherForecastInfoFromApi(){
+			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherForecastReportTesting\\WeatherForecastInfo.txt");
+			FileUtility fileUtility = new FileUtility();
+			JSONObject weatherForecastInfoFromFile = null;
+			try {
+				weatherForecastInfoFromFile = new JSONObject(fileUtility.readFile(inputPath));
+			} catch (JSONException e) {
+				fail("Failure cause: " + e.getMessage());
+			}
+			return weatherForecastInfoFromFile;
+		}
+	};
+	
+	@Test
+	public void testIfReturnedWeatherForecastInfoIsInJsonFormat() {
+		JSONObject forecastInfo = weatherForecastReportFactory.getWeatherForecastInfoFromApi();
+		Validator.validateJsonFormat(forecastInfo);
+	}*/
+	
 	@Before
 	public void setUpTests() {
 		weatherForecastReportFactory = new WeatherForecastReportFactory("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric");

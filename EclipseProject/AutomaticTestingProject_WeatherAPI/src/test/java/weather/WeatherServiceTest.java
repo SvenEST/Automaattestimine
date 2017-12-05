@@ -22,6 +22,20 @@ public class WeatherServiceTest {
 	
 	private WeatherService weatherService;
 	private boolean testsInitialized;
+	
+	/*
+	private WeatherRequest weatherRequestWithI
+	nputFile = new WeatherRequest(Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherRequestTesting\\input.txt\\"), "metric"){
+		@Override
+		public void WriteWeatherReportsInfoToFiles(Path outputFileLocation, boolean appendFile){
+			for(String cityName: cityNamesList) {
+				String outputContent = cityName + " test!";
+				FileUtility fileUtility = new FileUtility();
+				String outputFileName = cityName + ".txt";
+				fileUtility.writeFile(outputFileLocation, outputFileName, outputContent, appendFile);
+			}
+		}
+	};*/
 
 	@Before
 	public void setUpTests() {
@@ -56,9 +70,13 @@ public class WeatherServiceTest {
 			int dayNumber = 1;
 			WeatherForecastReport dummyWeatherForecastReport = new WeatherForecastReport(weatherForecastInfoFromFile, dayNumber);
 			Mockito.when(weatherForecastReportFactoryMock.createWeatherForecastReport(Mockito.anyInt())).thenReturn(dummyWeatherForecastReport);
+<<<<<<< HEAD
 			weatherService.updateForecastWeather(weatherForecastReportFactoryMock, dayNumber);
 			
 			testsInitialized = true;
+=======
+			weatherService.updateForecastWeather(weatherForecastReportFactoryMock, "Tallinn", dayNumber);
+>>>>>>> parent of cf36a81... x
 		}
 	}
 	
@@ -67,6 +85,7 @@ public class WeatherServiceTest {
 		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\input.txt\\");
 		WeatherService weatherService = new WeatherService(inputPath, "1a8a3563bee4967e64490dbfadf83b7e", "metric");
 		
+<<<<<<< HEAD
 		
 		
 		
@@ -110,8 +129,11 @@ public class WeatherServiceTest {
 		
 		
 		
+=======
+>>>>>>> parent of cf36a81... x
 		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\");
 		boolean appendFile = false;
+		
 		weatherService.WriteWeatherReportsInfoToFiles(outputPath, appendFile);
 		List<String> cityNamesList = weatherService.getCityNamesList();
 		

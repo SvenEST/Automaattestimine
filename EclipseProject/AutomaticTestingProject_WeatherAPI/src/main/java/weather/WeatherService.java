@@ -143,6 +143,7 @@ public class WeatherService {
 		updateWeather(1);
 		
 		String outputContent = null;
+		//CurrentWeatherReport currentWeatherReport = new CurrentWeatherReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units);
 		String cityNameFromReport = currentWeatherReport.getCityName();
 		String geoCoords = currentWeatherReport.getGeoCoordinates();
 		int currentTemp = currentWeatherReport.getTemperature();
@@ -154,12 +155,17 @@ public class WeatherService {
 		
 		int[] days = {1, 2, 3};
 		for(int dayNumber: days) {
+<<<<<<< HEAD
 			//WeatherForecastReportFactory weatherForecastReportFactory = new WeatherForecastReportFactory(cityName, apiKey, units);
 			//updateForecastWeather(weatherForecastReportFactory, cityName, dayNumber);
 			
 			updateWeather(dayNumber);
 			//WeatherForecastReport weatherForecastReport = weatherForecastReportList.get(cityName);
 			
+=======
+			updateWeather(cityName, dayNumber);
+			//WeatherForecastReport weatherForecastReport = new WeatherForecastReport(cityName, "1a8a3563bee4967e64490dbfadf83b7e", units, dayNumber);
+>>>>>>> parent of cf36a81... x
 			int forecastMaxTemp = weatherForecastReport.getMaxTemperature();
 			int forecastMinTemp = weatherForecastReport.getMinTemperature();
 			outputContent += "forecast day " + dayNumber + " info: " + lineSeperator + 
