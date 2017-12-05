@@ -1,12 +1,12 @@
-city: Los Angeles
-coordinates: 34:-118
-current temperature: 14
+city: Tallinn
+coordinates: 59:24
+current temperature: 0
 forecast day 1 info: 
-	maximum temperature: 22
-	minimum temperature: 13
+	maximum temperature: 0
+	minimum temperature: -1
 forecast day 2 info: 
-	maximum temperature: 17
-	minimum temperature: 11
+	maximum temperature: 0
+	minimum temperature: -1
 forecast day 3 info: 
-	maximum temperature: 10
-	minimum temperature: 7
+	maximum temperature: 0
+	minimum temperature: -1

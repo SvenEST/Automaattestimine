@@ -51,12 +51,12 @@ public class WeatherServiceTest {
 			
 			CurrentWeatherReport dummyCurrentWeatherReport = new CurrentWeatherReport(currentWeatherInfoFromFile);
 			Mockito.when(currentWeatherReportFactoryMock.createCurrentWeatherReport()).thenReturn(dummyCurrentWeatherReport);
-			weatherService.updateCurrentWeather(currentWeatherReportFactoryMock, "Tallinn");
+			weatherService.updateCurrentWeather(currentWeatherReportFactoryMock);
 			
 			int dayNumber = 1;
 			WeatherForecastReport dummyWeatherForecastReport = new WeatherForecastReport(weatherForecastInfoFromFile, dayNumber);
 			Mockito.when(weatherForecastReportFactoryMock.createWeatherForecastReport(Mockito.anyInt())).thenReturn(dummyWeatherForecastReport);
-			weatherService.updateForecastWeather(weatherForecastReportFactoryMock, "Tallinn", dayNumber);
+			weatherService.updateForecastWeather(weatherForecastReportFactoryMock, dayNumber);
 			
 			testsInitialized = true;
 		}
@@ -68,7 +68,8 @@ public class WeatherServiceTest {
 		WeatherService weatherService = new WeatherService(inputPath, "1a8a3563bee4967e64490dbfadf83b7e", "metric");
 		
 		
-		/*
+		
+		
 		Path inputPath1 = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\CurrentWeatherInfo.txt");
 		FileUtility fileUtility1 = new FileUtility();
 		JSONObject currentWeatherInfoFromFile = null;
@@ -77,6 +78,13 @@ public class WeatherServiceTest {
 		} catch (JSONException e) {
 			fail("Failure cause: " + e.getMessage());
 		}
+		
+		CurrentWeatherReportFactory currentWeatherReportFactoryMock = Mockito.mock(CurrentWeatherReportFactory.class);
+		CurrentWeatherReport dummyCurrentWeatherReport = new CurrentWeatherReport(currentWeatherInfoFromFile);
+		Mockito.when(currentWeatherReportFactoryMock.createCurrentWeatherReport()).thenReturn(dummyCurrentWeatherReport);
+		weatherService.updateCurrentWeather(currentWeatherReportFactoryMock);
+		
+		
 		
 		Path inputPath2 = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\WeatherForecastInfo.txt");
 		FileUtility fileUtility2 = new FileUtility();
@@ -87,18 +95,19 @@ public class WeatherServiceTest {
 			fail("Failure cause: " + e.getMessage());
 		}
 		
-		CurrentWeatherReportFactory currentWeatherReportFactoryMock = Mockito.mock(CurrentWeatherReportFactory.class);
 		WeatherForecastReportFactory weatherForecastReportFactoryMock = Mockito.mock(WeatherForecastReportFactory.class);
-		
-		CurrentWeatherReport dummyCurrentWeatherReport = new CurrentWeatherReport(currentWeatherInfoFromFile);
-		Mockito.when(currentWeatherReportFactoryMock.createCurrentWeatherReport()).thenReturn(dummyCurrentWeatherReport);
-		weatherService.updateCurrentWeather(currentWeatherReportFactoryMock, "Tallinn");
-		
 		int dayNumber = 1;
 		WeatherForecastReport dummyWeatherForecastReport = new WeatherForecastReport(weatherForecastInfoFromFile, dayNumber);
 		Mockito.when(weatherForecastReportFactoryMock.createWeatherForecastReport(Mockito.anyInt())).thenReturn(dummyWeatherForecastReport);
-		weatherService.updateForecastWeather(weatherForecastReportFactoryMock, "Tallinn", dayNumber);
-		*/
+		
+		List<String> cityNames = weatherService.getCityNamesList();
+		List<WeatherForecastReportFactory> weatherForecastReportFactoryList = new ArrayList<WeatherForecastReportFactory>();
+		for(int i=1; i<=cityNames.size(); i++) {
+			weatherForecastReportFactoryList.add(weatherForecastReportFactoryMock);
+		}
+		
+		weatherService.updateForecastWeather(weatherForecastReportFactoryList, dayNumber);
+		
 		
 		
 		Path outputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\");
