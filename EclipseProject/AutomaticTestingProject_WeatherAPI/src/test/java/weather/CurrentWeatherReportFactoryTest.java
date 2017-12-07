@@ -40,7 +40,7 @@ public class CurrentWeatherReportFactoryTest {
 	
 	@Test
 	public void testSettingNewApiKey() {
-		String newKey = "1a8a3563bee4967e64490dbfadf83b7e";
+		String newKey = "1a8a3563bee4967e64490dbfadf83b7eTEST";
 		currentWeatherReportFactory.setApiKey(newKey);
 		String resultKey = currentWeatherReportFactory.getApiKey();
 		assertEquals(newKey, resultKey);

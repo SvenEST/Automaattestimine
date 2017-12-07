@@ -17,9 +17,8 @@ import testhelpers.Validator;
 
 public class WeatherForecastParserTest {
 
-	private static JSONObject forecastInfoFromFile;
 	private static WeatherForecastParser weatherForecastParser;
-	private String units = "metric";
+	private static String units;
 	private static boolean testsInitialized;
 
 	@Before
@@ -27,19 +26,23 @@ public class WeatherForecastParserTest {
 		if (testsInitialized != true) {
 			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherForecastParserTesting\\WeatherForecastInfo.txt");
 			FileUtility fileUtility = new FileUtility();
+			JSONObject forecastInfoFromFile = null;
 			try {
 				forecastInfoFromFile = new JSONObject(fileUtility.readFile(inputPath));
 			} catch (JSONException e) {
 				fail("Failure cause: " + e.getMessage());
 			}
-			weatherForecastParser = new WeatherForecastParser(forecastInfoFromFile, 1);
+			int dayNumber = 1;
+			weatherForecastParser = new WeatherForecastParser(forecastInfoFromFile, dayNumber);
+			units = "metric";
 			testsInitialized = true;
 		}
 	}
 	
 	@Test
 	public void testIfForecastInfoIsInJsonFormat(){
-		Validator.validateJsonFormat(forecastInfoFromFile);
+		JSONObject forecastInfo = weatherForecastParser.getForecastInfo();
+		Validator.validateJsonFormat(forecastInfo);
 	}
 	
 	@Test

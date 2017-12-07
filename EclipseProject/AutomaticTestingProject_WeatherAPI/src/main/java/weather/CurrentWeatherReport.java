@@ -35,4 +35,8 @@ public class CurrentWeatherReport {
 	public JSONObject getWeatherInfo() {
 		return weatherInfo;
 	}
+
+	public CurrentWeatherParser getCurrentWeatherParser() {
+		return currentWeatherParser;
+	}
 }

@@ -31,9 +31,8 @@ public class FileUtility {
 	
 	public void writeFile(Path outputFileLocation, String fileName, String content, boolean appendFile){
 		Path path = Paths.get(outputFileLocation.toString(), fileName);
-		FileWriter fileWriter = null;
 		try {
-			fileWriter = new FileWriter(path.toString(), appendFile);
+			FileWriter fileWriter = new FileWriter(path.toString(), appendFile);
 			fileWriter.write(content);
 			fileWriter.close();
 		} catch (IOException e) {

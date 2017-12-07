@@ -19,8 +19,8 @@ import testhelpers.Validator;
 
 public class WeatherServiceTest {
 	
-	private WeatherService weatherService;
-	private boolean testsInitialized;
+	private static WeatherService weatherService;
+	private static boolean testsInitialized;
 
 	@Before
 	public void setUpTests() {

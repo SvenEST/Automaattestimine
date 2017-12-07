@@ -17,9 +17,8 @@ import testhelpers.Validator;
 
 public class CurrentWeatherParserTest {
 
-	private static JSONObject currentWeatherInfoFromFile;
 	private static CurrentWeatherParser currentWeatherParser;
-	private String units = "metric";
+	private static String units;
 	private static boolean testsInitialized;
 
 	@Before
@@ -27,19 +26,22 @@ public class CurrentWeatherParserTest {
 		if (testsInitialized != true) {
 			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\CurrentWeatherParserTesting\\CurrentWeatherInfo.txt");
 			FileUtility fileUtility = new FileUtility();
+			JSONObject currentWeatherInfoFromFile = null;
 			try {
 				currentWeatherInfoFromFile = new JSONObject(fileUtility.readFile(inputPath));
 			} catch (JSONException e) {
 				fail("Failure cause: " + e.getMessage());
 			}
 			currentWeatherParser = new CurrentWeatherParser(currentWeatherInfoFromFile);
+			units = "metric";
 			testsInitialized = true;
 		}
 	}
 	
 	@Test
 	public void testIfWeatherInfoIsInJsonFormat(){
-		Validator.validateJsonFormat(currentWeatherInfoFromFile);
+		JSONObject weatherInfo = currentWeatherParser.getWeatherInfo();
+		Validator.validateJsonFormat(weatherInfo);
 	}
 	
 	@Test

@@ -1,6 +1,7 @@
 package file;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,8 +39,7 @@ public class FileUtilityTest {
 	@Test
 	public void testFileRead() {
 		Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\FileUtilityTesting\\input.txt\\");
-		String result = null;
-		result = fileUtility.readFile(inputPath);
+		String result = fileUtility.readFile(inputPath);
 		assertFalse(result.isEmpty());
 	}
 }

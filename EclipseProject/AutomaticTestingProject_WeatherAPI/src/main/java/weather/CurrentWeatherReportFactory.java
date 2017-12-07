@@ -58,11 +58,11 @@ public class CurrentWeatherReportFactory {
 		return apiKey;
 	}
 
-	public String getCityName() {
-		return cityName;
-	}
-
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
+	}
+	
+	public String getCityName() {
+		return cityName;
 	}
 }

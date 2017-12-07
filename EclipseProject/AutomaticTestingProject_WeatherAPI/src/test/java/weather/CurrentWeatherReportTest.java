@@ -16,14 +16,13 @@ import testhelpers.Validator;
 
 public class CurrentWeatherReportTest {
 	
-	private CurrentWeatherReport currentWeatherReport;
-	private String units;
-	private boolean testsInitialized;
+	private static CurrentWeatherReport currentWeatherReport;
+	private static String units;
+	private static boolean testsInitialized;
 	
 	@Before
 	public void setUpTests() {
 		if (testsInitialized != true) {
-			units = "metric";
 			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\CurrentWeatherReportTesting\\CurrentWeatherInfo.txt");
 			FileUtility fileUtility = new FileUtility();
 			JSONObject currentWeatherInfoFromFile = null;
@@ -33,6 +32,8 @@ public class CurrentWeatherReportTest {
 				fail("Failure cause: " + e.getMessage());
 			}
 			currentWeatherReport = new CurrentWeatherReport(currentWeatherInfoFromFile);
+			units = "metric";
+			testsInitialized = true;
 		}
 	}
 	
