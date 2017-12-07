@@ -1,0 +1,12 @@
+city: Sidney
+coordinates: 41:-102
+current temperature: -8
+forecast day 1 info: 
+	maximum temperature: 0
+	minimum temperature: -2
+forecast day 2 info: 
+	maximum temperature: 2
+	minimum temperature: 1
+forecast day 3 info: 
+	maximum temperature: 1
+	minimum temperature: 0

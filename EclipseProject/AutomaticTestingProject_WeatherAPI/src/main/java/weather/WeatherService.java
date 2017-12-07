@@ -99,12 +99,12 @@ public class WeatherService {
 		CurrentWeatherReportFactory currentWeatherReportFactory = new CurrentWeatherReportFactory(cityName, apiKey, units);
 		updateCurrentWeather(currentWeatherReportFactory);
 		
-		String outputContent = null;
 		String cityNameFromReport = currentWeatherReport.getCityName();
 		String geoCoords = currentWeatherReport.getGeoCoordinates();
 		int currentTemp = currentWeatherReport.getTemperature();
-		
 		String lineSeperator = System.getProperty("line.separator");
+		
+		String outputContent = null;
 		outputContent = "city: " + cityNameFromReport + lineSeperator +  
 						"coordinates: " + geoCoords + lineSeperator +  
 				        "current temperature: " + currentTemp + lineSeperator;
@@ -113,8 +113,10 @@ public class WeatherService {
 		for(int dayNumber: days) {
 			WeatherForecastReportFactory weatherForecastReportFactory = new WeatherForecastReportFactory(cityName, apiKey, units);
 			updateForecastWeather(weatherForecastReportFactory, dayNumber);
+			
 			int forecastMaxTemp = weatherForecastReport.getMaxTemperature();
 			int forecastMinTemp = weatherForecastReport.getMinTemperature();
+			
 			outputContent += "forecast day " + dayNumber + " info: " + lineSeperator + 
 						"\t" + "maximum temperature: " + forecastMaxTemp + lineSeperator +
 						"\t" + "minimum temperature: " + forecastMinTemp + lineSeperator;
@@ -134,12 +136,12 @@ public class WeatherService {
 	}
 	
 	public int getForecastMinTemperatureForDay() {
-		int minTemperature = weatherForecastReport.getTemperature();
+		int minTemperature = weatherForecastReport.getMinTemperature();
 		return minTemperature;
 	}
 	
 	public int getForecastMaxTemperatureForDay() {
-		int maxTemperature = weatherForecastReport.getTemperature();
+		int maxTemperature = weatherForecastReport.getMaxTemperature();
 		return maxTemperature;
 	}
 	
@@ -183,12 +185,12 @@ public class WeatherService {
 	public WeatherForecastReport getWeatherForecastReport() {
 		return weatherForecastReport;
 	}
+	
+	public void setApiKey(String apiKey) {
+		this.apiKey = apiKey;
+	}
 
 	public String getApiKey() {
 		return apiKey;
-	}
-
-	public void setApiKey(String apiKey) {
-		this.apiKey = apiKey;
 	}
 }

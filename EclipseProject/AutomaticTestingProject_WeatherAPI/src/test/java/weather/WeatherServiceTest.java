@@ -27,20 +27,20 @@ public class WeatherServiceTest {
 		if (testsInitialized != true) {
 			weatherService = new WeatherService("Tallinn", "1a8a3563bee4967e64490dbfadf83b7e", "metric");
 			
-			Path inputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\CurrentWeatherInfo.txt");
+			Path currentWeatherInputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\CurrentWeatherInfo.txt");
 			FileUtility fileUtility = new FileUtility();
 			JSONObject currentWeatherInfoFromFile = null;
 			try {
-				currentWeatherInfoFromFile = new JSONObject(fileUtility.readFile(inputPath));
+				currentWeatherInfoFromFile = new JSONObject(fileUtility.readFile(currentWeatherInputPath));
 			} catch (JSONException e) {
 				fail("Failure cause: " + e.getMessage());
 			}
 			
-			Path inputPath2 = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\WeatherForecastInfo.txt");
+			Path weatherForecastInputPath = Paths.get("C:\\Users\\SvenEST School\\Documents\\GitHub\\Automaattestimine\\WeatherServiceTesting\\WeatherForecastInfo.txt");
 			FileUtility fileUtility2 = new FileUtility();
 			JSONObject weatherForecastInfoFromFile = null;
 			try {
-				weatherForecastInfoFromFile = new JSONObject(fileUtility2.readFile(inputPath2));
+				weatherForecastInfoFromFile = new JSONObject(fileUtility2.readFile(weatherForecastInputPath));
 			} catch (JSONException e) {
 				fail("Failure cause: " + e.getMessage());
 			}
@@ -116,7 +116,7 @@ public class WeatherServiceTest {
 	
 	@Test
 	public void testSettingNewCityName() {
-		String newCityName = "Tallinn";
+		String newCityName = "London";
 		weatherService.setCityName(newCityName);
 		String resultCityName = weatherService.getCityName();
 		assertEquals(newCityName, resultCityName);
@@ -126,7 +126,7 @@ public class WeatherServiceTest {
 	public void testSettingNewCityNamesList() {
 		List<String> newCityNames= new ArrayList<>();
 		newCityNames.add("London");
-		newCityNames.add("Kiev");
+		newCityNames.add("Los Angeles");
 		weatherService.setCityNamesList(newCityNames);
 		List<String> resultCityNames = weatherService.getCityNamesList();
 		assertEquals(newCityNames, resultCityNames);

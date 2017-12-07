@@ -2,11 +2,11 @@ city: Los Angeles
 coordinates: 34:-118
 current temperature: 13
 forecast day 1 info: 
-	maximum temperature: 18
-	minimum temperature: 14
+	maximum temperature: 21
+	minimum temperature: 18
 forecast day 2 info: 
-	maximum temperature: 15
-	minimum temperature: 13
+	maximum temperature: 23
+	minimum temperature: 20
 forecast day 3 info: 
-	maximum temperature: 10
-	minimum temperature: 9
+	maximum temperature: 19
+	minimum temperature: 18
