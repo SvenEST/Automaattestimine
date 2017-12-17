@@ -1,12 +1,12 @@
 city: Tallinn
 coordinates: 59:24
-current temperature: -1
+current temperature: 0
 forecast day 1 info: 
-	maximum temperature: 1
-	minimum temperature: 0
+	maximum temperature: 0
+	minimum temperature: -1
 forecast day 2 info: 
-	maximum temperature: 2
-	minimum temperature: 2
+	maximum temperature: 0
+	minimum temperature: -1
 forecast day 3 info: 
-	maximum temperature: 4
-	minimum temperature: 3
+	maximum temperature: -1
+	minimum temperature: -1
